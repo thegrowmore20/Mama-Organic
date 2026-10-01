@@ -36,7 +36,18 @@
     "accessibility": {
       "skip_to_content": "Skip to content",
       "opens_in_new_tab": "(opens in a new tab)",
+      "footer_bottom_menu": "Footer legal links",
       "close": "Close"
+    },
+    "social": {
+      "label": "Social media",
+      "links": {
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "pinterest": "Pinterest",
+        "tiktok": "TikTok",
+        "youtube": "YouTube"
+      }
     },
     "navigation": {
       "view_all": "View all",

@@ -503,6 +503,20 @@ span.star-rating {
   --vensa-wl-page-action-border: var(--button-primary, var(--color-secondary-a11y));
 }
 
+/* Wishlist heart on product cards: same size as the slider arrows (35px on
+   mobile, 40px from 750px up, 20px icon). Set on body rather than :root so it
+   wins over the app's own :root defaults whichever stylesheet loads last. */
+body {
+  --vensa-wl-card-size: 35px;
+  --vensa-wl-card-icon-size: 20px;
+}
+
+@media screen and (min-width: 750px) {
+  body {
+    --vensa-wl-card-size: 40px;
+  }
+}
+
 .vensa-wl-page-empty .vensa-wl-empty-link,
 .vensa-wl-page-grid .vensa-wl-mini-btn.vensa-wl-atc {
   background: var(--button-primary, var(--color-secondary-a11y)) !important;
@@ -568,6 +582,64 @@ summary:focus-visible {
   }
 }
 
+/* ---------- Social icons (snippets/social-icons) ----------
+   Round white wrappers like the slider arrows (35px mobile, 40px from 750px
+   up); on hover they fill with the button color and the icon turns white. */
+.social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-icons--center {
+  justify-content: center;
+}
+
+.social-icons__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: var(--color-primary);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.social-icons__link svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+@media screen and (min-width: 750px) {
+  .social-icons__link {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Two classes (not one): the global a:not(.button):hover rule would otherwise
+   win and turn the icon the same teal as the filled circle. */
+@media (hover: hover) and (pointer: fine) {
+  .social-icons .social-icons__link:hover {
+    background: var(--button-primary, var(--color-secondary-a11y));
+    color: #ffffff;
+  }
+}
+
+.social-icons .social-icons__link:focus-visible {
+  background: var(--button-primary, var(--color-secondary-a11y));
+  color: #ffffff;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 /* ---------- Rich text content (.rte marks page/article/accordion/FAQ body
    HTML from page.content, metafield rich-text, etc.) ---------- */
 /* The global `ul { list-style: none }` reset above is meant for UI chrome
@@ -623,6 +695,12 @@ summary:focus-visible {
 }
 
 .card-product-rating .jdgm-prev-badge[data-number-of-reviews="0"] {
+  display: none !important;
+}
+
+/* Cards show the star rating only - Judge.me's "No questions" Q&A badge is
+   hidden. */
+.card-product-rating .jdgm-qa-badge {
   display: none !important;
 }
 

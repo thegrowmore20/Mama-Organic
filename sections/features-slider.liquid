@@ -100,9 +100,9 @@
 
   /* Arrows */
   .features-slider__arrow {
-    width: 30px;
-    height: 30px;
-    background: #ffffff;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.7);
     border: none;
     border-radius: 50%;
     display: none; /* hidden by default, shown by JS if needed */
@@ -125,6 +125,10 @@
       color: #ffffff;
     }
   }
+  .features-slider__arrow svg {
+    width: 20px;
+    height: 20px;
+  }
   .features-slider__arrow:disabled {
     opacity: 0;
     pointer-events: none;
@@ -136,10 +140,6 @@
       height: 40px;
     }
 
-    .features-slider__arrow svg {
-      width: 24px;
-      height: 24px;
-    }
   }
 
   /* Dots */

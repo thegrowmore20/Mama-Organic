@@ -14,11 +14,10 @@
     "header": {
       "type": "header",
       "settings": {
-        "logo": "shopify://shop_images/Mama_Organic_Logo.webp",
-        "logo_inverse": "shopify://shop_images/Header_Logo.png",
+        "logo": "shopify://shop_images/Mobile_Logo.svg",
         "brand_name": "",
         "brand_subtitle": "",
-        "menu": "header-menu"
+        "menu": ""
       }
     }
   },

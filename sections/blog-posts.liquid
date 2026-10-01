@@ -73,7 +73,12 @@
    Native overflow-x + scroll-snap already supports touch drag - no JS
    needed since this only applies below the tablet breakpoint. */
 @media screen and (max-width: 749px) {
+  /* position: relative makes the row the containing block for the cards'
+     absolutely-positioned .visually-hidden "Read more - title" text. Without
+     it that text belongs to the page, so the cards scrolled off to the right
+     push the whole page wider than the screen (horizontal page overflow). */
   .blogs-section__grid {
+    position: relative;
     display: flex;
     overflow-x: auto;
     overscroll-behavior-x: contain;
@@ -154,6 +159,14 @@
   font-family: var(--font-accent);
   line-height: 1.35;
   margin: 0 0 10px;
+  /* Two lines max, and always two lines tall, so every card in a row keeps
+     its excerpt and "Read more" aligned whatever the title length. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(1.35em * 2);
 }
 
 .blog-listing-card__title a {
@@ -169,6 +182,14 @@
   line-height: 1.6;
   color: var(--color-text-muted);
   margin: 0 0 14px;
+  /* Three lines max, and always three lines tall. Sized in em, so it follows
+     the font size and the card width at every breakpoint. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.6em * 3);
 }
 
 .blog-listing-card__footer {

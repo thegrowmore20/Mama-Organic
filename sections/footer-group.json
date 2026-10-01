@@ -14,18 +14,17 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "footer_brand_content": "<p>Science-infused premium skincare. Every formula is crafted to deliver visible, clinically-proven results without compromise.</p>",
+        "footer_brand_content": "<p>Welcome to Mama Organic, your trusted partner in natural skincare. Owned and operated by <strong>INTERLINK GLOBAL</strong>. Our dedication lies in providing you with effective, chemical-free solutions that promote radiant skin, healthy hair, and a vibrant body.<br/>Your well-being is our top priority!</p>",
         "social_heading": "Social Media",
         "pages_heading": "Products",
         "policies_heading": "Quick links",
-        "logo": "shopify://shop_images/Footer_Logo.png",
-        "background_image": "shopify://shop_images/footer_background.webp",
+        "logo": "shopify://shop_images/Logo_PNG.png",
         "facebook": "https://www.facebook.com/MamaOrganicPK",
         "instagram": "https://www.instagram.com/mamaorganicpk/",
         "tiktok": "https://www.tiktok.com/@mamaorganicpk",
         "youtube": "https://www.youtube.com/@mamaorganicpk",
-        "pages_menu": "pages",
-        "help_menu": "quick-links"
+        "pages_menu": "",
+        "help_menu": ""
       }
     }
   },

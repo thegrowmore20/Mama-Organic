@@ -329,9 +329,21 @@ body:not(:has(.banner--transparent-header)) {
   flex-shrink: 0;
 }
 
+/* A definite height is what gives the logo its width inside the flex/grid
+   header (a percentage max-width alone collapses it to nothing there);
+   max-width then caps wide logos and object-fit keeps them undistorted. */
 .header__logo img {
   height: 44px;
   width: auto;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 989px) {
+  .header__logo img {
+    height: 30px;
+    max-width: 150px;
+  }
 }
 
 .header__logo-img--inverse {

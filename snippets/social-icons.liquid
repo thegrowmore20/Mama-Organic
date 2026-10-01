@@ -1,0 +1,49 @@
+{%- comment -%}
+  Social media icon links, read from the global social media theme settings
+  (Theme settings > Social media). Renders nothing when no link is set, and
+  each icon only when its link is set.
+
+  Accepts:
+    class - {String} optional extra class on the list (e.g. for spacing)
+    align - {String} optional, 'center' to centre the icons (default: start)
+
+  Usage:
+  {% render 'social-icons' %}
+  {% render 'social-icons', align: 'center', class: 'my-section__social' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign social_networks = 'facebook,instagram,pinterest,tiktok,youtube' | split: ','
+  assign has_social = false
+  for network in social_networks
+    assign setting_key = 'social_' | append: network
+    if settings[setting_key] != blank
+      assign has_social = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_social -%}
+  <ul class="social-icons{% if align == 'center' %} social-icons--center{% endif %}{% if class != blank %} {{ class }}{% endif %}" role="list" aria-label="{{ 'general.social.label' | t }}">
+    {%- for network in social_networks -%}
+      {%- assign setting_key = 'social_' | append: network -%}
+      {%- assign network_url = settings[setting_key] -%}
+      {%- if network_url != blank -%}
+        {%- assign label_key = 'general.social.links.' | append: network -%}
+        {%- assign icon_name = 'social-' | append: network -%}
+        <li class="social-icons__item">
+          <a
+            class="social-icons__link"
+            href="{{ network_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {% render 'icon', name: icon_name %}
+            <span class="visually-hidden">{{ label_key | t }} {{ 'general.accessibility.opens_in_new_tab' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

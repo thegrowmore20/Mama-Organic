@@ -14,6 +14,12 @@
     "font_body": "poppins_n4",
     "font_subheading": "poppins_n5",
     "font_accent": "poppins_n6",
+    "button_primary_color": "#004236",
+    "social_facebook": "https://www.facebook.com/MamaOrganicPK",
+    "social_instagram": "https://www.instagram.com/mamaorganicpk/",
+    "social_pinterest": "https://www.pinterest.com/mamaorganicpak/",
+    "social_tiktok": "https://www.tiktok.com/@mamaorganicpk",
+    "social_youtube": "https://www.youtube.com/@mamaorganicpk",
     "show_free_shipping_bar": false,
     "color_primary": "#004236",
     "color_secondary": "#108474",
@@ -119,6 +125,11 @@
       },
       "14060646107696862457": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "4727195953647268973": {
+        "type": "shopify://apps/doran-shoppable-videos/blocks/app-embed/9f421243-1cc3-42c0-8a88-49922de1eacf",
         "disabled": false,
         "settings": {}
       }

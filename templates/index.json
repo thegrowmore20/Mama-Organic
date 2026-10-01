@@ -78,38 +78,294 @@
         "autoplay_speed": 10
       }
     },
-    "hero": {
-      "type": "hero-banner",
-      "disabled": true,
-      "settings": {
-        "height": "large",
-        "custom_height": 640,
-        "mobile_height": "custom",
-        "custom_height_mobile": 600,
-        "transparent_header": false,
-        "show_overlay": false,
-        "overlay_color": "rgba(0, 0, 0, 0.2)",
-        "content_position_x": "left",
-        "content_position_y": "center",
-        "content_position_x_mobile": "left",
-        "content_position_y_mobile": "bottom",
-        "heading": "Where Beauty Begins with care",
-        "heading_color": "#004236",
-        "heading_size": "h0",
-        "text": "<p>We combine natural extracts with clinical research to give you skin results you can actually see. No fillers, just pure potency.</p>",
-        "button_label": "Shop Now",
-        "button_link": "/collections/all"
-      }
-    },
     "best-sellers": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Best Sellers",
+        "heading": "Shop Best Sellers",
         "collection": "best-sellers",
         "products_to_show": 12,
+        "show_view_all": true,
         "enable_slider": true,
         "padding_top": 60,
         "padding_bottom": 30
+      }
+    },
+    "collection_list_iYDEV6": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "collection": "hair-oil",
+            "image": "shopify://shop_images/Onion_Hair_Oil_150ml.jpg",
+            "title": "Hair Oil"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "collection": "hair-shampoo",
+            "image": "shopify://shop_images/OnionShampoo250ml.jpg",
+            "title": "Hair Shampoo"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "face-wash",
+            "image": "shopify://shop_images/Face_Wash_b06d2d11-a67c-47bd-8979-efc7a1f94a4c.png",
+            "title": "Face Wash"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "collection": "face-serum",
+            "image": "shopify://shop_images/Vitamin_C_Serum.jpg",
+            "title": "Face Serum"
+          }
+        },
+        "c5": {
+          "type": "collection",
+          "settings": {
+            "collection": "face-cream",
+            "image": "shopify://shop_images/RetinolNightCream.jpg",
+            "title": "Face Cream"
+          }
+        },
+        "c6": {
+          "type": "collection",
+          "settings": {
+            "collection": "face-moisturizer",
+            "image": "shopify://shop_images/DailyMoisturizingLotion230ml.jpg",
+            "title": "Face Moisturizer"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "heading": "Shop by Category",
+        "columns_desktop": 6,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "featured_collection_7wxMW6": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Shop Bundles",
+        "collection": "offers",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_slider": false,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "shop-by-concern": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "collection": "acne-pimples",
+            "image": "shopify://shop_images/Acne.jpg",
+            "title": "Acne & Pimples"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "collection": "acne-scars",
+            "image": "shopify://shop_images/Face_Marks.png",
+            "title": "Acne Marks"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "acne-scars",
+            "image": "shopify://shop_images/Scars.png",
+            "title": "Acne Scars"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "collection": "dryness-dehydration",
+            "image": "shopify://shop_images/Skin_Dullness.png",
+            "title": "Dryness & Dehydration"
+          }
+        },
+        "c5": {
+          "type": "collection",
+          "settings": {
+            "collection": "wrinkles-fine-lines",
+            "image": "shopify://shop_images/Fine_Lines.png",
+            "title": "Wrinkles & Fine Lines"
+          }
+        },
+        "c6": {
+          "type": "collection",
+          "settings": {
+            "collection": "anti-aging",
+            "image": "shopify://shop_images/Anti-Aging.png",
+            "title": "Anti Aging"
+          }
+        },
+        "c7": {
+          "type": "collection",
+          "settings": {
+            "collection": "pigmentation",
+            "image": "shopify://shop_images/Pigmentation.png",
+            "title": "Pigmentation"
+          }
+        },
+        "c8": {
+          "type": "collection",
+          "settings": {
+            "collection": "open-pores",
+            "image": "shopify://shop_images/Open_Pores.png",
+            "title": "Open Pores"
+          }
+        },
+        "c9": {
+          "type": "collection",
+          "settings": {
+            "collection": "dark-circles-and-puffiness",
+            "image": "shopify://shop_images/Dark_Circle_Puffiness.png",
+            "title": "Dark Circles & Puffiness"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9"
+      ],
+      "settings": {
+        "heading": "Shop by Concern",
+        "columns_desktop": 5,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "custom_section_LCMcUH": {
+      "type": "custom-section",
+      "blocks": {
+        "judge_me_reviews_all_reviews_page_iPhMLF": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_page/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "max_width": 1200,
+            "review_source": "all",
+            "show_all_reviews_in_same_tab": false,
+            "show_first": "product",
+            "empty_state": "empty_widget"
+          }
+        },
+        "judge_me_reviews_review_widget_homepage_aHKngY": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {
+            "product": "",
+            "review_data": "sample_data",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_all_reviews_page_iPhMLF",
+        "judge_me_reviews_review_widget_homepage_aHKngY"
+      ],
+      "name": "Custom Section",
+      "settings": {
+        "heading": "See what our customers said",
+        "text": "",
+        "link_text": "",
+        "link_url": "",
+        "link_new_tab": false,
+        "link_svg": "",
+        "full_width": false,
+        "embed_code": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "image_with_text_HCBzik": {
+      "type": "image-with-text",
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/Asset_3-8.webp",
+        "image_position": "left",
+        "text_alignment": "left",
+        "heading": "Our Mission – Goodness Of Nature",
+        "subheading": "",
+        "text": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>",
+        "text_image": "shopify://shop_images/Certified_Trust_Icon_Halla.webp",
+        "text_image_width": 300,
+        "text_background": "#eef6e4",
+        "button_label": "Learn More",
+        "button_link": "shopify://pages/about-us",
+        "button_color": "#108474",
+        "button_text_color": "#ffffff",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "custom_section_GRHE7m": {
+      "type": "custom-section",
+      "blocks": {
+        "doran_shoppable_videos_basic_widget_3yL3PR": {
+          "type": "shopify://apps/doran-shoppable-videos/blocks/basic-widget/9f421243-1cc3-42c0-8a88-49922de1eacf",
+          "settings": {
+            "widgets": [
+              "90f8b5f0-953b-470e-9243-05b7c2469e83"
+            ],
+            "widget_type": "carousel",
+            "heading": "",
+            "heading_tag": "h2",
+            "description": "",
+            "alignment": "center",
+            "is_custom_grid": false,
+            "grid_item_in_desktop": 4,
+            "grid_item_in_tablet": 3,
+            "grid_item_in_mobile": 2,
+            "is_custom_carousel": false,
+            "carousel_item_in_desktop": 4,
+            "carousel_item_in_tablet": 3,
+            "carousel_item_in_mobile": 2
+          }
+        }
+      },
+      "block_order": [
+        "doran_shoppable_videos_basic_widget_3yL3PR"
+      ],
+      "disabled": true,
+      "name": "Custom section",
+      "settings": {
+        "heading": "Real Women. Real Results.",
+        "text": "<p>Watch how Pakistan is glowing with Mama Organic. Tap any video to shop the look.</p>",
+        "link_text": "",
+        "link_url": "",
+        "link_new_tab": false,
+        "link_svg": "",
+        "full_width": false,
+        "embed_code": "",
+        "padding_top": 30,
+        "padding_bottom": 60
       }
     },
     "animated_pharmacies_qEMVb4": {
@@ -241,100 +497,6 @@
         "animation_direction": "left",
         "animation_speed": 30,
         "pause_on_hover": true
-      }
-    },
-    "shop-by-concern": {
-      "type": "collection-list",
-      "blocks": {
-        "c1": {
-          "type": "collection",
-          "settings": {
-            "collection": "acne-pimples",
-            "image": "shopify://shop_images/Acne.jpg",
-            "title": "Acne & Pimples"
-          }
-        },
-        "c2": {
-          "type": "collection",
-          "settings": {
-            "collection": "acne-scars",
-            "image": "shopify://shop_images/Face_Marks.png",
-            "title": "Acne Marks"
-          }
-        },
-        "c3": {
-          "type": "collection",
-          "settings": {
-            "collection": "acne-scars",
-            "image": "shopify://shop_images/Scars.png",
-            "title": "Acne Scars"
-          }
-        },
-        "c4": {
-          "type": "collection",
-          "settings": {
-            "collection": "dryness-dehydration",
-            "image": "shopify://shop_images/Skin_Dullness.png",
-            "title": "Dryness & Dehydration"
-          }
-        },
-        "c5": {
-          "type": "collection",
-          "settings": {
-            "collection": "wrinkles-fine-lines",
-            "image": "shopify://shop_images/Fine_Lines.png",
-            "title": "Wrinkles & Fine Lines"
-          }
-        },
-        "c6": {
-          "type": "collection",
-          "settings": {
-            "collection": "anti-aging",
-            "image": "shopify://shop_images/Anti-Aging.png",
-            "title": "Anti Aging"
-          }
-        },
-        "c7": {
-          "type": "collection",
-          "settings": {
-            "collection": "pigmentation",
-            "image": "shopify://shop_images/Pigmentation.png",
-            "title": "Pigmentation"
-          }
-        },
-        "c8": {
-          "type": "collection",
-          "settings": {
-            "collection": "open-pores",
-            "image": "shopify://shop_images/Open_Pores.png",
-            "title": "Open Pores"
-          }
-        },
-        "c9": {
-          "type": "collection",
-          "settings": {
-            "collection": "dark-circles-and-puffiness",
-            "image": "shopify://shop_images/Dark_Circle_Puffiness.png",
-            "title": "Dark Circles & Puffiness"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6",
-        "c7",
-        "c8",
-        "c9"
-      ],
-      "settings": {
-        "heading": "Shop by Concern",
-        "columns_desktop": 5,
-        "padding_top": 30,
-        "padding_bottom": 30
       }
     },
     "ingredients": {
@@ -482,6 +644,7 @@
       "name": "Custom Section",
       "settings": {
         "heading": "Follow Us on Instagram",
+        "text": "",
         "link_text": "@mamaorganicpk",
         "link_url": "https://www.instagram.com/mamaorganicpk/",
         "link_new_tab": true,
@@ -508,21 +671,6 @@
         "padding_bottom": 30
       }
     },
-    "custom_section_LCMcUH": {
-      "type": "custom-section",
-      "name": "Custom Section",
-      "settings": {
-        "heading": "See what our customers said",
-        "link_text": "",
-        "link_url": "",
-        "link_new_tab": false,
-        "link_svg": "",
-        "full_width": false,
-        "embed_code": "",
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
     "real-results": {
       "type": "split-banner",
       "disabled": true,
@@ -530,21 +678,47 @@
         "width": "container",
         "layout": "image_left",
         "style": "accent",
-        "heading": "Real Results. Proven By Science.",
+        "image": "shopify://shop_images/Asset_3-8.png",
+        "heading": "Our Mission – Goodness Of Nature",
         "subheading": "",
-        "text": "<p>We dont guess—we prove. All Mama Organic products are independently tested to ensure they actually work. Every claim we make is backed by real research.</p>",
-        "button_label": "Read More",
-        "button_link": "/pages/about-us",
+        "text": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>",
+        "button_label": "Learn More",
+        "button_link": "shopify://pages/about-us",
         "padding_top": 0,
         "padding_bottom": 30
       }
     },
+    "hero": {
+      "type": "hero-banner",
+      "disabled": true,
+      "settings": {
+        "height": "large",
+        "custom_height": 640,
+        "mobile_height": "custom",
+        "custom_height_mobile": 600,
+        "transparent_header": false,
+        "show_overlay": false,
+        "overlay_color": "rgba(0, 0, 0, 0.2)",
+        "content_position_x": "left",
+        "content_position_y": "center",
+        "content_position_x_mobile": "left",
+        "content_position_y_mobile": "bottom",
+        "heading": "Where Beauty Begins with care",
+        "heading_color": "#004236",
+        "heading_size": "h0",
+        "text": "<p>We combine natural extracts with clinical research to give you skin results you can actually see. No fillers, just pure potency.</p>",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all"
+      }
+    },
     "curated-for-you": {
       "type": "featured-collection",
+      "disabled": true,
       "settings": {
         "heading": "Curated for Every Skin",
         "collection": "face-wash",
         "products_to_show": 4,
+        "show_view_all": true,
         "enable_slider": false,
         "padding_top": 30,
         "padding_bottom": 60
@@ -552,10 +726,9 @@
     },
     "blogs": {
       "type": "blog-posts",
-      "disabled": true,
       "settings": {
         "heading": "Blogs",
-        "blog": "news",
+        "blog": "tips",
         "columns_desktop": "3",
         "articles_count": 3,
         "show_image": true,
@@ -570,17 +743,21 @@
   },
   "order": [
     "hero_slideshow_mamaorganic",
-    "hero",
     "best-sellers",
-    "animated_pharmacies_qEMVb4",
+    "collection_list_iYDEV6",
+    "featured_collection_7wxMW6",
     "shop-by-concern",
+    "custom_section_LCMcUH",
+    "image_with_text_HCBzik",
+    "custom_section_GRHE7m",
+    "animated_pharmacies_qEMVb4",
     "ingredients",
     "comparison_table_QYKVLT",
     "image_gallery_RGGFDx",
     "custom_section_dHGKA6",
     "before-after",
-    "custom_section_LCMcUH",
     "real-results",
+    "hero",
     "curated-for-you",
     "blogs"
   ]

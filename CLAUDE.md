@@ -148,4 +148,4 @@ Findings from an audit against `shopify.dev/docs/storefronts/themes/best-practic
 - ALWAYS use the `section-header` snippet (`{% render 'section-header', heading: ..., subheading: ..., text: ... %}`) for section introductions instead of hardcoding `<h2>` and `<p>`. This ensures a standardized `42rem` max-width and perfect symmetry across all sections.
 
 ### Sliders
-- When creating sliders, standardize arrow controls to be 40x40px, with a white background (`#ffffff`), `box-shadow: 0 4px 12px rgba(0,0,0,0.1)`, and the icon colored using `var(--color-primary)`. Position them symmetrically on the left and right (`left: 10px; right: 10px;`). Do not let them overflow negative margins.
+- When creating sliders, standardize arrow controls: 35x35px on mobile and 40x40px from 750px up, with a translucent white background (`rgba(255, 255, 255, 0.7)`, so content behind stays visible), `box-shadow: 0 4px 12px rgba(0,0,0,0.1)`, and a 20x20px icon colored using `var(--color-primary)`. Position them symmetrically on the left and right: `left: 2px; right: 2px` on mobile, `left: 10px; right: 10px` from 750px up. Do not let them overflow negative margins.

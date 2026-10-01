@@ -16,7 +16,10 @@
             {%- endif -%}
           </div>
           {%- if card_title != blank -%}
-            <h3 class="collection-card__title">{{ card_title }}</h3>
+            <h3 class="collection-card__title">
+              {{ card_title }}
+              <span class="collection-card__arrow" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+            </h3>
           {%- endif -%}
         </a>
       {%- endfor -%}
@@ -79,6 +82,10 @@
 }
 
 .collection-card__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
   margin: var(--space-2) 0 0;
   font-size: 16px;
   font-weight: var(--font-accent-weight);
@@ -88,6 +95,23 @@
   @media screen and (max-width: 749px) {
     font-size: 14px;
   }
+}
+
+/* The arrow's hover nudge comes from base.css (.icon--arrow-right), the same
+   as the "View all" links. */
+.collection-card__arrow {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  .collection-card__arrow {
+    display: flex;
+  }
+}
+
+.collection-card__arrow svg {
+  width: 16px;
+  height: 16px;
 }
 {% endstylesheet %}
 

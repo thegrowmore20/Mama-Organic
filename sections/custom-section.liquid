@@ -10,7 +10,13 @@
 >
   {%- if section.settings.heading != blank -%}
     <div class="container">
-      <h2 class="custom-embed-section__heading h2{% if section.settings.link_text != blank %} custom-embed-section__heading--with-link{% endif %}">{{ section.settings.heading }}</h2>
+      <h2 class="custom-embed-section__heading h2{% if section.settings.text != blank or section.settings.link_text != blank %} custom-embed-section__heading--with-link{% endif %}">{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.text != blank -%}
+    <div class="container">
+      <div class="custom-embed-section__text rte{% if section.settings.link_text != blank %} custom-embed-section__text--with-link{% endif %}">{{ section.settings.text }}</div>
     </div>
   {%- endif -%}
 
@@ -83,6 +89,16 @@
 
 .custom-embed-section__embed {
   line-height: 0;
+}
+
+.custom-embed-section__text {
+  max-width: 42rem;
+  margin: 0 auto var(--space-6);
+  text-align: center;
+}
+
+.custom-embed-section__text--with-link {
+  margin-bottom: var(--space-2);
 }
 
 .custom-embed-section__heading--with-link {
@@ -167,8 +183,14 @@
       "info": "Optional - leave blank to hide."
     },
     {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "info": "Optional - shown below the heading. Leave blank to hide."
+    },
+    {
       "type": "header",
-      "content": "Link below heading"
+      "content": "Link below text"
     },
     {
       "type": "text",
