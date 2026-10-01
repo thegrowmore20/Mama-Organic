@@ -1,0 +1,231 @@
+{% comment %}
+  Trusted Partners / Logo Bar section
+  - Animation is pure CSS (infinite marquee), so there is zero JS payload.
+  - Heading uses the shared section-header snippet and spacing uses the
+    shared section-padding class, matching every other section in the theme.
+{% endcomment %}
+
+<section
+  id="TrustedPartners-{{ section.id }}"
+  class="tp-section section-padding{% if section.settings.grayscale_logos %} tp-grayscale{% endif %}"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="{% unless section.settings.full_width %}container{% endunless %}">
+    {% render 'section-header', eyebrow: section.settings.eyebrow, heading: section.settings.heading %}
+
+    <div class="tp-track-wrap">
+      <div
+        class="tp-track{% if section.settings.enable_animation and section.blocks.size > 0 %} is-marquee{% if section.settings.animation_direction == 'right' %} direction-reverse{% endif %}{% if section.settings.pause_on_hover %} pause-on-hover{% endif %}{% else %} is-static{% endif %}"
+      >
+        {%- for block in section.blocks -%}
+          {%- assign logo_alt = block.settings.image.alt | default: block.settings.name | escape -%}
+          <div class="tp-logo-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="tp-logo-link">{%- endif -%}
+            {%- if block.settings.image -%}
+              {{ block.settings.image
+                | image_url: width: 450
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '150, 300, 450',
+                  sizes: '200px',
+                  class: 'tp-logo-img',
+                  alt: logo_alt
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'tp-logo-img tp-logo-placeholder' }}
+            {%- endif -%}
+            {%- if block.settings.link != blank -%}</a>{%- endif -%}
+            {%- if section.settings.show_names and block.settings.name != blank -%}
+              <span class="tp-logo-name">{{ block.settings.name | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+
+        {%- if section.settings.enable_animation and section.blocks.size > 0 -%}
+          {%- comment -%} Duplicate set (aria-hidden) so the marquee loops seamlessly {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            <div class="tp-logo-item" aria-hidden="true">
+              {%- if block.settings.link != blank -%}<span class="tp-logo-link" tabindex="-1">{%- endif -%}
+              {%- if block.settings.image -%}
+                {{ block.settings.image
+                  | image_url: width: 450
+                  | image_tag: loading: 'lazy', widths: '150, 300, 450', sizes: '200px', class: 'tp-logo-img', alt: ''
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'tp-logo-img tp-logo-placeholder' }}
+              {%- endif -%}
+              {%- if block.settings.link != blank -%}</span>{%- endif -%}
+              {%- if section.settings.show_names and block.settings.name != blank -%}
+                <span class="tp-logo-name">{{ block.settings.name | escape }}</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #TrustedPartners-{{ section.id }} {
+    --tp-logo-height: {{ section.settings.logo_height_mobile }}px;
+    --tp-gap: {{ section.settings.logo_gap_mobile }}px;
+    --tp-duration: {{ section.settings.animation_speed }}s;
+  }
+
+  @media screen and (min-width: 750px) {
+    #TrustedPartners-{{ section.id }} {
+      --tp-logo-height: {{ section.settings.logo_height_desktop }}px;
+      --tp-gap: {{ section.settings.logo_gap_desktop }}px;
+    }
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-track-wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-track {
+    display: flex;
+    align-items: center;
+    gap: var(--tp-gap);
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-track.is-static {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-track.is-marquee {
+    width: max-content;
+    animation: tp-scroll-{{ section.id }} var(--tp-duration) linear infinite;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-track.is-marquee.direction-reverse {
+    animation-direction: reverse;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-track.is-marquee.pause-on-hover:hover,
+  #TrustedPartners-{{ section.id }} .tp-track.is-marquee.pause-on-hover:focus-within {
+    animation-play-state: paused;
+  }
+
+  @keyframes tp-scroll-{{ section.id }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-logo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-logo-img {
+    height: var(--tp-logo-height);
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    display: block;
+  }
+
+  #TrustedPartners-{{ section.id }}.tp-grayscale .tp-logo-img {
+    filter: grayscale(100%);
+    opacity: 0.65;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+  }
+
+  #TrustedPartners-{{ section.id }}.tp-grayscale .tp-logo-item:hover .tp-logo-img,
+  #TrustedPartners-{{ section.id }}.tp-grayscale .tp-logo-item:focus-within .tp-logo-img {
+    filter: none;
+    opacity: 1;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-logo-name {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  #TrustedPartners-{{ section.id }} .tp-logo-link {
+    display: inline-flex;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TrustedPartners-{{ section.id }} .tp-track.is-marquee {
+      animation: none;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Trusted partners",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Trusted Retail Partners" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Available On Pharmacies Near You" },
+    { "type": "checkbox", "id": "show_names", "label": "Show partner name under each logo", "default": false },
+    { "type": "checkbox", "id": "full_width", "label": "Full width (edge to edge)", "default": false },
+
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 30 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 30 },
+
+    { "type": "header", "content": "Logos" },
+    { "type": "range", "id": "logo_height_desktop", "min": 24, "max": 100, "step": 2, "unit": "px", "label": "Logo height — desktop", "default": 48 },
+    { "type": "range", "id": "logo_height_mobile", "min": 20, "max": 70, "step": 2, "unit": "px", "label": "Logo height — mobile", "default": 32 },
+    { "type": "range", "id": "logo_gap_desktop", "min": 8, "max": 100, "step": 4, "unit": "px", "label": "Gap between logos — desktop", "default": 56 },
+    { "type": "range", "id": "logo_gap_mobile", "min": 8, "max": 60, "step": 4, "unit": "px", "label": "Gap between logos — mobile", "default": 28 },
+    { "type": "checkbox", "id": "grayscale_logos", "label": "Show logos in grayscale (full color on hover)", "default": false },
+
+    { "type": "header", "content": "Animation" },
+    { "type": "checkbox", "id": "enable_animation", "label": "Enable continuous scrolling animation", "default": true },
+    {
+      "type": "select",
+      "id": "animation_direction",
+      "label": "Scroll direction",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "range", "id": "animation_speed", "min": 10, "max": 60, "step": 5, "unit": "s", "label": "Scroll speed (seconds per loop)", "default": 30 },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo image" },
+        { "type": "text", "id": "name", "label": "Partner name", "default": "Partner name", "info": "Used as alt text and optional label" },
+        { "type": "url", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trusted partners",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "footer_brand_content": "<p>Science-infused premium skincare. Every formula is crafted to deliver visible, clinically-proven results without compromise.</p>",
+        "social_heading": "Social Media",
+        "pages_heading": "Products",
+        "policies_heading": "Quick links",
+        "logo": "shopify://shop_images/Footer_Logo.png",
+        "background_image": "shopify://shop_images/footer_background.webp",
+        "facebook": "https://www.facebook.com/MamaOrganicPK",
+        "instagram": "https://www.instagram.com/mamaorganicpk/",
+        "tiktok": "https://www.tiktok.com/@mamaorganicpk",
+        "youtube": "https://www.youtube.com/@mamaorganicpk",
+        "pages_menu": "pages",
+        "help_menu": "quick-links"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

@@ -1,0 +1,55 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_DAtWjn": {
+      "type": "hero-banner",
+      "settings": {
+        "image": "shopify://shop_images/About_Us_Banner.webp",
+        "mobile_image": "shopify://shop_images/About_us_Mobile.webp",
+        "height": "custom",
+        "custom_height": 360,
+        "mobile_height": "custom",
+        "custom_height_mobile": 380,
+        "transparent_header": false,
+        "show_overlay": false,
+        "overlay_color": "rgba(0, 0, 0, 0.4)",
+        "content_position_x": "left",
+        "content_position_y": "center",
+        "content_position_x_mobile": "center",
+        "content_position_y_mobile": "top",
+        "heading": "{{ blog.title }}",
+        "heading_color": "#004236",
+        "heading_size": "h0",
+        "text": "",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "columns_desktop": "3",
+        "articles_per_page": 9,
+        "show_image": true,
+        "show_excerpt": true,
+        "show_date": true,
+        "show_author": false,
+        "show_comments": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "hero_banner_DAtWjn",
+    "main"
+  ]
+}

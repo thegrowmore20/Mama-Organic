@@ -1,0 +1,587 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_slideshow_mamaorganic": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/2.png",
+            "mobile_image": "shopify://shop_images/2_286fb821-781a-439f-abb4-3bb6187293dd.png",
+            "eyebrow": "",
+            "heading": "",
+            "heading_color": "#004236",
+            "heading_size": "h0",
+            "content": "",
+            "button_label": "",
+            "link": "",
+            "ratings": ""
+          }
+        },
+        "slide_RdnJCb": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/3.png",
+            "mobile_image": "shopify://shop_images/3_caa215a5-8073-4682-b508-a5e9ae7fe857.png",
+            "eyebrow": "",
+            "heading": "",
+            "heading_color": "#004236",
+            "heading_size": "h0",
+            "content": "",
+            "button_label": "",
+            "link": "",
+            "ratings": ""
+          }
+        },
+        "slide_86jfiA": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "eyebrow": "",
+            "heading": "",
+            "heading_color": "#004236",
+            "heading_size": "h0",
+            "content": "",
+            "button_label": "",
+            "link": "",
+            "ratings": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_RdnJCb",
+        "slide_86jfiA"
+      ],
+      "settings": {
+        "height": "large",
+        "custom_height": 640,
+        "mobile_height": "custom",
+        "custom_height_mobile": 600,
+        "transparent_header": false,
+        "content_position_x": "left",
+        "content_position_y": "center",
+        "content_position_x_mobile": "center",
+        "content_position_y_mobile": "top",
+        "show_overlay": false,
+        "overlay_color": "rgba(0, 0, 0, 0.1)",
+        "autoplay": true,
+        "autoplay_speed": 10
+      }
+    },
+    "hero": {
+      "type": "hero-banner",
+      "disabled": true,
+      "settings": {
+        "height": "large",
+        "custom_height": 640,
+        "mobile_height": "custom",
+        "custom_height_mobile": 600,
+        "transparent_header": false,
+        "show_overlay": false,
+        "overlay_color": "rgba(0, 0, 0, 0.2)",
+        "content_position_x": "left",
+        "content_position_y": "center",
+        "content_position_x_mobile": "left",
+        "content_position_y_mobile": "bottom",
+        "heading": "Where Beauty Begins with care",
+        "heading_color": "#004236",
+        "heading_size": "h0",
+        "text": "<p>We combine natural extracts with clinical research to give you skin results you can actually see. No fillers, just pure potency.</p>",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all"
+      }
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Best Sellers",
+        "collection": "best-sellers",
+        "products_to_show": 12,
+        "enable_slider": true,
+        "padding_top": 60,
+        "padding_bottom": 30
+      }
+    },
+    "animated_pharmacies_qEMVb4": {
+      "type": "animated-pharmacies",
+      "blocks": {
+        "logo_7kxHXM": {
+          "type": "logo",
+          "settings": {
+            "name": "Bashir Sons Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_h7dr8Y": {
+          "type": "logo",
+          "settings": {
+            "name": "Al Noor Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_htT7yp": {
+          "type": "logo",
+          "settings": {
+            "name": "Servaid Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_ACHDCp": {
+          "type": "logo",
+          "settings": {
+            "name": "Fazal Deen Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_CF7tnc": {
+          "type": "logo",
+          "settings": {
+            "name": "Mahmood & Sons Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_TjHVXG": {
+          "type": "logo",
+          "settings": {
+            "name": "Clinix Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_E3bcbh": {
+          "type": "logo",
+          "settings": {
+            "name": "Nova Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_thP3P6": {
+          "type": "logo",
+          "settings": {
+            "name": "Get Well Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_Xmyx3f": {
+          "type": "logo",
+          "settings": {
+            "name": "Green Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_xeLDar": {
+          "type": "logo",
+          "settings": {
+            "name": "New Mahmood Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_yDWnTp": {
+          "type": "logo",
+          "settings": {
+            "name": "National Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_tjmVFH": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/2.png",
+            "name": "Impluse Pharmacy",
+            "link": ""
+          }
+        },
+        "logo_W67Gt8": {
+          "type": "logo",
+          "settings": {
+            "name": "Health Zone Pharmacy",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_7kxHXM",
+        "logo_h7dr8Y",
+        "logo_htT7yp",
+        "logo_ACHDCp",
+        "logo_CF7tnc",
+        "logo_TjHVXG",
+        "logo_E3bcbh",
+        "logo_thP3P6",
+        "logo_Xmyx3f",
+        "logo_xeLDar",
+        "logo_yDWnTp",
+        "logo_tjmVFH",
+        "logo_W67Gt8"
+      ],
+      "disabled": true,
+      "name": "Trusted partners",
+      "settings": {
+        "eyebrow": "Trusted Retail Partners",
+        "heading": "Available On Pharmacies Near You",
+        "show_names": true,
+        "full_width": false,
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "logo_height_desktop": 48,
+        "logo_height_mobile": 32,
+        "logo_gap_desktop": 56,
+        "logo_gap_mobile": 28,
+        "grayscale_logos": false,
+        "enable_animation": true,
+        "animation_direction": "left",
+        "animation_speed": 30,
+        "pause_on_hover": true
+      }
+    },
+    "shop-by-concern": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "collection": "acne-pimples",
+            "image": "shopify://shop_images/Acne.jpg",
+            "title": "Acne & Pimples"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "collection": "acne-scars",
+            "image": "shopify://shop_images/Face_Marks.png",
+            "title": "Acne Marks"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "acne-scars",
+            "image": "shopify://shop_images/Scars.png",
+            "title": "Acne Scars"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "collection": "dryness-dehydration",
+            "image": "shopify://shop_images/Skin_Dullness.png",
+            "title": "Dryness & Dehydration"
+          }
+        },
+        "c5": {
+          "type": "collection",
+          "settings": {
+            "collection": "wrinkles-fine-lines",
+            "image": "shopify://shop_images/Fine_Lines.png",
+            "title": "Wrinkles & Fine Lines"
+          }
+        },
+        "c6": {
+          "type": "collection",
+          "settings": {
+            "collection": "anti-aging",
+            "image": "shopify://shop_images/Anti-Aging.png",
+            "title": "Anti Aging"
+          }
+        },
+        "c7": {
+          "type": "collection",
+          "settings": {
+            "collection": "pigmentation",
+            "image": "shopify://shop_images/Pigmentation.png",
+            "title": "Pigmentation"
+          }
+        },
+        "c8": {
+          "type": "collection",
+          "settings": {
+            "collection": "open-pores",
+            "image": "shopify://shop_images/Open_Pores.png",
+            "title": "Open Pores"
+          }
+        },
+        "c9": {
+          "type": "collection",
+          "settings": {
+            "collection": "dark-circles-and-puffiness",
+            "image": "shopify://shop_images/Dark_Circle_Puffiness.png",
+            "title": "Dark Circles & Puffiness"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9"
+      ],
+      "settings": {
+        "heading": "Shop by Concern",
+        "columns_desktop": 5,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "ingredients": {
+      "type": "features-with-image",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "title": "Glutathione",
+            "text": "Brightens skin tone and enhances natural glow."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "title": "Vitamin C 20%",
+            "text": "Brightens skin tone and enhances natural glow."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "title": "Hyaluronic Acid",
+            "text": "Brightens skin & fades dark spots."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "title": "Niacinamide 10%",
+            "text": "Clears pores & controls oil."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Pure Ingredients. Proven Science.",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "comparison_table_QYKVLT": {
+      "type": "comparison-table",
+      "blocks": {
+        "feature_wkCLNE": {
+          "type": "feature",
+          "settings": {
+            "text": "Dermatologically Tested",
+            "icon_svg": ""
+          }
+        },
+        "feature_NVpk3y": {
+          "type": "feature",
+          "settings": {
+            "text": "No Harsh Chemicals",
+            "icon_svg": ""
+          }
+        },
+        "feature_Qag7iJ": {
+          "type": "feature",
+          "settings": {
+            "text": "Suitable for All Skin Types",
+            "icon_svg": ""
+          }
+        },
+        "feature_9wUkih": {
+          "type": "feature",
+          "settings": {
+            "text": "Visible Glow Results",
+            "icon_svg": ""
+          }
+        },
+        "feature_iYMwzB": {
+          "type": "feature",
+          "settings": {
+            "text": "Skin-Friendly Ingredients",
+            "icon_svg": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_wkCLNE",
+        "feature_NVpk3y",
+        "feature_Qag7iJ",
+        "feature_9wUkih",
+        "feature_iYMwzB"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Why Choose Mama Organic?",
+        "subheading": "<p>Our advanced skincare solutions are carefully formulated to deliver visible results while keeping your skin healthy, hydrated, and naturally radiant.</p>",
+        "content_max_width": 1000,
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "header_1": "Features",
+        "header_2": "Mama Organic Products",
+        "header_3": "Regular Products"
+      }
+    },
+    "image_gallery_RGGFDx": {
+      "type": "image-gallery",
+      "blocks": {
+        "image_tPVLBb": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_3wnnt4": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_tPVLBb",
+        "image_3wnnt4"
+      ],
+      "disabled": true,
+      "name": "Image Gallery",
+      "settings": {
+        "heading": "Certified for Your Peace of Mind",
+        "subheading": "",
+        "text": "<p>Manufactured under strict ISO 9001 controls and proudly Halal-certified. We guarantee ethical, premium quality in every drop of our skincare and cosmetics.</p>",
+        "image_space": 16,
+        "aspect_ratio": "adapt",
+        "border_radius": 8,
+        "enable_border": true,
+        "border_color": "#e2e6e8",
+        "content_max_width": 800,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "custom_section_dHGKA6": {
+      "type": "custom-section",
+      "disabled": true,
+      "name": "Custom Section",
+      "settings": {
+        "heading": "Follow Us on Instagram",
+        "link_text": "@mamaorganicpk",
+        "link_url": "https://www.instagram.com/mamaorganicpk/",
+        "link_new_tab": true,
+        "link_svg": "",
+        "full_width": false,
+        "embed_code": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "before-after": {
+      "type": "image-comparison",
+      "disabled": true,
+      "settings": {
+        "before_label": "Before",
+        "after_label": "After",
+        "eyebrow": "See The Difference",
+        "heading": "Real Results. Proven By Science.",
+        "text": "<p>We don't guess—we prove. All Mama Organic products are independently tested to ensure they actually work. Every claim we make is backed by real research.</p>",
+        "text_position": "center",
+        "width": "medium",
+        "initial_position": 50,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "custom_section_LCMcUH": {
+      "type": "custom-section",
+      "name": "Custom Section",
+      "settings": {
+        "heading": "See what our customers said",
+        "link_text": "",
+        "link_url": "",
+        "link_new_tab": false,
+        "link_svg": "",
+        "full_width": false,
+        "embed_code": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "real-results": {
+      "type": "split-banner",
+      "disabled": true,
+      "settings": {
+        "width": "container",
+        "layout": "image_left",
+        "style": "accent",
+        "heading": "Real Results. Proven By Science.",
+        "subheading": "",
+        "text": "<p>We dont guess—we prove. All Mama Organic products are independently tested to ensure they actually work. Every claim we make is backed by real research.</p>",
+        "button_label": "Read More",
+        "button_link": "/pages/about-us",
+        "padding_top": 0,
+        "padding_bottom": 30
+      }
+    },
+    "curated-for-you": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Curated for Every Skin",
+        "collection": "face-wash",
+        "products_to_show": 4,
+        "enable_slider": false,
+        "padding_top": 30,
+        "padding_bottom": 60
+      }
+    },
+    "blogs": {
+      "type": "blog-posts",
+      "disabled": true,
+      "settings": {
+        "heading": "Blogs",
+        "blog": "news",
+        "columns_desktop": "3",
+        "articles_count": 3,
+        "show_image": true,
+        "show_excerpt": true,
+        "show_date": true,
+        "show_author": false,
+        "show_comments": false,
+        "padding_top": 30,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "hero_slideshow_mamaorganic",
+    "hero",
+    "best-sellers",
+    "animated_pharmacies_qEMVb4",
+    "shop-by-concern",
+    "ingredients",
+    "comparison_table_QYKVLT",
+    "image_gallery_RGGFDx",
+    "custom_section_dHGKA6",
+    "before-after",
+    "custom_section_LCMcUH",
+    "real-results",
+    "curated-for-you",
+    "blogs"
+  ]
+}

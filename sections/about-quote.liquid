@@ -1,0 +1,175 @@
+{%- comment -%}
+  About page pull-quote + stats row, merged into one section so they render
+  as a single visual block (no double section-padding boundary between them).
+{%- endcomment -%}
+
+<section
+  class="about-quote section-padding"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="container">
+    {%- if section.settings.quote != blank or section.settings.quote_attribution != blank -%}
+      <div class="about-quote__block">
+        {% render 'section-header', eyebrow: section.settings.quote_attribution, text: section.settings.quote %}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="u-grid about-quote__stats-grid">
+        {%- for block in section.blocks -%}
+          <div class="about-quote__stat" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon_image != blank -%}
+              <span class="u-inline-flex u-items-center u-justify-center about-quote__stat-icon" aria-hidden="true">
+                {{ block.settings.icon_image | image_url: width: 64 | image_tag: loading: 'lazy', widths: '32, 64', sizes: '32px', width: 32, height: 32, alt: '' }}
+              </span>
+            {%- endif -%}
+            {%- if block.settings.number != blank -%}
+              <p class="about-quote__stat-number">{{ block.settings.number }}</p>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <p class="about-quote__stat-label">{{ block.settings.label }}</p>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="about-quote__stat-description">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.about-quote__block {
+  margin-bottom: var(--space-6);
+}
+
+.about-quote__block .section-header__text {
+  font-size: clamp(22px, 18px + 1.5vw, 32px);
+  font-weight: 500;
+  font-family: var(--font-heading);
+  line-height: 1.35;
+  color: var(--color-primary);
+}
+
+.about-quote__block .section-header__text p::before,
+.about-quote__block .section-header__text p::after {
+  content: '"';
+  color: var(--color-secondary);
+}
+
+.about-quote__stats-grid {
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media screen and (min-width: 550px) {
+  .about-quote__stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .about-quote__stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.about-quote__stat {
+  text-align: center;
+  padding: var(--space-7) var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+  backface-visibility: hidden;
+}
+
+.about-quote__stat:hover {
+  transform: translateY(-5px);
+}
+
+.about-quote__stat-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  border-radius: 50%;
+  background: var(--color-background);
+  margin-bottom: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-quote__stat-icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.about-quote__stat-number {
+  font-size: clamp(28px, 24px + 1.5vw, 40px);
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  margin: 0 0 6px;
+}
+
+.about-quote__stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin: 0 0 var(--space-2);
+}
+
+.about-quote__stat-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About quote & stats",
+  "class": "section",
+  "settings": [
+    { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>We believe in results, not marketing promises.</p>" },
+    { "type": "text", "id": "quote_attribution", "label": "Quote attribution", "default": "Formulated by industry specialists" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "image_picker", "id": "icon_image", "label": "Icon image" },
+        { "type": "text", "id": "number", "label": "Number", "default": "95%" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Clinical Efficacy" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Average results across all product lines in independent trials." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About quote & stats",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "95%", "label": "Clinical Efficacy", "description": "Average results across all product lines in independent trials." } },
+        { "type": "stat", "settings": { "number": "5+", "label": "Countries Served", "description": "Trusted by customers on every continent." } },
+        { "type": "stat", "settings": { "number": "1500+", "label": "Happy Customers", "description": "With a 4.9-star average across 1500+ reviews." } },
+        { "type": "stat", "settings": { "number": "12+", "label": "Clinical Studies", "description": "Published in peer-reviewed dermatology journals worldwide." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

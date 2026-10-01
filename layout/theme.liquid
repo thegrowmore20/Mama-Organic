@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+
+  {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {%- render 'meta-tags' -%}
+
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+
+    {%- unless settings.font_heading.system? -%}
+      {{ settings.font_heading | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {%- endunless -%}
+    {%- unless settings.font_body.system? -%}
+      {{ settings.font_body | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {%- endunless -%}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {%- if template.suffix == 'all-review-page' -%}
+      {%- render 'avada-customize' -%}
+    {%- endif -%}
+
+    <style>
+      {{ settings.font_heading | font_face: font_display: 'swap' }}
+      {{ settings.font_body | font_face: font_display: 'swap' }}
+      {{ settings.font_subheading | font_face: font_display: 'swap' }}
+      {{ settings.font_accent | font_face: font_display: 'swap' }}
+      {%- assign subheading_medium = settings.font_subheading | font_modify: 'weight', '500' -%}
+      {%- assign accent_semibold = settings.font_accent | font_modify: 'weight', '600' -%}
+      {{ subheading_medium | font_face: font_display: 'swap' }}
+      {{ accent_semibold | font_face: font_display: 'swap' }}
+
+      :root {
+        --color-primary: {{ settings.color_primary }};
+        --color-secondary: {{ settings.color_secondary }};
+        /* Brand color is fixed - kept identical to --color-secondary rather
+           than a darkened WCAG-safe mix. Elements using this variable will
+           render at the brand teal's actual ~3.85:1 contrast against white. */
+        --color-secondary-a11y: {{ settings.color_secondary }};
+        --color-dark: {{ settings.color_dark }};
+        --color-surface: {{ settings.color_surface }};
+        --color-background: {{ settings.color_background }};
+        --color-text: {{ settings.color_text }};
+        --color-star: {{ settings.color_star }};
+        --color-border: {{ settings.color_border }};
+        --color-error: {{ settings.color_error }};
+        --button-primary: {{ settings.button_primary_color }};
+        --button-secondary: {{ settings.button_secondary_color }};
+        --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+        --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+        --font-subheading: {{ settings.font_subheading.family }}, {{ settings.font_subheading.fallback_families }};
+        --font-subheading-weight: {{ settings.font_subheading.weight }};
+        --font-subheading-style: {{ settings.font_subheading.style }};
+        --font-accent: {{ settings.font_accent.family }}, {{ settings.font_accent.fallback_families }};
+        --font-accent-weight: {{ settings.font_accent.weight }};
+        --font-accent-style: {{ settings.font_accent.style }};
+      }
+    </style>
+
+    <script type="speculationrules">
+      {
+        "prerender": [
+          {
+            "where": {
+              "and": [
+                { "href_matches": "/*" },
+                { "not": { "href_matches": "/cart*" } },
+                { "not": { "href_matches": "/account*" } },
+                { "not": { "href_matches": "/checkout*" } }
+              ]
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
+
+    {%- comment -%}
+      The AirReviews app injects its own stylesheet (air-reviews.min.css)
+      further down in content_for_header as a normal render-blocking <link>,
+      and it consistently takes far longer to arrive than every other
+      stylesheet on the page (~600ms vs ~90ms) - since it's discovered so
+      late in <head>, it ends up holding up first paint of the whole page
+      (title, price, everything) until it's done. Preloading it up here lets
+      the browser start fetching it immediately alongside the other early
+      requests, so by the time content_for_header's <link> actually needs
+      it, it's already in cache. Rewriting content_for_header's own output
+      to change that <link>'s loading strategy was considered and rejected -
+      Shopify's theme-check explicitly flags relying on its exact content as
+      unsafe, since its format isn't a stable contract.
+    {%- endcomment -%}
+    <link rel="preload" as="style" href="https://cdn.shopify.com/extensions/01a0cd11-b913-7e7d-8b62-2b63ab1be515/air-reviews-1-110/assets/air-reviews.min.css">
+
+    {{ content_for_header }}
+  </head>
+  <body class="template-{{ template.name }}">
+    <a class="skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    <div class="scroll-progress-bar" id="ScrollProgressBar"></div>
+
+    {% sections 'header-group' %}
+    {% section 'cart-drawer' %}
+
+    <main id="MainContent" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+    {% unless request.page_type == 'product' %}
+      {% section 'fix-footer-mobile' %}
+    {% endunless %}
+
+    <script>
+      window.routes = {
+        cartAddUrl: {{ routes.cart_add_url | json }},
+        cartChangeUrl: {{ routes.cart_change_url | json }},
+        predictiveSearchUrl: {{ routes.predictive_search_url | json }}
+      };
+    </script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>

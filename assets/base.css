@@ -1,0 +1,659 @@
+/* Mama Organic - base theme stylesheet */
+/* Common/utility CSS only. Section-specific CSS lives in each section's {% stylesheet %} block. */
+
+:root {
+  --container-width: 1320px;
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --color-text-muted: #55636b;
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* clip, not hidden: overflow-x: hidden forces overflow-y's computed value
+     to auto (even though it's authored as the default visible), which turns
+     html/body into their own scroll container and silently breaks
+     position: sticky for every descendant on the site. clip clips the same
+     horizontal overflow without that side effect. */
+  overflow-x: clip;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media screen and (min-width: 750px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.15s ease;
+}
+
+/* Buttons already give their own hover feedback (opacity dim) - a color
+   change here would fight it, and on solid/accent buttons can make the
+   label unreadable against its own background. */
+a:not(.button):hover {
+  color: var(--color-secondary);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: var(--color-secondary);
+  transition: width 0.1s ease;
+  z-index: 10001;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 8px;
+  z-index: 10002;
+  background: var(--color-secondary);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: var(--radius-s);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+
+  @media screen and (max-width: 1280px) {
+      padding-inline: 3rem;
+  }
+
+  @media screen and (max-width: 768px) {
+      padding-inline: 2rem;
+  }
+
+  @media screen and (max-width: 520px) {
+      padding-inline: 0.8rem;
+  }
+}
+
+/* ---------- Fluid heading scale ---------- */
+/* Desktop sizes: .h1 48px, .h2 36px, .h3 30px, .h4 24px, .h5 20px, .h6 16px;
+   they scale down to the minimums on phones (the clamp floor). */
+h1,
+h2,
+h1[class],
+h2[class] {
+  font-family: var(--font-heading);
+}
+
+.h0 {
+  font-weight: 500;
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  font-size: clamp(44px, 34.49px + 2.54vw, 70px);
+  text-wrap: balance;
+}
+
+/* Phones: the clamp above bottoms out at 44px, which is too big for the
+   narrowest screens. This tier scales from 32px at ~390px wide up to 53.5px
+   at 749px - exactly what the formula above gives at 750px, so there's no
+   size jump at the breakpoint and tablet/desktop are unchanged. */
+@media screen and (max-width: 749px) {
+  .h0 {
+    font-size: clamp(32px, 8.62px + 5.99vw, 53.5px);
+  }
+}
+
+.h1 {
+  font-weight: 500;
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  font-size: clamp(32px, calc(32px + 16 * (100vw - 390px) / 810), 48px);
+  text-wrap: balance;
+}
+
+.h2 {
+  font-weight: 500;
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  font-size: clamp(26px, calc(26px + 10 * (100vw - 390px) / 810), 36px);
+   text-wrap: balance;
+}
+
+.h3 {
+  font-weight: 500;
+  font-family: var(--font-subheading);
+  line-height: 1.25;
+  font-size: clamp(22px, calc(22px + 8 * (100vw - 390px) / 810), 30px);
+}
+
+.h4 {
+  font-weight: 500;
+  font-family: var(--font-subheading);
+  line-height: 1.3;
+  font-size: clamp(20px, calc(20px + 4 * (100vw - 390px) / 810), 24px);
+}
+
+.h5 {
+  font-weight: 500;
+  font-family: var(--font-subheading);
+  line-height: 1.4;
+  font-size: clamp(18px, calc(18px + 2 * (100vw - 390px) / 810), 20px);
+}
+
+.h6 {
+  font-weight: 500;
+  font-family: var(--font-subheading);
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+/* ---------- Section padding (settings-driven, see each section's padding_top/padding_bottom) ---------- */
+.section-padding {
+  padding-block: var(--padding-top, 30px) var(--padding-bottom, 30px);
+}
+
+/* Tablet: 0.75x the merchant-set value. */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .section-padding {
+    padding-block: calc(var(--padding-top, 30px) * 0.75) calc(var(--padding-bottom, 30px) * 0.75);
+  }
+}
+
+/* Mobile: 0.5x the merchant-set value. */
+@media screen and (max-width: 749px) {
+  .section-padding {
+    padding-block: calc(var(--padding-top, 30px) / 2) calc(var(--padding-bottom, 30px) / 2);
+  }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 48px;
+  padding: 0 34px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font-subheading);
+  border: none;
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+@media screen and (max-width: 749px) {
+  .button {
+    height: 40px;
+  }
+}
+
+.button:hover {
+  opacity: 0.88;
+}
+
+.button--dark {
+  background: var(--button-secondary, var(--color-dark));
+  color: #fff;
+}
+
+.button--light {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.button--accent {
+  background: var(--button-primary, var(--color-secondary-a11y));
+  color: #fff;
+}
+
+.button.is-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.button.is-loading::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: button-spin 0.6s linear infinite;
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Product card (shared snippet: product-card, price, star-rating) ---------- */
+.product-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+  backface-visibility: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card__media {
+  position: relative;
+  background: var(--color-surface);
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__image--secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: var(--color-surface);
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-card__image--secondary {
+  opacity: 1;
+}
+
+.product-card__badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: var(--color-secondary-a11y, var(--color-secondary));
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: var(--font-subheading);
+  padding: var(--space-1) 10px;
+  border-radius: var(--radius-s);
+
+  @media screen and (max-width: 600px) {        
+    top: 5px;
+    left: 5px;
+  }
+}
+
+.product-card__badge--soldout {
+  background: var(--color-primary);
+}
+
+@media screen and (min-width: 750px) {
+  .product-card__badge {
+    font-size: 12px;
+  }
+}
+
+.product-card__body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  @media screen and (max-width: 600px) {
+    padding: 10px;
+  }
+}
+
+.product-card__body form,
+.product-card__body > .button {
+  margin-top: auto;
+}
+
+.product-card__title {
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  margin: 0px;
+  min-height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 0.25rem;
+
+  @media screen and (max-width: 600px) {   
+   margin-bottom: 5px;
+  }
+ 
+}
+
+
+ @media screen and (max-width: 600px) {    
+    .AirReviews-Widget.AirReviews-Widget--Stars{
+          margin-bottom: 5px;
+    }
+  }
+
+.product-card__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.product-card .AirReviews-Widget--Stars {
+  margin-bottom: 10px;
+}
+
+.product-card__rating span svg {
+  fill: var(--color-star);
+}
+
+span.star-rating {
+  display: flex;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  margin: 0 0 5px;
+  font-size: 15px;
+  min-height: 1.2em;
+  min-width: 0;
+}
+
+.price-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price-item--regular {
+  flex-shrink: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .product-card__title .price {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+}
+
+
+.price-item--regular {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-family: var(--font-accent);
+}
+
+.price-item--compare {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.product-card .button {
+  width: 100%;
+  padding: 14px var(--space-4);
+
+  @media screen and (max-width: 600px) {
+    font-size: 12px;
+    padding: 10px 12px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.vensa-wl-badge{
+  background-color: var(--color-secondary) !important;
+}
+
+/* Vensa wishlist buttons ("Continue shopping", "Add to cart") default to the
+   app's own navy. The app reads its colors from these custom properties, so
+   point them at the brand button color, and also set the two buttons directly
+   since the app's stylesheet can load after ours (hence !important). */
+:root {
+  --vensa-wl-accent: var(--button-primary, var(--color-secondary-a11y));
+  --vensa-wl-page-action-bg: var(--button-primary, var(--color-secondary-a11y));
+  --vensa-wl-page-action-fg: #fff;
+  --vensa-wl-page-action-border: var(--button-primary, var(--color-secondary-a11y));
+}
+
+.vensa-wl-page-empty .vensa-wl-empty-link,
+.vensa-wl-page-grid .vensa-wl-mini-btn.vensa-wl-atc {
+  background: var(--button-primary, var(--color-secondary-a11y)) !important;
+  border-color: var(--button-primary, var(--color-secondary-a11y)) !important;
+  color: #fff !important;
+}
+
+/* ---------- Shared layout utilities ---------- */
+/* Component styles own spacing and responsive overrides.
+   Use these in Liquid HTML to avoid repeating display/alignment
+   declarations across every section's {% stylesheet %}.
+   Kept to only the classes actually used theme-wide (verified by grep before
+   trimming) - everything else was dead weight shipped to every page with
+   zero pages using it, so it was removed rather than kept "for later". */
+
+/* Display */
+.u-flex         { display: flex; }
+.u-grid         { display: grid; }
+.u-inline-flex  { display: inline-flex; }
+
+/* Flex direction */
+.u-flex-col     { flex-direction: column; }
+
+/* Align */
+.u-items-center  { align-items: center; }
+
+/* Justify */
+.u-justify-center  { justify-content: center; }
+.u-justify-between { justify-content: space-between; }
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* ---------- Links with an arrow icon ----------
+   Any link or button containing the theme's arrow icon ({% render 'icon',
+   name: 'arrow-right' %}, which carries .icon--arrow-right) nudges it
+   forward on hover - so every current and future "View all ->" style link
+   behaves the same without per-link CSS. Uses the individual `translate`
+   property rather than `transform` so it composes with a transform the link
+   already applies to the arrow (the article page's back link flips it with
+   scaleX(-1)). Hover-capable pointers only, so a tap on touch devices
+   doesn't leave the arrow stuck mid-nudge. */
+.icon--arrow-right {
+  transition: translate 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(a, button):hover .icon--arrow-right {
+    translate: 3px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon--arrow-right {
+    transition: none;
+  }
+}
+
+/* ---------- Rich text content (.rte marks page/article/accordion/FAQ body
+   HTML from page.content, metafield rich-text, etc.) ---------- */
+/* The global `ul { list-style: none }` reset above is meant for UI chrome
+   (nav, cards), not editorial content - re-enable markers here so lists
+   inside rich text actually render as lists. */
+.rte ul {
+  list-style: disc;
+  padding-left: 1.25em;
+  margin: 0 0 1em;
+}
+
+.rte ol {
+  list-style: decimal;
+  padding-left: 1.25em;
+  margin: 0 0 1em;
+}
+
+.rte li {
+  margin-bottom: 0.25em;
+}
+
+.rte p {
+  margin: 0 0 1em;
+}
+
+.rte p:last-child,
+.rte ul:last-child,
+.rte ol:last-child {
+  margin-bottom: 0;
+}
+
+
+
+/* custom app css */
+/* The star-rating widget (rendered via a Custom Liquid block right under the
+   product title) starts empty and is populated by the AirReviews app's own
+   script after load, so its box grows from 0 to ~29px - this reserves that
+   height upfront to avoid a layout shift (CLS) when it populates. Kept
+   (though unused now that product-card/mega-menu-card render Judge.me
+   markup instead) since the AirReviews app embed is still enabled - see
+   .card-product-rating below for the Judge.me equivalent. */
+.ProductPage-StarRating,
+.AirReviews-Widget--Stars {
+  min-height: 29px;
+}
+
+/* Same CLS reservation as above, for the Judge.me preview badge rendered in
+   product-card.liquid and mega-menu-product-card.liquid. Judge.me hides the
+   badge (display: none) when a product has no reviews, so the wrapper keeps
+   the height to hold the card layout steady. */
+.card-product-rating {
+  min-height: 29px;
+}
+
+.card-product-rating .jdgm-prev-badge[data-number-of-reviews="0"] {
+  display: none !important;
+}
+
+.AirReviews-Widget__V2.desktop {
+    padding-top: 0 !important;
+}
+
+.AirReviews-Blocks__Summary h2.AirReviews-Blocks--Title.AirReviews-Text--headingLg {
+    display: none;
+}
+
+/* The review photo carousel's own nav arrows ship with z-index: 100 - since
+   they're absolutely positioned (not fixed), they normally scroll with the
+   page, but that z-index is high enough to paint over our fixed header
+   (z-index: 30) whenever the carousel scrolls through the header's band.
+   !important is needed since the app's stylesheet can load after ours. */
+.AirReviews-Carousel__NavPrev,
+.AirReviews-Carousel__NavNext {
+  z-index: 5 !important;
+}
+
+/* The Vensa wishlist drawer parks itself just off the right edge with
+   transform: translateX(100%), but keeps its box-shadow (-6px 0 24px) and a
+   z-index of 2147483001 - so the shadow bleeds ~18px into the viewport above
+   everything else, including the cart drawer (a gray gradient down its right
+   edge). Only drop it while closed; its .open state keeps the app's own look.
+   Two classes beat the app's one, so no !important is needed. */
+.vensa-wl-drawer:not(.open) {
+  box-shadow: none;
+}
+
+.AirReviews-Widget .AirReviews-Widget__FloatButtonWrapper {
+  display: none !important
+}

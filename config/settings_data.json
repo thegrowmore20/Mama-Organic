@@ -1,0 +1,127 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "favicon": "shopify://shop_images/Favicon_Icon_d0478f04-072e-4aa1-a4bc-48a38905f45a.png",
+    "font_heading": "raleway_n6",
+    "font_body": "poppins_n4",
+    "font_subheading": "poppins_n5",
+    "font_accent": "poppins_n6",
+    "show_free_shipping_bar": false,
+    "color_primary": "#004236",
+    "color_secondary": "#108474",
+    "color_dark": "#002E25",
+    "color_surface": "#EEF6E4",
+    "color_background": "#FFFFFF",
+    "color_text": "#232323",
+    "color_star": "#FFA41C",
+    "color_border": "#E6E6E6",
+    "color_error": "#C0392B",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/Mama_Organic_Logo.webp",
+          "brand_name": "",
+          "brand_subtitle": "",
+          "menu": "header-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "logo": "shopify://shop_images/Mamaorganic_Logo.png",
+          "background_image": "shopify://shop_images/footer_background.webp",
+          "facebook": "https://www.facebook.com/MamaOrganicPK",
+          "instagram": "https://www.instagram.com/mamaorganicpk/",
+          "tiktok": "https://www.tiktok.com/@mamaorganicpk",
+          "youtube": "",
+          "pages_menu": "",
+          "help_menu": ""
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "fix-footer-mobile": {
+        "type": "fix-footer-mobile",
+        "blocks": {
+          "home": {
+            "type": "link",
+            "settings": {
+              "label": "Home",
+              "icon": "store",
+              "url": "/",
+              "custom_link": "",
+              "icon_url": ""
+            }
+          },
+          "products": {
+            "type": "link",
+            "settings": {
+              "label": "Products",
+              "icon": "tag",
+              "url": "/collections/all",
+              "custom_link": "",
+              "icon_url": ""
+            }
+          },
+          "email": {
+            "type": "link",
+            "settings": {
+              "label": "Email us",
+              "icon": "mail",
+              "url": "mailto:sales@mamaorganic.pk",
+              "custom_link": "",
+              "icon_url": ""
+            }
+          },
+          "wishlist": {
+            "type": "wishlist",
+            "settings": {
+              "label": "Wishlist"
+            }
+          }
+        },
+        "block_order": [
+          "home",
+          "products",
+          "email",
+          "wishlist"
+        ],
+        "settings": {
+          "aria_label": "Quick links",
+          "height": 56,
+          "background_color": "",
+          "text_color": ""
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "16462826257733288596": {
+        "type": "shopify://apps/vensa-wishlist-back-in-stock/blocks/wishlist-loader/019f9be2-4682-783c-bf16-0376fe0b8d5d",
+        "disabled": false,
+        "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
+}

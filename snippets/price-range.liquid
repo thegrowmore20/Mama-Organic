@@ -1,0 +1,104 @@
+{%- comment -%}
+  Renders a dual-handle price range slider (plus editable min/max boxes) for a
+  price_range filter. Auto-applies on release/blur — no submit button.
+
+  Accepts:
+  - filter: {Object} a price_range type filter from collection.filters
+
+  Usage:
+  {% render 'price-range', filter: filter %}
+{%- endcomment -%}
+
+{%- liquid
+  assign range_max = filter.range_max | divided_by: 100.0
+
+  assign min_value = 0
+  if filter.min_value.value != blank
+    assign min_value = filter.min_value.value | divided_by: 100.0
+  endif
+
+  assign max_value = range_max
+  if filter.max_value.value != blank
+    assign max_value = filter.max_value.value | divided_by: 100.0
+  endif
+
+  assign min_cents = filter.min_value.value | default: 0
+  assign min_whole = min_cents | divided_by: 100
+  assign min_remainder = min_cents | modulo: 100
+  assign min_remainder_str = min_remainder | append: ''
+  if min_remainder < 10
+    assign min_remainder_str = '0' | append: min_remainder
+  endif
+  assign min_display = min_whole | append: '.' | append: min_remainder_str
+
+  assign max_cents = filter.max_value.value | default: filter.range_max
+  assign max_whole = max_cents | divided_by: 100
+  assign max_remainder = max_cents | modulo: 100
+  assign max_remainder_str = max_remainder | append: ''
+  if max_remainder < 10
+    assign max_remainder_str = '0' | append: max_remainder
+  endif
+  assign max_display = max_whole | append: '.' | append: max_remainder_str
+-%}
+
+<price-range-slider class="price-range">
+  <div class="price-range__slider">
+    <div class="price-range__track"></div>
+    <div class="price-range__progress" data-price-progress></div>
+    <input
+      type="range"
+      id="PriceThumbMin-{{ section.id }}-{{ filter.param_name }}"
+      class="price-range__thumb price-range__thumb--min"
+      data-price-thumb-min
+      min="0"
+      max="{{ range_max }}"
+      step="1"
+      value="{{ min_value | default: 0 }}"
+      aria-label="{{ 'products.facets.from' | t }}"
+    >
+    <input
+      type="range"
+      class="price-range__thumb price-range__thumb--max"
+      id="PriceThumbMax-{{ section.id }}-{{ filter.param_name }}"
+      data-price-thumb-max
+      min="0"
+      max="{{ range_max }}"
+      step="1"
+      value="{{ max_value }}"
+      aria-label="{{ 'products.facets.to' | t }}"
+    >
+  </div>
+  <div class="price-range__values">
+    <div class="price-range__field">
+      <label for="PriceMin-{{ section.id }}-{{ filter.param_name }}" class="visually-hidden">{{ 'products.facets.from' | t }}</label>
+      <div class="price-range__input-wrap">
+        <span class="price-range__currency" aria-hidden="true">{{ cart.currency.symbol }}</span>
+        <input
+          type="text"
+          inputmode="decimal"
+          class="price-range__input"
+          name="{{ filter.min_value.param_name }}"
+          id="PriceMin-{{ section.id }}-{{ filter.param_name }}"
+          data-price-input-min
+          value="{{ min_display }}"
+        >
+      </div>
+    </div>
+    <span class="price-range__separator" aria-hidden="true">&ndash;</span>
+    <div class="price-range__field">
+      <label for="PriceMax-{{ section.id }}-{{ filter.param_name }}" class="visually-hidden">{{ 'products.facets.to' | t }}</label>
+      <div class="price-range__input-wrap">
+        <span class="price-range__currency" aria-hidden="true">{{ cart.currency.symbol }}</span>
+        <input
+          type="text"
+          inputmode="decimal"
+          class="price-range__input"
+          name="{{ filter.max_value.param_name }}"
+          id="PriceMax-{{ section.id }}-{{ filter.param_name }}"
+          data-price-input-max
+          value="{{ max_display }}"
+        >
+      </div>
+    </div>
+  </div>
+</price-range-slider>

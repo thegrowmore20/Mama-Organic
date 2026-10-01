@@ -1,0 +1,198 @@
+{%- comment -%}
+  About page certifications: badge cards (icon, heading, text) plus a
+  compliance list of regulation/standard names.
+
+  Accepts two block types: "badge" and "compliance_item".
+{%- endcomment -%}
+
+<section
+  class="about-certifications section-padding"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="container">
+    {% render 'section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.description
+    %}
+
+    {%- assign badges = section.blocks | where: 'type', 'badge' -%}
+    {%- if badges.size > 0 -%}
+      <div class="u-grid about-certifications__grid">
+        {%- for block in badges -%}
+          <div class="about-certifications__badge" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon_image != blank -%}
+              <span class="u-inline-flex u-items-center u-justify-center about-certifications__icon" aria-hidden="true">
+                {{ block.settings.icon_image | image_url: width: 64 | image_tag: loading: 'lazy', widths: '32, 64', sizes: '32px', width: 32, height: 32, alt: '' }}
+              </span>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="about-certifications__badge-heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="about-certifications__badge-text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign compliance_items = section.blocks | where: 'type', 'compliance_item' -%}
+    {%- if compliance_items.size > 0 -%}
+      <div class="about-certifications__compliance">
+        {%- if section.settings.compliance_label != blank -%}
+          <p class="about-certifications__compliance-label">{{ section.settings.compliance_label }}</p>
+        {%- endif -%}
+        <ul class="u-flex u-justify-center about-certifications__compliance-list" role="list">
+          {%- for block in compliance_items -%}
+            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.about-certifications__grid {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: 40px;
+}
+
+@media screen and (min-width: 750px) {
+  .about-certifications__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.about-certifications__badge {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+  backface-visibility: hidden;
+}
+
+.about-certifications__badge:hover {
+  transform: translateY(-5px);
+}
+
+.about-certifications__icon {
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  border-radius: 50%;
+  background: var(--color-background);
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-certifications__icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.about-certifications__badge-heading {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  margin: 0 0 6px;
+}
+
+.about-certifications__badge-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.about-certifications__compliance {
+  text-align: center;
+}
+
+.about-certifications__compliance-label {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.about-certifications__compliance-list {
+  flex-wrap: wrap;
+  gap: 10px var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  color: var(--color-primary);
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About certifications",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Certifications & Standards" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Held to the Highest Standard" },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every product meets or exceeds the strictest international safety, efficacy, and environmental standards.</p>"
+    },
+    { "type": "text", "id": "compliance_label", "label": "Compliance list label", "default": "Compliant With" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        { "type": "image_picker", "id": "icon_image", "label": "Icon image" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Cruelty-Free" },
+        { "type": "text", "id": "text", "label": "Text", "default": "No animal testing at any stage." }
+      ]
+    },
+    {
+      "type": "compliance_item",
+      "name": "Compliance item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "EU Cosmetics Regulation 1223/2009" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About certifications",
+      "blocks": [
+        { "type": "badge", "settings": { "heading": "Cruelty-Free", "text": "Certified by Leaping Bunny. No animal testing at any stage." } },
+        { "type": "badge", "settings": { "heading": "Vegan", "text": "Certified by The Vegan Society. Zero animal-derived ingredients." } },
+        { "type": "badge", "settings": { "heading": "Clinically Proven", "text": "Clinically tested formula. Proven results for visible skin improvement." } },
+        { "type": "badge", "settings": { "heading": "Dermatologist Tested", "text": "Signed off by board-certified dermatologists before every release." } },
+        { "type": "compliance_item", "settings": { "text": "EU Cosmetics Regulation 1223/2009" } },
+        { "type": "compliance_item", "settings": { "text": "FDA 21 CFR Cosmetics" } },
+        { "type": "compliance_item", "settings": { "text": "ISO 22716 GMP" } },
+        { "type": "compliance_item", "settings": { "text": "Leaping Bunny" } },
+        { "type": "compliance_item", "settings": { "text": "The Vegan Society" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

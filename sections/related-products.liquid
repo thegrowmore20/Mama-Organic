@@ -1,0 +1,256 @@
+{%- comment -%}
+  Product recommendations for the product page. `recommendations.performed`
+  is only populated when this section is re-rendered via the Section
+  Rendering API with `product_id` + `section_id` query params - so the
+  initial full-page load renders an empty shell, and `<product-recs>` below
+  lazy-fetches the real content once it scrolls into view (same mechanism
+  Dawn uses). Reuses the same `product-card` snippet as every other product
+  grid in the theme for visual consistency.
+{%- endcomment -%}
+
+<product-recs
+  class="related-products section-padding"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --related-columns-desktop: {{ section.settings.columns_desktop }};"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&limit={{ section.settings.products_to_show }}"
+  data-product-id="{{ product.id }}"
+>
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <div class="container">
+      <div class="related-products__head">
+        {% render 'section-header',
+          heading: section.settings.heading
+        %}
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="related-products__action">
+            {{ section.settings.button_label | escape }}
+            <span class="related-products__action-icon" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+          </a>
+        {%- endif -%}
+      </div>
+      <div class="u-grid related-products__grid">
+        {%- for recommended_product in recommendations.products -%}
+          {% render 'product-card', product: recommended_product %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</product-recs>
+
+{% stylesheet %}
+.related-products {
+  display: block;
+}
+
+.related-products__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media screen and (min-width: 993px) {
+  .related-products__grid {
+    grid-template-columns: repeat(var(--related-columns-desktop, 4), minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+/* Heading row: the heading stays centred (middle column) while the View all
+   button sits on the right of the same row. The shared section-header brings
+   its own bottom margin, which would throw off the button's vertical
+   centring against the heading, so the row owns that spacing instead. Below
+   750px there isn't room for both side by side, so the button drops to a
+   right-aligned line under the heading. */
+.related-products__head {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.related-products__head .section-header {
+  margin-bottom: 0;
+}
+
+/* A text link, not a button - same treatment as the header mega menu's
+   "View all" link: primary text colour, semibold, no underline, turning the
+   brand teal on hover. The min-height keeps a 44px tap area around the
+   single line of text. */
+.related-products__action {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: var(--space-1);
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.related-products__action:hover {
+  color: var(--color-secondary);
+}
+
+.related-products__action-icon {
+  display: flex;
+}
+
+/* The arrow's hover nudge comes from base.css (.icon--arrow-right). */
+.related-products__action-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (min-width: 750px) {
+  .related-products__head {
+    grid-template-columns: 1fr auto 1fr;
+    /* Baseline, not center: the link's text then sits on the same line as
+       the heading's text, rather than floating at the heading box's middle. */
+    align-items: baseline;
+    margin-bottom: var(--space-8);
+  }
+
+  .related-products__head .section-header {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .related-products__action {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+{% endstylesheet %}
+
+{% javascript %}
+class ProductRecommendations extends HTMLElement {
+  #observer
+  #request
+
+  connectedCallback() {
+    this.#observer?.disconnect()
+    this.#observer = new IntersectionObserver(
+      (entries, observer) => {
+        if (!entries[0].isIntersecting) return
+        observer.unobserve(this)
+        this.#load()
+      },
+      { rootMargin: '0px 0px 400px 0px' }
+    )
+    this.#observer.observe(this)
+  }
+
+  disconnectedCallback() {
+    this.#observer?.disconnect()
+    this.#request?.abort()
+  }
+
+  async #load() {
+    try {
+      this.#request?.abort()
+      this.#request = new AbortController()
+      const response = await fetch(`${this.dataset.url}&product_id=${this.dataset.productId}`, {
+        signal: this.#request.signal,
+      })
+      if (!response.ok) throw new Error(`Recommendations request failed: ${response.status}`)
+      const text = await response.text()
+      if (!this.isConnected) return
+      const doc = new DOMParser().parseFromString(text, 'text/html')
+      const newContent = doc.querySelector('product-recs')
+      if (newContent && newContent.innerHTML.trim().length) {
+        this.innerHTML = newContent.innerHTML
+        // Product cards render Judge.me's preview badge. Its markup is
+        // server-rendered, but re-run Judge.me's badge styling on the freshly
+        // swapped-in DOM when its script exposes the hook.
+        window.jdgm?.customizeBadges?.()
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') return
+      console.error('Related products error:', error)
+    }
+  }
+}
+
+if (!customElements.get('product-recs')) {
+  customElements.define('product-recs', ProductRecommendations)
+}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Signature Products"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }        
+      ],
+      "default": "4"
+    },
+    {
+      "type": "header",
+      "content": "View all button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave empty to hide the button.",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Leave empty to link to the all-products collection."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related products"
+    }
+  ]
+}
+{% endschema %}
