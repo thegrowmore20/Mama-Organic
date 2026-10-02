@@ -554,7 +554,11 @@ body:not(:has(.banner--transparent-header)) {
    !important, but the svg draws with currentColor, so setting it there works
    for every icon uniformly. Hover-capable pointers only, so a tap doesn't
    leave an icon stuck enlarged on touch devices. */
+/* Search, wishlist, account and cart icons all draw at the same 22px (their
+   own width/height attributes differ: 20px for most, 22px for the cart). */
 .header__icons svg {
+  width: 22px;
+  height: 22px;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -628,11 +632,6 @@ body:not(:has(.banner--transparent-header)) {
 
   .header__icons > *:last-child {
     margin-right: -5px;
-  }
-
-  #WishlistToggle svg {
-    width: 18px;
-    height: 18px;
   }
 
   /* The fixed mobile bottom nav (sections/fix-footer-mobile.liquid) has its

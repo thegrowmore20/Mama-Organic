@@ -51,13 +51,35 @@
         "columns_mobile": "2",
         "enable_filtering": true,
         "enable_sorting": true,
-        "padding_top": 60,
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "rich_text_9WiE7q": {
+      "type": "rich-text",
+      "blocks": {
+        "richtext_cLqH8F": {
+          "type": "richtext",
+          "settings": {
+            "text": "{{ collection.description }}"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_cLqH8F"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "text_alignment": "center",
+        "content_width": 800,
+        "padding_top": 30,
         "padding_bottom": 60
       }
     }
   },
   "order": [
     "banner",
-    "product-grid"
+    "product-grid",
+    "rich_text_9WiE7q"
   ]
 }
