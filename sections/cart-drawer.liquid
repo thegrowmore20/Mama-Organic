@@ -177,27 +177,6 @@
       assign total_saved_amount = total_line_price | plus: discount_total
     -%}
     <div id="CartDrawerFooter" class="cart-drawer__footer">
-      <div class="cart-drawer__summary">
-        {%- if total_saved_amount > 0 -%}
-          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
-            <span>{{ 'general.cart.total_price' | t }}</span>
-            <span>{{ compare_at_total | money }}</span>
-          </div>
-          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--discount">
-            <span class="u-inline-flex u-items-center cart-drawer__summary-label">
-              {{ 'general.cart.discount' | t }}
-              <span class="u-inline-flex u-items-center cart-drawer__summary-percent">
-                {% render 'icon', name: 'tag' %}{{ grand_saving }}%
-              </span>
-            </span>
-            <span>-{{ total_saved_amount | money }}</span>
-          </div>
-        {%- endif -%}
-        <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--total">
-          <span>{{ 'general.cart.total' | t }}</span>
-          <span>{{ cart.total_price | money }}</span>
-        </div>
-      </div>
       <div class="cart-drawer__note" data-cart-note>
         <button
           type="button"
@@ -229,6 +208,27 @@
               data-saved="{{ 'general.cart.note_saved' | t }}"
               data-failed="{{ 'general.cart.note_failed' | t }}"></p>
           </div>
+        </div>
+      </div>
+      <div class="cart-drawer__summary">
+        {%- if total_saved_amount > 0 -%}
+          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
+            <span>{{ 'general.cart.total_price' | t }}</span>
+            <span>{{ compare_at_total | money }}</span>
+          </div>
+          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--discount">
+            <span class="u-inline-flex u-items-center cart-drawer__summary-label">
+              {{ 'general.cart.discount' | t }}
+              <span class="u-inline-flex u-items-center cart-drawer__summary-percent">
+                {% render 'icon', name: 'tag' %}{{ grand_saving }}%
+              </span>
+            </span>
+            <span>-{{ total_saved_amount | money }}</span>
+          </div>
+        {%- endif -%}
+        <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--total">
+          <span>{{ 'general.cart.total' | t }}</span>
+          <span>{{ cart.total_price | money }}</span>
         </div>
       </div>
       <a href="/checkout" class="button button--accent cart-drawer__checkout">{{ 'general.cart.checkout' | t }}</a>
@@ -528,6 +528,7 @@
    (0fr to 1fr) so there is no height measuring in script. */
 .cart-drawer__note {
   border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--space-4);
 }
 
