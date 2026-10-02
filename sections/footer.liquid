@@ -257,6 +257,20 @@
   .footer__contact-icon svg {
     width: 16px;
     height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  /* The icon grows slightly when its row is hovered, like the header icons. */
+  @media (hover: hover) and (pointer: fine) {
+    a.footer__contact-item:hover .footer__contact-icon svg {
+      transform: scale(1.12);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer__contact-icon svg {
+      transition: none;
+    }
   }
 
   .footer__social-icons {

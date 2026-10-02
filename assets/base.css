@@ -608,6 +608,7 @@ summary:focus-visible {
   display: block;
   width: 18px;
   height: 18px;
+  transition: transform 0.2s ease;
 }
 
 @media screen and (min-width: 750px) {
@@ -623,6 +624,19 @@ summary:focus-visible {
   .social-icons .social-icons__link:hover {
     background: var(--button-primary, var(--color-secondary-a11y));
     color: #ffffff;
+  }
+}
+
+/* The icon grows slightly on hover, like the header icons (scale 1.12). */
+@media (hover: hover) and (pointer: fine) {
+  .social-icons .social-icons__link:hover svg {
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-icons__link svg {
+    transition: none;
   }
 }
 
