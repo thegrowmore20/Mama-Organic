@@ -42,8 +42,10 @@
     },
     "whatsapp": {
       "type": "whatsapp-widget",
+      "disabled": true,
       "settings": {
         "whatsapp_number": "+92 311 146 4444",
+        "whatsapp_message": "",
         "widget_size": 56
       }
     }

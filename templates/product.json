@@ -20,12 +20,9 @@
             "alignment": "left"
           }
         },
-        "custom_liquid": {
-          "type": "custom_liquid",
-          "disabled": true,
-          "settings": {
-            "custom_liquid": "<div class=\"ProductPage-StarRating\" style=\"display: flex; align-items: center; gap: 10px;\"><div class=\"AirReviews-Widget AirReviews-Widget--Stars\"></div><span>{{ product.metafields.air_reviews_product.review_avg }} ({{ product.metafields.air_reviews_product.review_count }})</span></div>"
-          }
+        "judge_me_reviews_preview_badge_UhKfiV": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
         },
         "price": {
           "type": "price",
@@ -148,7 +145,7 @@
       },
       "block_order": [
         "title",
-        "custom_liquid",
+        "judge_me_reviews_preview_badge_UhKfiV",
         "price",
         "variant-picker",
         "quantity-buy-buttons",
