@@ -48,7 +48,7 @@
 
     <button
       type="submit"
-      class="button button--{{ button_style }} button--large product-buy-box__submit"
+      class="button button--{{ button_style }} product-buy-box__submit"
       data-add-to-cart
       data-label-available="{{ 'products.product.add_to_cart' | t }}"
       data-label-unavailable="{{ 'products.product.sold_out' | t }}"
@@ -71,7 +71,7 @@
   {%- if block.settings.enable_waitlist -%}
     <button
       type="button"
-      class="button button--{{ waitlist_style }} button--large product-buy-box__waitlist"
+      class="button button--{{ waitlist_style }} product-buy-box__waitlist"
       data-waitlist-button
       id="ProductWaitlist-{{ section.id }}"
       {% if is_available %}hidden{% endif %}

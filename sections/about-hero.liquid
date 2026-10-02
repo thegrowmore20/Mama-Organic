@@ -22,7 +22,7 @@
         {%- if section.settings.button_1_label != blank or section.settings.button_2_label != blank -%}
           <div class="u-flex u-items-center about-hero__actions">
             {%- if section.settings.button_1_label != blank -%}
-              <a href="{{ section.settings.button_1_link | default: '#' }}" class="button button--accent button--large">{{ section.settings.button_1_label }}</a>
+              <a href="{{ section.settings.button_1_link | default: '#' }}" class="button button--accent">{{ section.settings.button_1_label }}</a>
             {%- endif -%}
             {%- if section.settings.button_2_label != blank -%}
               <a href="{{ section.settings.button_2_link | default: '#' }}" class="u-inline-flex u-items-center about-hero__link">
