@@ -1074,10 +1074,13 @@ product-addons {
   background: var(--color-surface);
 }
 
+/* Edge to edge: the picture fills the whole tile (cover) instead of sitting
+   inside it with strips of the tile color on the sides. */
 .product-addons__thumb img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .product-addons__placeholder {
