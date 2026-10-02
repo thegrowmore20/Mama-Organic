@@ -291,10 +291,12 @@ a.contact-card:focus-visible {
   color: inherit;
 }
 
+/* 18px as you tested in DevTools; weight and family come from the subheading
+   font variables (nothing hardcoded). */
 .contact-card__heading {
-  font-size: 15px;
-  font-weight: 600;
-  font-family: var(--font-accent);
+  font-size: 18px;
+  font-weight: var(--font-subheading-weight);
+  font-family: var(--font-subheading);
   margin: 0;
 }
 
