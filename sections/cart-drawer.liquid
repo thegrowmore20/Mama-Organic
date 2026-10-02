@@ -120,46 +120,115 @@
   {%- if cart.item_count > 0 -%}
     {%- liquid
       comment
-        Total price is what the cart would cost before any saving: each line at its
-        compare-at (original) price when it is on sale, otherwise its price. The
-        saving is that figure minus what the shopper actually pays, so it covers
-        sale prices and discount codes together, and the percentage follows from it.
+        Same calculation as the AirVape cart modal:
+        - Total price: every line at its compare-at (original) price when it is
+          on sale, otherwise at its price.
+        - Discount %: the compare-at saving, plus any line-level and cart-level
+          discount (codes) percentages.
+        - Discount amount: the compare-at saving plus the discounts applied.
       endcomment
-      assign original_total = 0
+      assign compare_at_total = 0
+      assign total_compare_at_savings = 0
+      assign c_savings_percent = 0
+      assign regular_price_total = 0
+      assign discount_total = cart.total_discount
+
       for item in cart.items
-        assign unit_price = item.variant.price
-        if item.variant.compare_at_price > unit_price
-          assign unit_price = item.variant.compare_at_price
+        assign quantity = item.quantity
+        assign regular_price = item.variant.price
+        assign compare_price = item.variant.compare_at_price
+        assign item_total_regular_price = regular_price | times: quantity
+
+        if compare_price and compare_price > regular_price
+          assign item_total_compare_price = compare_price | times: quantity
+        else
+          assign item_total_compare_price = regular_price | times: quantity
         endif
-        assign line_original = unit_price | times: item.quantity
-        assign original_total = original_total | plus: line_original
+
+        assign compare_at_total = compare_at_total | plus: item_total_compare_price
+        assign regular_price_total = regular_price_total | plus: item_total_regular_price
+
+        if compare_price and compare_price > regular_price
+          assign single_item_save = compare_price | minus: regular_price
+          assign line_item_save = single_item_save | times: quantity
+          assign total_compare_at_savings = total_compare_at_savings | plus: line_item_save
+        endif
+
+        assign item_level_discount_percentage = 0
+        if item.line_level_discount_allocations.size > 0
+          for discount in item.line_level_discount_allocations
+            assign item_level_discount_percentage = item_level_discount_percentage | plus: discount.discount_application.value | round
+          endfor
+        endif
       endfor
-      assign total_saved = original_total | minus: cart.total_price
-      assign saved_percent = 0
-      if total_saved > 0 and original_total > 0
-        assign saved_percent = total_saved | times: 100.0 | divided_by: original_total | round
+
+      if compare_at_total > 0 and total_compare_at_savings > 0
+        assign c_savings_percent = total_compare_at_savings | times: 100.0 | divided_by: compare_at_total | round
       endif
+
+      assign cart_level_discount_percentage = 0
+      for discount in cart.cart_level_discount_applications
+        assign cart_level_discount_percentage = cart_level_discount_percentage | plus: discount.value | round
+      endfor
+
+      assign grand_saving = c_savings_percent | plus: item_level_discount_percentage | plus: cart_level_discount_percentage
+
+      assign total_line_price = compare_at_total | minus: regular_price_total
+      assign total_saved_amount = total_line_price | plus: discount_total
     -%}
     <div id="CartDrawerFooter" class="cart-drawer__footer">
       <div class="cart-drawer__summary">
-        {%- if total_saved > 0 -%}
+        {%- if total_saved_amount > 0 -%}
           <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
             <span>{{ 'general.cart.total_price' | t }}</span>
-            <span>{{ original_total | money }}</span>
+            <span>{{ compare_at_total | money }}</span>
           </div>
           <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--discount">
             <span class="u-inline-flex u-items-center cart-drawer__summary-label">
               {{ 'general.cart.discount' | t }}
               <span class="u-inline-flex u-items-center cart-drawer__summary-percent">
-                {% render 'icon', name: 'tag' %}{{ saved_percent }}%
+                {% render 'icon', name: 'tag' %}{{ grand_saving }}%
               </span>
             </span>
-            <span>-{{ total_saved | money }}</span>
+            <span>-{{ total_saved_amount | money }}</span>
           </div>
         {%- endif -%}
         <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--total">
           <span>{{ 'general.cart.total' | t }}</span>
           <span>{{ cart.total_price | money }}</span>
+        </div>
+      </div>
+      <div class="cart-drawer__note" data-cart-note>
+        <button
+          type="button"
+          class="u-flex u-items-center cart-drawer__note-toggle"
+          aria-expanded="false"
+          aria-controls="CartDrawerNotePanel"
+          data-note-toggle
+        >
+          {% render 'icon', name: 'pencil' %}
+          <span data-note-label data-label-add="{{ 'general.cart.add_note' | t }}" data-label-edit="{{ 'general.cart.edit_note' | t }}">
+            {%- if cart.note != blank -%}{{ 'general.cart.edit_note' | t }}{%- else -%}{{ 'general.cart.add_note' | t }}{%- endif -%}
+          </span>
+        </button>
+        <div class="cart-drawer__note-panel" id="CartDrawerNotePanel" data-note-panel>
+          <div class="cart-drawer__note-inner">
+            <label class="visually-hidden" for="CartDrawerNote">{{ 'general.cart.note_label' | t }}</label>
+            <textarea
+              id="CartDrawerNote"
+              class="cart-drawer__note-field"
+              name="note"
+              rows="3"
+              placeholder="{{ 'general.cart.note_placeholder' | t }}"
+              data-note-field
+            >{{ cart.note }}</textarea>
+            <button type="button" class="button button--dark cart-drawer__note-save" data-note-save>
+              {{ 'general.cart.save_note' | t }}
+            </button>
+            <p class="cart-drawer__note-status" role="status" data-note-status
+              data-saved="{{ 'general.cart.note_saved' | t }}"
+              data-failed="{{ 'general.cart.note_failed' | t }}"></p>
+          </div>
         </div>
       </div>
       <a href="/checkout" class="button button--accent cart-drawer__checkout">{{ 'general.cart.checkout' | t }}</a>
@@ -455,6 +524,79 @@
   height: 14px;
 }
 
+/* Order note: a row that opens a panel, animated with grid-template-rows
+   (0fr to 1fr) so there is no height measuring in script. */
+.cart-drawer__note {
+  border-top: 1px solid var(--color-border);
+  margin-bottom: var(--space-4);
+}
+
+.cart-drawer__note-toggle {
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  font-family: var(--font-subheading);
+  font-weight: var(--font-subheading-weight);
+  color: var(--color-primary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.cart-drawer__note-toggle svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.cart-drawer__note-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.cart-drawer__note-toggle[aria-expanded='true'] + .cart-drawer__note-panel {
+  grid-template-rows: 1fr;
+}
+
+.cart-drawer__note-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cart-drawer__note-field {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  font-family: var(--font-body);
+  font-size: 14px;
+  resize: vertical;
+}
+
+.cart-drawer__note-field:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.cart-drawer__note-status {
+  min-height: 1.2em;
+  margin: 0 0 var(--space-3);
+  font-size: 13px;
+  color: var(--color-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-drawer__note-panel {
+    transition: none;
+  }
+}
+
 .cart-drawer__summary-row--total {
   font-size: 16px;
   font-weight: 600;
@@ -512,6 +654,44 @@ class CartDrawer {
     this.#closeButton.addEventListener('click', () => this.close())
     this.#backdrop.addEventListener('click', () => this.close())
     document.addEventListener('keydown', (event) => this.#onKeydown(event))
+    document.addEventListener('click', (event) => this.#onNoteClick(event))
+  }
+
+  // Order note: the toggle opens/closes the panel; Save posts the note to the cart.
+  #onNoteClick(event) {
+    const toggle = event.target.closest('[data-note-toggle]')
+    if (toggle) {
+      const open = toggle.getAttribute('aria-expanded') !== 'true'
+      toggle.setAttribute('aria-expanded', String(open))
+      if (open) toggle.closest('[data-cart-note]')?.querySelector('[data-note-field]')?.focus()
+      return
+    }
+
+    const save = event.target.closest('[data-note-save]')
+    if (save) this.#saveNote(save.closest('[data-cart-note]'), save)
+  }
+
+  async #saveNote(wrapper, button) {
+    const field = wrapper?.querySelector('[data-note-field]')
+    const status = wrapper?.querySelector('[data-note-status]')
+    const label = wrapper?.querySelector('[data-note-label]')
+    if (!field || !status) return
+
+    button.disabled = true
+    try {
+      const response = await fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ note: field.value })
+      })
+      if (!response.ok) throw new Error(response.statusText)
+      status.textContent = status.dataset.saved
+      if (label) label.textContent = field.value.trim() ? label.dataset.labelEdit : label.dataset.labelAdd
+    } catch (error) {
+      status.textContent = status.dataset.failed
+    } finally {
+      button.disabled = false
+    }
   }
 
   open() {
