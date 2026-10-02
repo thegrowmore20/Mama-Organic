@@ -766,13 +766,13 @@ h1.product-title {
 }
 
 /* The Shopify dynamic checkout button ("Buy it now") loads late and brings its
-   own margins. Reserving its 44px height and zeroing those margins keeps it in
-   the same place before and after it loads, with the buy box's normal 16px gap
-   above it (the old -1rem margin cancelled that gap and made the button jump
-   once Shopify's styles arrived). */
+   own margins. Zeroing those below and reserving its 44px height keeps it in the
+   same place before and after it loads. The buy box already puts 16px between
+   its rows, and the -1rem margin here takes that gap back out so the button sits
+   16px under Add to Cart rather than 32px. */
 .product-buy-box__payment {
   min-height: 44px;
-  margin: 0;
+  margin: -1rem 0 0;
 }
 
 .product-buy-box__payment :is(.shopify-payment-button, .shopify-payment-button__button, shopify-accelerated-checkout, shopify-accelerated-checkout-cart) {
