@@ -241,15 +241,24 @@
   color: var(--color-text);
 }
 
+/* minmax(0, 1fr), not 1fr: a plain 1fr column cannot shrink below its widest
+   child, so any wide, unbreakable element in the info column (an app widget, a
+   long word, a checkout button) widened the single mobile column and pushed the
+   gallery off the right edge of the screen. */
 .product-layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-8);
+}
+
+.product-layout__media,
+.product-layout__info {
+  min-width: 0;
 }
 
 @media screen and (min-width: 990px) {
   .product-layout {
-    grid-template-columns: var(--media-width, 50%) 1fr;
+    grid-template-columns: var(--media-width, 50%) minmax(0, 1fr);
     align-items: start;
     gap: 48px;
   }

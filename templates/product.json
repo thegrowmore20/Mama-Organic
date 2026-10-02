@@ -83,16 +83,8 @@
         "accordion_QwpEjW": {
           "type": "accordion",
           "settings": {
-            "heading": "Beauty Gains",
-            "content": "",
-            "open_by_default": false
-          }
-        },
-        "accordion_P6Bgpw": {
-          "type": "accordion",
-          "settings": {
             "heading": "Ingredients",
-            "content": "",
+            "content": "{{ product.metafields.product.ingredients | metafield_tag }}",
             "open_by_default": false
           }
         },
@@ -108,15 +100,15 @@
           "type": "accordion",
           "settings": {
             "heading": "How to Use",
-            "content": "{{ product.metafields.custom.how_to_use | metafield_tag }}",
+            "content": "{{ product.metafields.product.how_to_use | metafield_tag }}",
             "open_by_default": false
           }
         },
-        "accordion_bnDt9W": {
+        "accordion_P6Bgpw": {
           "type": "accordion",
           "settings": {
             "heading": "Who Can Use",
-            "content": "",
+            "content": "{{ product.metafields.product.who_can_use | metafield_tag }}",
             "open_by_default": false
           }
         },
@@ -124,7 +116,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Caution",
-            "content": "",
+            "content": "{{ product.metafields.product.caution | metafield_tag }}",
             "open_by_default": false
           }
         },
@@ -154,10 +146,9 @@
         "icons-with-text",
         "accordion-description",
         "accordion_QwpEjW",
-        "accordion_P6Bgpw",
         "accordion_N7zm6k",
         "accordion_9WFKDV",
-        "accordion_bnDt9W",
+        "accordion_P6Bgpw",
         "accordion_LWxRLg",
         "image_Ft9EMh",
         "share"
@@ -194,7 +185,7 @@
         "link_text": "@mamaorganicpk",
         "link_url": "https://www.instagram.com/mamaorganicpk/",
         "link_image": "shopify://shop_images/instagram_icon_a65561bf-2210-490a-90fc-b1e036ee1767.jpg",
-        "link_new_tab": false,
+        "link_new_tab": true,
         "link_svg": "",
         "full_width": false,
         "embed_code": "",

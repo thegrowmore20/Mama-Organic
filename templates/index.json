@@ -110,7 +110,7 @@
         "link_text": "@mamaorganicpk",
         "link_url": "https://www.instagram.com/mamaorganicpk/",
         "link_image": "shopify://shop_images/instagram_icon_a65561bf-2210-490a-90fc-b1e036ee1767.jpg",
-        "link_new_tab": false,
+        "link_new_tab": true,
         "link_svg": "",
         "full_width": false,
         "embed_code": "",
