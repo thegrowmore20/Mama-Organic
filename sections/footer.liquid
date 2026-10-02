@@ -83,6 +83,15 @@
                   <span>{{ block.settings.link_label | escape }}</span>
                 </a>
               {%- endif -%}
+              {%- if block.settings.phone != blank -%}
+                <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}" class="footer__contact-item">
+                  <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'phone' %}</span>
+                  <span>
+                    {%- if block.settings.phone_label != blank -%}<strong>{{ block.settings.phone_label | escape }}</strong> {% endif -%}
+                    {{ block.settings.phone | escape }}
+                  </span>
+                </a>
+              {%- endif -%}
               {%- if block.settings.email != blank -%}
                 <a href="mailto:{{ block.settings.email | escape }}" class="footer__contact-item">
                   <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'mail' %}</span>
@@ -90,10 +99,17 @@
                 </a>
               {%- endif -%}
               {%- if block.settings.address != blank -%}
-                <p class="footer__contact-item footer__contact-item--address">
-                  <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'marker-pin' %}</span>
-                  <span>{{ block.settings.address | escape | newline_to_br }}</span>
-                </p>
+                {%- if block.settings.address_link != blank -%}
+                  <a href="{{ block.settings.address_link }}" class="footer__contact-item footer__contact-item--address" target="_blank" rel="noopener noreferrer">
+                    <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'marker-pin' %}</span>
+                    <span>{{ block.settings.address | escape | newline_to_br }}<span class="visually-hidden"> {{ 'general.accessibility.opens_in_new_tab' | t }}</span></span>
+                  </a>
+                {%- else -%}
+                  <p class="footer__contact-item footer__contact-item--address">
+                    <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'marker-pin' %}</span>
+                    <span>{{ block.settings.address | escape | newline_to_br }}</span>
+                  </p>
+                {%- endif -%}
               {%- endif -%}
             </div>
           {%- endif -%}
@@ -533,6 +549,18 @@
           },
           {
             "type": "text",
+            "id": "phone_label",
+            "label": "Phone label",
+            "default": "Call/WhatsApp:"
+          },
+          {
+            "type": "text",
+            "id": "phone",
+            "label": "Phone number",
+            "info": "Shown below the contact link and above the email. Tapping it starts a call."
+          },
+          {
+            "type": "text",
             "id": "email",
             "label": "Email"
           },
@@ -541,6 +569,12 @@
             "id": "address",
             "label": "Address",
             "info": "Line breaks are kept."
+          },
+          {
+            "type": "url",
+            "id": "address_link",
+            "label": "Address link",
+            "info": "Optional - makes the address open in a new tab, e.g. a Google Maps link."
           }
         ]
       }
