@@ -1,0 +1,6 @@
+{% layout none %}
+{%- comment -%}
+  Alternate product template (?view=card): just the shared product card, no page
+  layout. Used by sections/recently-viewed.liquid to fetch one card per product.
+{%- endcomment -%}
+{% render 'product-card', product: product %}
