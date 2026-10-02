@@ -94,8 +94,26 @@
       {%- endfor -%}
     {%- endif -%}
 
-    {%- comment -%} 3. Real Search & Discovery filters {%- endcomment -%}
+    {%- comment -%}
+      3. Real Search & Discovery filters. Two passes put Product type first (it
+      is above Availability and the rest), then every other filter in the order
+      Search & Discovery gives them.
+    {%- endcomment -%}
+    {%- for pass in (1..2) -%}
     {%- for filter in results.filters -%}
+      {%- assign is_product_type = false -%}
+      {%- if filter.param_name == 'filter.p.product_type' -%}
+        {%- assign is_product_type = true -%}
+      {%- endif -%}
+      {%- assign render_filter = false -%}
+      {%- if pass == 1 and is_product_type -%}
+        {%- assign render_filter = true -%}
+      {%- elsif pass == 2 and is_product_type == false -%}
+        {%- assign render_filter = true -%}
+      {%- endif -%}
+      {%- unless render_filter -%}
+        {%- continue -%}
+      {%- endunless -%}
       {%- if filter.type == 'price_range' -%}
         <details class="facets__group" data-filter-param="{{ filter.param_name }}" open>
           <summary class="facets__summary">
@@ -134,6 +152,7 @@
           </div>
         </details>
       {%- endif -%}
+    {%- endfor -%}
     {%- endfor -%}
   </form>
 </facet-filters-form>
