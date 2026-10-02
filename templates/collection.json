@@ -61,7 +61,9 @@
         "richtext_cLqH8F": {
           "type": "richtext",
           "settings": {
-            "text": "{{ collection.description }}"
+            "text": "{{ collection.description }}",
+            "collapsible": true,
+            "collapsed_height": 160
           }
         }
       },

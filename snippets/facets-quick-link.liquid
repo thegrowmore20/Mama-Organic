@@ -7,6 +7,7 @@
     link_text  - {String} row label
     link_url   - {String} destination
     attributes - {String} optional extra attributes, e.g. block.shopify_attributes
+    active     - {Boolean} optional, highlights the row as the current page
 
   Usage:
   {% render 'facets-quick-link', link_text: 'Shop bundles', link_url: '/collections/offers' %}
@@ -25,7 +26,12 @@
     {%- assign link_count = link_collection.products_count -%}
   {%- endif -%}
 {%- endif -%}
-<a href="{{ link_url }}" class="facets__group facets__group--link" {{ attributes }}>
+<a
+  href="{{ link_url }}"
+  class="facets__group facets__group--link{% if active %} facets__group--active{% endif %}"
+  {% if active %}aria-current="page"{% endif %}
+  {{ attributes }}
+>
   <span class="facets__summary">
     <span>{{ link_text | escape }}{% if link_count != nil %} <span class="facets__count text-muted">({{ link_count }})</span>{% endif %}</span>
     <span class="facets__chevron facets__chevron--right" aria-hidden="true">{% render 'icon', name: 'chevron-right' %}</span>

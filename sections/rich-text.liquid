@@ -1,7 +1,29 @@
 {%- liquid
   assign align = section.settings.text_alignment | default: 'center'
+
+  comment
+    The whole section renders only when at least one block has something to
+    show (a heading, subheading, text or a complete button), so an empty one -
+    e.g. a collection with no description - leaves no blank space.
+  endcomment
+  assign has_content = false
+  for block in section.blocks
+    case block.type
+      when 'eyebrow', 'heading', 'richtext'
+        if block.settings.text != blank
+          assign has_content = true
+        endif
+      when 'buttons'
+        if block.settings.button_1_label != blank and block.settings.button_1_link != blank
+          assign has_content = true
+        elsif block.settings.button_2_label != blank and block.settings.button_2_link != blank
+          assign has_content = true
+        endif
+    endcase
+  endfor
 -%}
 
+{%- if has_content -%}
 <section
   class="rich-text-section rich-text-section--{{ align }} section-padding"
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --rich-text-width: {{ section.settings.content_width }}px;"
@@ -26,9 +48,35 @@
 
           {%- when 'richtext' -%}
             {%- if block.settings.text != blank -%}
-              <div class="rich-text-section__block rich-text-section__text rte" {{ block.shopify_attributes }}>
-                {{ block.settings.text }}
-              </div>
+              {%- if block.settings.collapsible -%}
+                {%- assign content_id = 'RichTextContent-' | append: block.id -%}
+                <collapsible-text
+                  class="rich-text-section__block rich-text-section__collapsible"
+                  style="--collapsed-height: {{ block.settings.collapsed_height }}px;"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="rich-text-section__clip" id="{{ content_id }}" data-collapsible-content>
+                    <div class="rich-text-section__text rte">{{ block.settings.text }}</div>
+                  </div>
+                  <button
+                    type="button"
+                    class="rich-text-section__toggle"
+                    aria-expanded="false"
+                    aria-controls="{{ content_id }}"
+                    data-collapsible-toggle
+                    data-label-more="{{ 'general.collapsible.show_more' | t }}"
+                    data-label-less="{{ 'general.collapsible.show_less' | t }}"
+                    hidden
+                  >
+                    <span data-collapsible-label>{{ 'general.collapsible.show_more' | t }}</span>
+                    <span class="rich-text-section__toggle-icon" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+                  </button>
+                </collapsible-text>
+              {%- else -%}
+                <div class="rich-text-section__block rich-text-section__text rte" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
             {%- endif -%}
 
           {%- when 'buttons' -%}
@@ -59,6 +107,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% stylesheet %}
 .rich-text-section__inner {
@@ -107,6 +156,77 @@
   margin-bottom: 0;
 }
 
+/* Long text: clipped to --collapsed-height with a fade, plus a Show more
+   toggle. The clip applies from the start so the page doesn't jump when the
+   script runs; the script lifts it when the text turns out to be short. */
+.rich-text-section__clip {
+  position: relative;
+  max-height: var(--collapsed-height, 160px);
+  overflow: hidden;
+}
+
+.rich-text-section__clip::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--color-background));
+  pointer-events: none;
+}
+
+collapsible-text.is-static .rich-text-section__clip,
+collapsible-text.is-expanded .rich-text-section__clip {
+  max-height: none;
+}
+
+collapsible-text.is-static .rich-text-section__clip::after,
+collapsible-text.is-expanded .rich-text-section__clip::after {
+  display: none;
+}
+
+.rich-text-section__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: var(--space-2) 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.rich-text-section--center .rich-text-section__toggle {
+  display: flex;
+  margin-inline: auto;
+}
+
+.rich-text-section--right .rich-text-section__toggle {
+  display: flex;
+  margin-inline-start: auto;
+}
+
+.rich-text-section__toggle[hidden] {
+  display: none;
+}
+
+.rich-text-section__toggle-icon {
+  display: flex;
+  transition: transform 0.2s ease;
+}
+
+.rich-text-section__toggle[aria-expanded='true'] .rich-text-section__toggle-icon {
+  transform: rotate(180deg);
+}
+
+.rich-text-section__toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .rich-text-section__buttons {
   flex-wrap: wrap;
   gap: var(--space-3);
@@ -121,6 +241,44 @@
   justify-content: flex-end;
 }
 {% endstylesheet %}
+
+{% javascript %}
+if (!customElements.get('collapsible-text')) {
+  customElements.define('collapsible-text', class CollapsibleText extends HTMLElement {
+    connectedCallback() {
+      this.content = this.querySelector('[data-collapsible-content]')
+      this.toggle = this.querySelector('[data-collapsible-toggle]')
+      this.label = this.querySelector('[data-collapsible-label]')
+      if (!this.content || !this.toggle) return
+
+      this.toggle.addEventListener('click', () => this.#onToggle())
+      this.resizeObserver = new ResizeObserver(() => this.#measure())
+      this.resizeObserver.observe(this)
+      this.#measure()
+    }
+
+    disconnectedCallback() {
+      this.resizeObserver?.disconnect()
+    }
+
+    // Short text needs no clipping or toggle; long text gets both.
+    #measure() {
+      if (this.classList.contains('is-expanded')) return
+      const collapsed = Number.parseFloat(getComputedStyle(this).getPropertyValue('--collapsed-height')) || 160
+      const fits = this.content.scrollHeight <= collapsed + 4
+      this.classList.toggle('is-static', fits)
+      this.toggle.hidden = fits
+    }
+
+    #onToggle() {
+      const expanded = this.classList.toggle('is-expanded')
+      this.toggle.setAttribute('aria-expanded', String(expanded))
+      this.label.textContent = expanded ? this.toggle.dataset.labelLess : this.toggle.dataset.labelMore
+      if (!expanded) this.#measure()
+    }
+  })
+}
+{% endjavascript %}
 
 {% schema %}
 {
@@ -208,6 +366,23 @@
           "id": "text",
           "label": "Text",
           "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "collapsible",
+          "label": "Collapse long text",
+          "info": "Long text is cut short with a Show more link.",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "collapsed_height",
+          "label": "Collapsed height",
+          "min": 80,
+          "max": 400,
+          "step": 20,
+          "unit": "px",
+          "default": 160
         }
       ]
     },

@@ -83,6 +83,6 @@
       </div>
     </details>
   {%- else -%}
-    {% render 'facets-quick-link', link_text: top.title, link_url: top.url, attributes: block.shopify_attributes %}
+    {% render 'facets-quick-link', link_text: top.title, link_url: top.url, attributes: block.shopify_attributes, active: top.active %}
   {%- endif -%}
 {%- endfor -%}

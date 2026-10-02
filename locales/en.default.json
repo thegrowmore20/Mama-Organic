@@ -39,6 +39,10 @@
       "footer_bottom_menu": "Footer legal links",
       "close": "Close"
     },
+    "collapsible": {
+      "show_more": "Show more",
+      "show_less": "Show less"
+    },
     "whatsapp": {
       "label": "Chat with us on WhatsApp",
       "default_message": "Hello! I would like to know more about your products.",
