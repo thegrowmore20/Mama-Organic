@@ -765,9 +765,23 @@ h1.product-title {
   padding: 10px 14px;
 }
 
+/* The Shopify dynamic checkout button ("Buy it now") loads late and brings its
+   own margins. Reserving its 44px height and zeroing those margins keeps it in
+   the same place before and after it loads, with the buy box's normal 16px gap
+   above it (the old -1rem margin cancelled that gap and made the button jump
+   once Shopify's styles arrived). */
 .product-buy-box__payment {
   min-height: 44px;
-  margin-top: -1rem;
+  margin: 0;
+}
+
+.product-buy-box__payment :is(.shopify-payment-button, .shopify-payment-button__button, shopify-accelerated-checkout, shopify-accelerated-checkout-cart) {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.product-buy-box__payment .shopify-payment-button__button {
+  min-height: 44px;
 }
 
 .product-buy-box__waitlist {
