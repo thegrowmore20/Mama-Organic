@@ -1093,13 +1093,16 @@ product-addons {
   min-width: 0;
 }
 
+/* Up to two lines, then an ellipsis. */
 .product-addons__name {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
   font-size: 14px;
+  line-height: 1.35;
   color: var(--color-primary);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .product-addons__toggle {
