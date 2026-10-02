@@ -10,6 +10,9 @@
 
   Links that point at a collection show their product count. Any group that
   holds the active link opens by itself (first level down to third level).
+  Accordions are exclusive: the name attribute groups sibling <details>, so
+  opening one closes the others at the same level (Face closes Hair, and
+  Shop by Products closes Shop by Concerns).
   Rows are plain links (the checkbox version lives behind show_checkbox in
   snippets/facets-nav-link.liquid); none of this is a real product filter.
 
@@ -32,8 +35,9 @@
     {%- endif -%}
     <details
       class="facets__group{% if top.active %} facets__group--active{% elsif top.child_active %} facets__group--parent-active{% endif %}"
+      name="nav-{{ block.id }}"
       data-filter-param="{{ top_key }}"
-      {% if block.settings.open_by_default or top.active or top.child_active %}open{% endif %}
+      {% if top.active or top.child_active %}open{% endif %}
       {{ block.shopify_attributes }}
     >
       <summary class="facets__summary">
@@ -51,6 +55,7 @@
               <li class="facets__item">
                 <details
                   class="facets__sub"
+                  name="nav-{{ block.id }}-{{ top_index }}"
                   data-filter-param="{{ item_key }}"
                   {% if item.active or item.child_active %}open{% endif %}
                 >
