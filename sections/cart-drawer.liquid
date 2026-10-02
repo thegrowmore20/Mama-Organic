@@ -211,8 +211,7 @@
         </div>
       </div>
       <div class="cart-drawer__summary">
-        {%- if total_saved_amount > 0 -%}
-          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
+        <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
             <span>{{ 'general.cart.total_price' | t }}</span>
             <span>{{ compare_at_total | money }}</span>
           </div>
@@ -225,7 +224,6 @@
             </span>
             <span>-{{ total_saved_amount | money }}</span>
           </div>
-        {%- endif -%}
         <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--total">
           <span>{{ 'general.cart.total' | t }}</span>
           <span>{{ cart.total_price | money }}</span>
