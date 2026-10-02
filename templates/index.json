@@ -90,6 +90,34 @@
         "padding_bottom": 30
       }
     },
+    "custom_section_tUkyUC": {
+      "type": "custom-section",
+      "blocks": {
+        "gsc_instagram_feed_instafeed_dYteaL": {
+          "type": "shopify://apps/gsc-instagram-feed/blocks/instafeed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+          "settings": {
+            "widget_id": "GSC-SaLtpjbJnugEeKF"
+          }
+        }
+      },
+      "block_order": [
+        "gsc_instagram_feed_instafeed_dYteaL"
+      ],
+      "name": "Custom section",
+      "settings": {
+        "heading": "Follow Us on Instagram",
+        "text": "",
+        "link_text": "@mamaorganicpk",
+        "link_url": "https://www.instagram.com/mamaorganicpk/",
+        "link_image": "shopify://shop_images/instagram_icon_a65561bf-2210-490a-90fc-b1e036ee1767.jpg",
+        "link_new_tab": false,
+        "link_svg": "",
+        "full_width": false,
+        "embed_code": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
     "features_with_image_ymQnGd": {
       "type": "features-with-image",
       "blocks": {
@@ -398,7 +426,6 @@
       "block_order": [
         "doran_shoppable_videos_basic_widget_3yL3PR"
       ],
-      "disabled": true,
       "name": "Custom section",
       "settings": {
         "heading": "Real Women. Real Results.",
@@ -409,6 +436,22 @@
         "link_svg": "",
         "full_width": false,
         "embed_code": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "blogs": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "Blogs",
+        "blog": "tips",
+        "columns_desktop": "3",
+        "articles_count": 3,
+        "show_image": true,
+        "show_excerpt": true,
+        "show_date": true,
+        "show_author": false,
+        "show_comments": false,
         "padding_top": 30,
         "padding_bottom": 60
       }
@@ -768,27 +811,12 @@
         "padding_top": 30,
         "padding_bottom": 60
       }
-    },
-    "blogs": {
-      "type": "blog-posts",
-      "settings": {
-        "heading": "Blogs",
-        "blog": "tips",
-        "columns_desktop": "3",
-        "articles_count": 3,
-        "show_image": true,
-        "show_excerpt": true,
-        "show_date": true,
-        "show_author": false,
-        "show_comments": false,
-        "padding_top": 30,
-        "padding_bottom": 60
-      }
     }
   },
   "order": [
     "hero_slideshow_mamaorganic",
     "best-sellers",
+    "custom_section_tUkyUC",
     "features_with_image_ymQnGd",
     "collection_list_iYDEV6",
     "featured_collection_7wxMW6",
@@ -796,6 +824,7 @@
     "custom_section_LCMcUH",
     "image_with_text_HCBzik",
     "custom_section_GRHE7m",
+    "blogs",
     "animated_pharmacies_qEMVb4",
     "ingredients",
     "comparison_table_QYKVLT",
@@ -804,7 +833,6 @@
     "before-after",
     "real-results",
     "hero",
-    "curated-for-you",
-    "blogs"
+    "curated-for-you"
   ]
 }

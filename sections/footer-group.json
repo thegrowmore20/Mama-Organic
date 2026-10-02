@@ -13,18 +13,28 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "heading": "Contact",
+            "link_label": "Get in touch",
+            "link_url": "/pages/contact-us",
+            "email": "sales@mamaorganic.pk"
+          }
+        }
+      },
+      "block_order": [
+        "contact"
+      ],
       "settings": {
         "footer_brand_content": "<p>Welcome to Mama Organic, your trusted partner in natural skincare. Owned and operated by <strong>INTERLINK GLOBAL</strong>. Our dedication lies in providing you with effective, chemical-free solutions that promote radiant skin, healthy hair, and a vibrant body.<br/>Your well-being is our top priority!</p>",
-        "social_heading": "Social Media",
         "pages_heading": "Products",
         "policies_heading": "Quick links",
         "logo": "shopify://shop_images/Logo_PNG.png",
-        "facebook": "https://www.facebook.com/MamaOrganicPK",
-        "instagram": "https://www.instagram.com/mamaorganicpk/",
-        "tiktok": "https://www.tiktok.com/@mamaorganicpk",
-        "youtube": "https://www.youtube.com/@mamaorganicpk",
-        "pages_menu": "",
-        "help_menu": ""
+        "pages_menu": "footer-main-menu",
+        "help_menu": "quick-links",
+        "bottom_menu": "policies"
       }
     }
   },

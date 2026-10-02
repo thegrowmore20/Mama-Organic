@@ -15,12 +15,12 @@
     "font_subheading": "poppins_n5",
     "font_accent": "poppins_n6",
     "button_primary_color": "#004236",
+    "show_free_shipping_bar": false,
     "social_facebook": "https://www.facebook.com/MamaOrganicPK",
     "social_instagram": "https://www.instagram.com/mamaorganicpk/",
     "social_pinterest": "https://www.pinterest.com/mamaorganicpak/",
     "social_tiktok": "https://www.tiktok.com/@mamaorganicpk",
     "social_youtube": "https://www.youtube.com/@mamaorganicpk",
-    "show_free_shipping_bar": false,
     "color_primary": "#004236",
     "color_secondary": "#108474",
     "color_dark": "#002E25",
@@ -45,10 +45,6 @@
         "settings": {
           "logo": "shopify://shop_images/Mamaorganic_Logo.png",
           "background_image": "shopify://shop_images/footer_background.webp",
-          "facebook": "https://www.facebook.com/MamaOrganicPK",
-          "instagram": "https://www.instagram.com/mamaorganicpk/",
-          "tiktok": "https://www.tiktok.com/@mamaorganicpk",
-          "youtube": "",
           "pages_menu": "",
           "help_menu": ""
         }
@@ -130,6 +126,11 @@
       },
       "4727195953647268973": {
         "type": "shopify://apps/doran-shoppable-videos/blocks/app-embed/9f421243-1cc3-42c0-8a88-49922de1eacf",
+        "disabled": false,
+        "settings": {}
+      },
+      "13305437469741356523": {
+        "type": "shopify://apps/gsc-instagram-feed/blocks/embed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
         "disabled": false,
         "settings": {}
       }
