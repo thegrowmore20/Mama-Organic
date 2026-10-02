@@ -1,0 +1,284 @@
+{%- liquid
+  assign align = section.settings.text_alignment | default: 'center'
+-%}
+
+<section
+  class="rich-text-section rich-text-section--{{ align }} section-padding"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --rich-text-width: {{ section.settings.content_width }}px;"
+>
+  <div class="container">
+    <div class="rich-text-section__inner">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'eyebrow' -%}
+            {%- if block.settings.text != blank -%}
+              <div class="rich-text-section__block" {{ block.shopify_attributes }}>
+                {% render 'section-header', eyebrow: block.settings.text, alignment: align %}
+              </div>
+            {%- endif -%}
+
+          {%- when 'heading' -%}
+            {%- if block.settings.text != blank -%}
+              <div class="rich-text-section__block" {{ block.shopify_attributes }}>
+                {% render 'section-header', heading: block.settings.text, alignment: align %}
+              </div>
+            {%- endif -%}
+
+          {%- when 'richtext' -%}
+            {%- if block.settings.text != blank -%}
+              <div class="rich-text-section__block rich-text-section__text rte" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+            {%- endif -%}
+
+          {%- when 'buttons' -%}
+            {%- assign has_button_1 = false -%}
+            {%- assign has_button_2 = false -%}
+            {%- if block.settings.button_1_label != blank and block.settings.button_1_link != blank -%}
+              {%- assign has_button_1 = true -%}
+            {%- endif -%}
+            {%- if block.settings.button_2_label != blank and block.settings.button_2_link != blank -%}
+              {%- assign has_button_2 = true -%}
+            {%- endif -%}
+            {%- if has_button_1 or has_button_2 -%}
+              <div class="u-flex rich-text-section__block rich-text-section__buttons" {{ block.shopify_attributes }}>
+                {%- if has_button_1 -%}
+                  <a href="{{ block.settings.button_1_link }}" class="button button--{{ block.settings.button_1_style }}">
+                    {{ block.settings.button_1_label | escape }}
+                  </a>
+                {%- endif -%}
+                {%- if has_button_2 -%}
+                  <a href="{{ block.settings.button_2_link }}" class="button button--{{ block.settings.button_2_style }}">
+                    {{ block.settings.button_2_label | escape }}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.rich-text-section__inner {
+  max-width: var(--rich-text-width, 800px);
+  margin-inline: auto;
+}
+
+.rich-text-section--left .rich-text-section__inner {
+  margin-inline: 0 auto;
+}
+
+.rich-text-section--right .rich-text-section__inner {
+  margin-inline: auto 0;
+}
+
+/* Each heading block is its own section-header; they stack tightly, and the
+   wider max-width keeps long headings from wrapping early. */
+.rich-text-section__block + .rich-text-section__block {
+  margin-top: var(--space-3);
+}
+
+.rich-text-section__block .section-header {
+  max-width: none;
+  margin-bottom: 0;
+}
+
+.rich-text-section__text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.rich-text-section--center .rich-text-section__text {
+  text-align: center;
+}
+
+.rich-text-section--right .rich-text-section__text {
+  text-align: right;
+}
+
+.rich-text-section__text > :first-child {
+  margin-top: 0;
+}
+
+.rich-text-section__text > :last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-section__buttons {
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.rich-text-section--center .rich-text-section__buttons {
+  justify-content: center;
+}
+
+.rich-text-section--right .rich-text-section__buttons {
+  justify-content: flex-end;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content width",
+      "min": 400,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Subheading"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Talk about your brand"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "name": "Rich text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Button 1"
+        },
+        {
+          "type": "text",
+          "id": "button_1_label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "button_1_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "button_1_style",
+          "label": "Style",
+          "options": [
+            { "value": "accent", "label": "Primary" },
+            { "value": "dark", "label": "Dark" },
+            { "value": "light", "label": "Light" }
+          ],
+          "default": "accent"
+        },
+        {
+          "type": "header",
+          "content": "Button 2"
+        },
+        {
+          "type": "text",
+          "id": "button_2_label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "button_2_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "button_2_style",
+          "label": "Style",
+          "options": [
+            { "value": "accent", "label": "Primary" },
+            { "value": "dark", "label": "Dark" },
+            { "value": "light", "label": "Light" }
+          ],
+          "default": "light"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "richtext" },
+        { "type": "buttons" }
+      ]
+    }
+  ]
+}
+{% endschema %}

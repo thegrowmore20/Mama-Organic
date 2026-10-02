@@ -461,7 +461,7 @@ details[open] > .facets__summary .facets__chevron--down {
 .facets__list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .facets__checkbox-label {
@@ -1276,10 +1276,6 @@ customElements.define('collection-results', CollectionResults)
       "name": "Quick link",
       "settings": [
         {
-          "type": "paragraph",
-          "content": "A plain navigation row above the filters (e.g. Accessories, Shop bundles). It is a link, not a filter. Drag blocks to change the order."
-        },
-        {
           "type": "text",
           "id": "text",
           "label": "Text"
@@ -1295,10 +1291,6 @@ customElements.define('collection-results', CollectionResults)
       "type": "nav_menu",
       "name": "Navigation filter menu",
       "settings": [
-        {
-          "type": "paragraph",
-          "content": "Each top-level link becomes its own accordion group. Second-level links are the items inside it, and a second-level link with its own links opens to show the third level. Collection links show their product count, and the group with the active link opens by itself. Checking a link goes straight to it, it isn't a real product filter."
-        },
         {
           "type": "link_list",
           "id": "menu",

@@ -70,14 +70,7 @@
         "social": {
           "type": "social",
           "settings": {
-            "label": "Our social media",
-            "social_facebook_url": "https://www.facebook.com/MamaOrganicPK",
-            "social_instagram_url": "https://www.instagram.com/mamaorganicpk/",
-            "social_youtube_url": "https://www.youtube.com/@mamaorganicpk",
-            "social_tiktok_url": "https://www.tiktok.com/@mamaorganicpk",
-            "social_x_url": "",
-            "social_pinterest_url": "https://www.pinterest.com/mamaorganicpak/",
-            "social_linkedin_url": ""
+            "label": "Our social media"
           }
         }
       },
