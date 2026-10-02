@@ -39,6 +39,9 @@
       "footer_bottom_menu": "Footer legal links",
       "close": "Close"
     },
+    "breadcrumb": {
+      "label": "Breadcrumb"
+    },
     "collapsible": {
       "show_more": "Show more",
       "show_less": "Show less"

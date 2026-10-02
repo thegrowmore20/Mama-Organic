@@ -46,6 +46,8 @@
     {%- if product == blank -%}
       <p class="product-info-section__empty">{{ 'collections.general.empty' | t }}</p>
     {%- else -%}
+      {% render 'breadcrumbs', product: product %}
+
       <div class="{{ layout_classes }}">
         <div class="product-layout__media" data-product-media>
           {% render 'product-media-gallery', product: product, section: section %}

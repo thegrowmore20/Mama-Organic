@@ -575,6 +575,46 @@ summary:focus-visible {
   }
 }
 
+/* ---------- Breadcrumbs (snippets/breadcrumbs) ---------- */
+.breadcrumbs {
+  margin-bottom: var(--space-4);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumbs__item:not(:last-child)::after {
+  content: '/';
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs__item a {
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs__item a:hover {
+  color: var(--color-secondary);
+}
+
+.breadcrumbs__item[aria-current='page'] {
+  color: var(--color-primary);
+}
+
 /* ---------- Social icons (snippets/social-icons) ----------
    Round white wrappers like the slider arrows (35px mobile, 40px from 750px
    up); on hover they fill with the button color and the icon turns white. */
