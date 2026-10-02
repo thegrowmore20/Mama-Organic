@@ -37,8 +37,7 @@
         "nav_menu_cHbNAj": {
           "type": "nav_menu",
           "settings": {
-            "menu": "main-menu",
-            "open_by_default": false
+            "menu": "main-menu"
           }
         }
       },

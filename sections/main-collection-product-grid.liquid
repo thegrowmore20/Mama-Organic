@@ -551,25 +551,13 @@ details[open] > .facets__sub-summary .facets__chevron--down {
   font-weight: 600;
 }
 
-/* First level: the current group (or the row that is the current page) gets the
-   same highlight as an active second/third-level link - brand color on a soft
-   background. A group that only contains the active link is tinted in the
-   brand color. */
-.facets__group--active > .facets__summary,
-.facets__group--active.facets__group--link > .facets__summary {
-  margin-inline: -8px;
-  padding: 5px 8px;
-  border-radius: var(--radius-s);
-  background: var(--color-surface);
-  color: var(--color-secondary);
-}
-
-.facets__group--active > .facets__summary .facets__chevron {
-  color: var(--color-secondary);
-}
-
+/* First level: titles are dark green; the group on the active path (it holds
+   the active link, or is the current page itself) turns the brand teal. Only the
+   color changes - no background - unlike the active second/third-level link. */
 .facets__group--active > .facets__summary > span:first-child,
-.facets__group--parent-active > .facets__summary > span:first-child {
+.facets__group--parent-active > .facets__summary > span:first-child,
+.facets__group--active > .facets__summary .facets__chevron,
+.facets__group--parent-active > .facets__summary .facets__chevron {
   color: var(--color-secondary);
 }
 
