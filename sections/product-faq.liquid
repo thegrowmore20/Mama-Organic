@@ -1,5 +1,5 @@
 {%- liquid
-  assign faq_items = product.metafields.custom.faqs.value
+  assign faq_items = product.metafields.custom.product_faqs.value
   assign faq_count = 0
 -%}
 {%- capture faq_markup -%}
@@ -178,7 +178,7 @@ if (!customElements.get('product-faq')) {
   "settings": [
     {
       "type": "paragraph",
-      "content": "Displays the current product's custom.faqs metaobject list using its question and rich-text answer fields. Hidden when no populated FAQs exist."
+      "content": "Displays the current product's custom.product_faqs metaobject list using its question and rich-text answer fields. Hidden when no populated FAQs exist."
     },
     { "type": "text", "id": "heading", "label": "Heading", "default": "FAQs" },
     { "type": "checkbox", "id": "show_numbers", "label": "Show question numbers", "default": true },
