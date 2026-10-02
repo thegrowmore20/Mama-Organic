@@ -102,38 +102,15 @@
                 </div>
 
               {%- when 'social' -%}
-                {%- liquid
-                  assign social_keys = 'facebook,instagram,youtube,tiktok,x,pinterest,linkedin' | split: ','
-                  assign has_social = false
-                  for key in social_keys
-                    assign url_key = 'social_' | append: key | append: '_url'
-                    if block.settings[url_key] != blank
-                      assign has_social = true
-                    endif
-                  endfor
-                -%}
-                {%- if has_social -%}
+                {%- comment -%} Same round icons as the footer, from the global Social media settings. {%- endcomment -%}
+                {%- capture social_markup -%}{% render 'social-icons' %}{%- endcapture -%}
+                {%- assign social_markup = social_markup | strip -%}
+                {%- if social_markup != blank -%}
                   <div class="u-flex u-items-center u-justify-between contact-social" {{ block.shopify_attributes }}>
                     {%- if block.settings.label != blank -%}
-                      <p class="contact-social__label">{{ block.settings.label }}</p>
+                      <h6 class="contact-social__label">{{ block.settings.label }}</h6>
                     {%- endif -%}
-                    <div class="u-flex u-items-center contact-social__icons">
-                      {%- for key in social_keys -%}
-                        {%- assign url_key = 'social_' | append: key | append: '_url' -%}
-                        {%- assign url_val = block.settings[url_key] -%}
-                        {%- if url_val != blank -%}
-                          <a
-                            href="{{ url_val }}"
-                            class="u-flex u-items-center contact-social__link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="{{ key | capitalize }}"
-                          >
-                            {% render 'icon', name: key %}
-                          </a>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </div>
+                    {{ social_markup }}
                   </div>
                 {%- endif -%}
 
@@ -333,6 +310,7 @@ a.contact-card:focus-visible {
 
 .contact-social__label {
   font-size: 12px;
+  line-height: 1.4;
   font-weight: 600;
   font-family: var(--font-accent);
   letter-spacing: 0.08em;
@@ -340,20 +318,6 @@ a.contact-card:focus-visible {
   margin: 0;
   color: var(--color-text-muted);
   white-space: nowrap;
-}
-
-.contact-social__icons {
-  gap: 14px;
-}
-
-.contact-social__link {
-  color: var(--color-primary);
-  opacity: 0.75;
-  transition: opacity 0.2s ease;
-}
-
-.contact-social__link:hover {
-  opacity: 1;
 }
 
 .contact-section__richtext {
@@ -606,13 +570,7 @@ a.contact-card:focus-visible {
       "limit": 1,
       "settings": [
         { "type": "text", "id": "label", "label": "Label", "default": "Our social media" },
-        { "type": "url", "id": "social_facebook_url", "label": "Facebook URL" },
-        { "type": "url", "id": "social_instagram_url", "label": "Instagram URL" },
-        { "type": "url", "id": "social_youtube_url", "label": "YouTube URL" },
-        { "type": "url", "id": "social_tiktok_url", "label": "TikTok URL" },
-        { "type": "url", "id": "social_x_url", "label": "X (Twitter) URL" },
-        { "type": "url", "id": "social_pinterest_url", "label": "Pinterest URL" },
-        { "type": "url", "id": "social_linkedin_url", "label": "LinkedIn URL" }
+        { "type": "paragraph", "content": "The icons come from Theme settings > Social media." }
       ]
     },
     {

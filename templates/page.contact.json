@@ -64,18 +64,20 @@
             "card_2_color": "#ffffff",
             "card_2_heading": "Email",
             "card_2_body": "<p>sales@mamaorganic.pk</p>",
-            "card_2_link": "mailto:sales@mamaorganic.pk",
-            "card_3_bg": "#004236",
-            "card_3_color": "#ffffff",
-            "card_3_heading": "Location",
-            "card_3_body": "<p>HSB Care Pvt<br>249 E 1 Johar Town Lahore<br>Pakistan</p>",
-            "card_3_link": "https://maps.app.goo.gl/VSVfaNjfoY8v7vKP9"
+            "card_2_link": "mailto:sales@mamaorganic.pk"
           }
         },
         "social": {
           "type": "social",
           "settings": {
-            "label": "Our social media"
+            "label": "Our social media",
+            "social_facebook_url": "https://www.facebook.com/MamaOrganicPK",
+            "social_instagram_url": "https://www.instagram.com/mamaorganicpk/",
+            "social_youtube_url": "https://www.youtube.com/@mamaorganicpk",
+            "social_tiktok_url": "https://www.tiktok.com/@mamaorganicpk",
+            "social_x_url": "",
+            "social_pinterest_url": "https://www.pinterest.com/mamaorganicpak/",
+            "social_linkedin_url": ""
           }
         }
       },

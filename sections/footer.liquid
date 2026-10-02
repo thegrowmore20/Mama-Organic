@@ -86,10 +86,7 @@
               {%- if block.settings.phone != blank -%}
                 <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}" class="footer__contact-item">
                   <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'phone' %}</span>
-                  <span>
-                    {%- if block.settings.phone_label != blank -%}<strong>{{ block.settings.phone_label | escape }}</strong> {% endif -%}
-                    {{ block.settings.phone | escape }}
-                  </span>
+                  <span>{{ block.settings.phone | escape }}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.email != blank -%}
@@ -546,12 +543,6 @@
             "id": "link_url",
             "label": "Contact link",
             "info": "The link shows when both its text and link are set."
-          },
-          {
-            "type": "text",
-            "id": "phone_label",
-            "label": "Phone label",
-            "default": "Call/WhatsApp:"
           },
           {
             "type": "text",

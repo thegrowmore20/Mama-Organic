@@ -148,22 +148,15 @@ h2[class] {
   font-family: var(--font-heading);
 }
 
+/* .h0 (hero): 56px on desktop. The clamp scales it down smoothly to a 36px
+   floor on phones (the same 390px-to-1200px range as the .h1-.h6 scale below),
+   so there's no size jump at the 750px breakpoint. */
 .h0 {
   font-weight: 500;
   font-family: var(--font-heading);
   line-height: 1.1;
-  font-size: clamp(44px, 34.49px + 2.54vw, 70px);
+  font-size: clamp(36px, calc(36px + 20 * (100vw - 390px) / 810), 56px);
   text-wrap: balance;
-}
-
-/* Phones: the clamp above bottoms out at 44px, which is too big for the
-   narrowest screens. This tier scales from 32px at ~390px wide up to 53.5px
-   at 749px - exactly what the formula above gives at 750px, so there's no
-   size jump at the breakpoint and tablet/desktop are unchanged. */
-@media screen and (max-width: 749px) {
-  .h0 {
-    font-size: clamp(32px, 8.62px + 5.99vw, 53.5px);
-  }
 }
 
 .h1 {
