@@ -85,25 +85,25 @@
               {%- endif -%}
               {%- if block.settings.phone != blank -%}
                 <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}" class="footer__contact-item">
-                  <span class="footer__contact-icon footer__contact-icon--phone" aria-hidden="true">{% render 'icon', name: 'phone-filled' %}</span>
+                  <span class="footer__contact-icon footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'phone-filled' %}</span>
                   <span>{{ block.settings.phone | escape }}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.email != blank -%}
                 <a href="mailto:{{ block.settings.email | escape }}" class="footer__contact-item">
-                  <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'mail' %}</span>
+                  <span class="footer__contact-icon footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'mail-filled' %}</span>
                   <span>{{ block.settings.email | escape }}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.address != blank -%}
                 {%- if block.settings.address_link != blank -%}
                   <a href="{{ block.settings.address_link }}" class="footer__contact-item footer__contact-item--address" target="_blank" rel="noopener noreferrer">
-                    <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'marker-pin' %}</span>
+                    <span class="footer__contact-icon footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'marker-filled' %}</span>
                     <span>{{ block.settings.address | escape | newline_to_br }}<span class="visually-hidden"> {{ 'general.accessibility.opens_in_new_tab' | t }}</span></span>
                   </a>
                 {%- else -%}
                   <p class="footer__contact-item footer__contact-item--address">
-                    <span class="footer__contact-icon" aria-hidden="true">{% render 'icon', name: 'marker-pin' %}</span>
+                    <span class="footer__contact-icon footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'marker-filled' %}</span>
                     <span>{{ block.settings.address | escape | newline_to_br }}</span>
                   </p>
                 {%- endif -%}
@@ -254,8 +254,8 @@
     margin-top: 3px;
   }
 
-  /* The filled phone icon is drawn in the heading green. */
-  .footer__contact-icon--phone {
+  /* The filled phone, email and location icons are drawn in the heading green. */
+  .footer__contact-icon--filled {
     color: var(--color-primary);
   }
 
