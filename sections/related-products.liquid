@@ -41,6 +41,13 @@
   display: block;
 }
 
+/* The section starts as an empty shell and is filled in by script. With no
+   recommendations it stays empty, so it must not keep its padding either -
+   that would leave a blank band on the page. */
+.related-products:not(:has(> .container)) {
+  padding-block: 0;
+}
+
 .related-products__grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
