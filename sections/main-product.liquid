@@ -790,6 +790,22 @@ h1.product-title {
   border-radius: var(--radius-m);
 }
 
+/* "Buy it now" in the same light green as the Our Mission section (the surface
+   color) with dark green text, instead of Shopify's default blue. The loading
+   placeholder gets the same color, so there is no blue-to-green flash. The
+   branded wallet buttons (Shop Pay, Apple Pay and so on) keep their own look. */
+.product-buy-box__payment .shopify-payment-button__button:not(.shopify-payment-button__button--branded) {
+  background-color: var(--color-surface) !important;
+  color: var(--color-primary) !important;
+  border: 0 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-buy-box__payment .shopify-payment-button__button:not(.shopify-payment-button__button--branded):hover {
+    background-color: color-mix(in srgb, var(--color-surface) 80%, var(--color-primary)) !important;
+  }
+}
+
 .product-buy-box__waitlist {
   width: 100%;
 }
