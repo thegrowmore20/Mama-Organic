@@ -56,7 +56,7 @@
   display: block;
   flex: 0 0 calc((100% - (var(--collections-columns) - 1) * var(--collections-gap)) / var(--collections-columns));
   min-width: 0;
-  text-align: center;
+  text-align: left;
   transform-origin: center;
   transition: transform 0.25s ease;
   backface-visibility: hidden;
@@ -84,7 +84,7 @@
 .collection-card__title {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-1);
   margin: var(--space-2) 0 0;
   font-size: 16px;
