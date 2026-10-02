@@ -55,11 +55,24 @@ document.addEventListener('submit', (event) => {
   const formData = new FormData(form)
   formData.append('sections_url', window.location.pathname)
 
-  fetch(window.routes.cartAddUrl, {
-    method: 'POST',
-    headers: { Accept: 'application/javascript' },
-    body: formData,
-  })
+  // Ticked add-ons (the product page's add-ons block) go into the same request
+  // as extra items, so the main product and its add-ons are added together.
+  const addonIds = Array.from(form.querySelectorAll('[data-addon-checkbox]:checked'), (box) => Number(box.value))
+  const requestInit = { method: 'POST', headers: { Accept: 'application/javascript' }, body: formData }
+  if (addonIds.length > 0) {
+    const mainItem = { id: Number(formData.get('id')), quantity: Number(formData.get('quantity')) || 1 }
+    const sellingPlan = formData.get('selling_plan')
+    if (sellingPlan) mainItem.selling_plan = Number(sellingPlan)
+    requestInit.headers = { 'Content-Type': 'application/json', Accept: 'application/json' }
+    requestInit.body = JSON.stringify({
+      items: [mainItem, ...addonIds.map((id) => ({ id, quantity: 1 }))],
+      sections: formData.get('sections'),
+      sections_url: window.location.pathname,
+    })
+  }
+
+  let added = false
+  fetch(window.routes.cartAddUrl, requestInit)
     .then((response) => response.json())
     .then((json) => {
       if (json.status) {
@@ -67,6 +80,7 @@ document.addEventListener('submit', (event) => {
         document.dispatchEvent(new CustomEvent('cart:error', { detail: json }))
         return
       }
+      added = true
       document.dispatchEvent(new CustomEvent('cart:updated', { detail: { sections: json.sections } }))
     })
     .catch((error) => {
@@ -80,7 +94,7 @@ document.addEventListener('submit', (event) => {
         button.disabled = disabledStates.get(button)
         button.removeAttribute('aria-busy')
       }
-      form.dispatchEvent(new CustomEvent('cart:complete'))
+      form.dispatchEvent(new CustomEvent('cart:complete', { detail: { success: added } }))
     })
 })
 

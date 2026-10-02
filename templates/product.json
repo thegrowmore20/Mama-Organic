@@ -35,6 +35,12 @@
           "type": "variant_picker",
           "settings": {}
         },
+        "addons_block": {
+          "type": "addons",
+          "settings": {
+            "heading": "Add to your order"
+          }
+        },
         "quantity-buy-buttons": {
           "type": "quantity_buy_buttons",
           "settings": {
@@ -141,6 +147,7 @@
         "judge_me_reviews_preview_badge_UhKfiV",
         "price",
         "variant-picker",
+        "addons_block",
         "quantity-buy-buttons",
         "delivery_FbrJ8k",
         "icons-with-text",

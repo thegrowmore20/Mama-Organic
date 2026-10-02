@@ -93,6 +93,13 @@
     "product": {
       "add_to_cart": "Add to Cart",
       "delivery_estimate": "Receive by {{ from }} - {{ to }}",
+      "addons_none": "No add-ons selected",
+      "addons_one": "1 add-on selected",
+      "addons_many": "{{ count }} add-ons selected",
+      "addons_add_label": "Add {{ title }} for {{ price }}",
+      "addons_go_to": "Go to add-on {{ index }}",
+      "addons_previous": "Previous add-on",
+      "addons_next": "Next add-on",
       "sale": "Save {{ percentage }}%",
       "sale_amount": "Save {{ amount }}",
       "reviews": "{{ count }} Reviews",

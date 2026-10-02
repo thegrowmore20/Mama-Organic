@@ -1,0 +1,98 @@
+{%- comment -%}
+  Product add-ons, ported from the AirVape addons_and_free_gifts snippet.
+  The add-on products come from the product's custom.addons metafield (a list of
+  product references). Each one is a row with a thumbnail, its title and a
+  "+price" toggle; ticking it adds that product to the cart together with the
+  main product when Add to Cart is pressed (assets/global.js reads the ticked
+  [data-addon-checkbox] inputs). A summary line shows how many are selected and
+  their total. On phones the rows become a swipeable slider with arrows and dots.
+  Renders nothing when the product has no add-ons.
+
+  Accepts:
+    product - {Object} the current product
+    heading - {String} optional heading above the list
+
+  Usage:
+  {% render 'product-addons', product: product, heading: block.settings.heading %}
+{%- endcomment -%}
+
+{%- assign addon_products = product.metafields.custom.addons.value -%}
+
+{%- if addon_products != blank and addon_products.size > 0 -%}
+  <product-addons
+    class="product-addons"
+    data-label-none="{{ 'products.product.addons_none' | t }}"
+    data-label-one="{{ 'products.product.addons_one' | t }}"
+    data-label-many="{{ 'products.product.addons_many' | t: count: '__COUNT__' }}"
+    data-label-go-to="{{ 'products.product.addons_go_to' | t: index: '__INDEX__' }}"
+    data-label-previous="{{ 'products.product.addons_previous' | t }}"
+    data-label-next="{{ 'products.product.addons_next' | t }}"
+  >
+    {%- if heading != blank -%}
+      <p class="product-addons__heading">{{ heading | escape }}</p>
+    {%- endif -%}
+
+    <div class="product-addons__slider">
+      <ul class="product-addons__list" role="list" data-addons-list>
+        {%- for addon in addon_products -%}
+          {%- assign addon_variant = addon.selected_or_first_available_variant -%}
+          {%- assign addon_price = addon_variant.price | money -%}
+          <li class="product-addons__item" data-addon-item>
+            <span class="product-addons__thumb">
+              {%- if addon.featured_image -%}
+                {{
+                  addon.featured_image
+                  | image_url: width: 160
+                  | image_tag:
+                    widths: '80, 120, 160',
+                    sizes: '54px',
+                    width: 54,
+                    height: 54,
+                    alt: addon.featured_image.alt | default: addon.title,
+                    loading: 'lazy'
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'product-addons__placeholder' }}
+              {%- endif -%}
+            </span>
+
+            <div class="product-addons__info">
+              <a href="{{ addon.url }}" class="product-addons__name">{{ addon.title | escape }}</a>
+            </div>
+
+            <label
+              class="product-addons__toggle"
+              aria-label="{{ 'products.product.addons_add_label' | t: title: addon.title, price: addon_price }}"
+            >
+              {%- comment -%} No name attribute: it must not be submitted with the product form; global.js adds ticked add-ons as separate cart items. {%- endcomment -%}
+              <input
+                type="checkbox"
+                class="product-addons__checkbox"
+                value="{{ addon_variant.id }}"
+                data-addon-checkbox
+                data-price="{{ addon_variant.price }}"
+                {% unless addon_variant.available %}disabled{% endunless %}
+              >
+              <span class="product-addons__shell">
+                {%- if addon_variant.available -%}
+                  <span class="product-addons__price">+{{ addon_variant.price | money }}</span>
+                  <span class="product-addons__tick" aria-hidden="true">&#10003;</span>
+                {%- else -%}
+                  <span class="product-addons__price">{{ 'products.product.sold_out' | t }}</span>
+                {%- endif -%}
+              </span>
+            </label>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- comment -%} Arrows and dots: filled in and shown by the script on phones only. {%- endcomment -%}
+      <div class="product-addons__controls" data-addons-controls hidden></div>
+    </div>
+
+    <p class="product-addons__summary" aria-live="polite">
+      <span data-addons-text>{{ 'products.product.addons_none' | t }}</span>
+      <span class="product-addons__total" data-addons-total></span>
+    </p>
+  </product-addons>
+{%- endif -%}

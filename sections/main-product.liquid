@@ -84,6 +84,11 @@
                     {%- render 'product-variant-picker', product: product -%}
                   </div>
 
+                {%- when 'addons' -%}
+                  <div class="product-addons-block" {{ block.shopify_attributes }}>
+                    {% render 'product-addons', product: product, heading: block.settings.heading %}
+                  </div>
+
                 {%- when 'quantity_buy_buttons' -%}
                   <div {{ block.shopify_attributes }}>
                     {%- render 'product-buy-buttons',
@@ -1002,6 +1007,269 @@ h1.product-title {
   }
 }
 
+/* Add-ons block (snippets/product-addons): rows with a thumbnail, title and a
+   "+price" toggle; a slider with arrows and dots on phones. */
+.product-addons-block {
+  margin: var(--space-4) 0;
+}
+
+product-addons {
+  display: block;
+}
+
+.product-addons__heading {
+  margin: 0 0 var(--space-2);
+  font-size: 14px;
+  font-weight: var(--font-accent-weight);
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+}
+
+.product-addons__slider {
+  position: relative;
+}
+
+.product-addons__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.product-addons__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) 6px;
+  border-radius: var(--radius-s);
+}
+
+.product-addons__thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-s);
+  background: var(--color-surface);
+}
+
+.product-addons__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-addons__placeholder {
+  width: 2rem;
+  opacity: 0.3;
+}
+
+.product-addons__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-addons__name {
+  display: block;
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--color-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-addons__toggle {
+  position: relative;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+/* The real checkbox sits invisibly over the whole toggle so it stays clickable
+   and focusable; the shell next to it draws the state. */
+.product-addons__checkbox {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.product-addons__checkbox:disabled {
+  cursor: not-allowed;
+}
+
+.product-addons__shell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84px;
+  height: 38px;
+  padding: 0 var(--space-3);
+  overflow: hidden;
+  border: 2px solid var(--button-primary, var(--color-secondary-a11y));
+  border-radius: var(--radius-m);
+  background: var(--button-primary, var(--color-secondary-a11y));
+  color: #fff;
+  pointer-events: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.product-addons__price,
+.product-addons__tick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.product-addons__tick {
+  position: absolute;
+  inset: 0;
+  font-size: 18px;
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.product-addons__checkbox:checked ~ .product-addons__shell {
+  background: var(--color-background);
+  color: var(--button-primary, var(--color-secondary-a11y));
+}
+
+.product-addons__checkbox:checked ~ .product-addons__shell .product-addons__price {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.product-addons__checkbox:checked ~ .product-addons__shell .product-addons__tick {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-addons__checkbox:disabled ~ .product-addons__shell {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+}
+
+.product-addons__checkbox:focus-visible ~ .product-addons__shell {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.product-addons__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 20px;
+  margin: 0 0 var(--space-3);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.product-addons__total {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Phones: one add-on at a time, swipeable, with arrows and dots below. */
+@media screen and (max-width: 768px) {
+  .product-addons__list {
+    flex-direction: row;
+    gap: 0;
+    margin-bottom: var(--space-2);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .product-addons__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-addons__item {
+    flex: 0 0 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+  }
+
+  .product-addons__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .product-addons__controls[hidden] {
+    display: none;
+  }
+}
+
+.product-addons__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.product-addons__arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.product-addons__arrow--prev svg {
+  transform: scaleX(-1);
+}
+
+.product-addons__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.product-addons__dots {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.product-addons__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-border);
+  cursor: pointer;
+}
+
+.product-addons__dot.is-active {
+  background: var(--color-primary);
+}
+
 /* Delivery date block (snippets/product-delivery-dates) */
 .product-delivery-block {
   margin: var(--space-4) 0;
@@ -1174,6 +1442,143 @@ h1.product-title {
 // doesn't mistake this fallback money-format placeholder for a Liquid output
 // tag - a literal double-brace pair anywhere in this block breaks the parser.
 const DEFAULT_MONEY_FORMAT = '$' + String.fromCharCode(123, 123) + 'amount' + String.fromCharCode(125, 125)
+
+// Add-ons (snippets/product-addons): keeps the "N add-ons selected  +total"
+// summary current, runs the phone slider (arrows + dots), and clears the ticks
+// once the add-to-cart request has finished. The ticked checkboxes themselves are
+// read by the add-to-cart handler in assets/global.js.
+class ProductAddons extends HTMLElement {
+  #list
+  #controls
+  #text
+  #total
+  #moneyFormat = DEFAULT_MONEY_FORMAT
+  #current = 0
+  #mobile = window.matchMedia('(max-width: 768px)')
+  #resizeTimer
+
+  connectedCallback() {
+    this.#list = this.querySelector('[data-addons-list]')
+    this.#controls = this.querySelector('[data-addons-controls]')
+    this.#text = this.querySelector('[data-addons-text]')
+    this.#total = this.querySelector('[data-addons-total]')
+    this.#moneyFormat = this.closest('product-info')?.dataset.moneyFormat || DEFAULT_MONEY_FORMAT
+
+    this.addEventListener('change', (event) => {
+      if (event.target.matches('[data-addon-checkbox]')) this.#updateSummary()
+    })
+    // Clear the ticks after a successful add to cart, so they aren't added twice.
+    this.closest('form')?.addEventListener('cart:complete', (event) => {
+      if (event.detail?.success) this.reset()
+    })
+    window.addEventListener('resize', () => {
+      window.clearTimeout(this.#resizeTimer)
+      this.#resizeTimer = window.setTimeout(() => this.#initSlider(), 200)
+    }, { passive: true })
+
+    this.#updateSummary()
+    this.#initSlider()
+  }
+
+  reset() {
+    for (const box of this.querySelectorAll('[data-addon-checkbox]:checked')) box.checked = false
+    this.#updateSummary()
+  }
+
+  #updateSummary() {
+    const checked = Array.from(this.querySelectorAll('[data-addon-checkbox]:checked'))
+    const cents = checked.reduce((sum, box) => sum + Number(box.dataset.price || 0), 0)
+
+    if (checked.length === 0) {
+      this.#text.textContent = this.dataset.labelNone
+      this.#total.textContent = ''
+      return
+    }
+    this.#text.textContent = checked.length === 1
+      ? this.dataset.labelOne
+      : this.dataset.labelMany.replace('__COUNT__', String(checked.length))
+    this.#total.textContent = '+' + this.#formatMoney(cents)
+  }
+
+  #formatMoney(cents) {
+    const amount = (cents / 100).toFixed(2)
+    const [dollars, decimalPart] = amount.split('.')
+    const withComma = dollars.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return this.#moneyFormat
+      .replace(/\{\{\s*amount\s*\}\}/, amount)
+      .replace(/\{\{\s*amount_no_decimals\s*\}\}/, Math.round(cents / 100).toString())
+      .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/, withComma + '.' + decimalPart)
+      .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/, withComma)
+  }
+
+  // Phones only, and only when there is more than one add-on.
+  #initSlider() {
+    const items = this.#list.querySelectorAll('[data-addon-item]')
+    if (!this.#mobile.matches || items.length <= 1) {
+      this.#controls.hidden = true
+      this.#controls.replaceChildren()
+      return
+    }
+
+    const arrow = (direction, label) => {
+      const button = document.createElement('button')
+      button.type = 'button'
+      button.className = 'product-addons__arrow product-addons__arrow--' + direction
+      button.setAttribute('aria-label', label)
+      button.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>'
+      return button
+    }
+    const previous = arrow('prev', this.dataset.labelPrevious)
+    const next = arrow('next', this.dataset.labelNext)
+    const dotsWrap = document.createElement('div')
+    dotsWrap.className = 'product-addons__dots'
+    const dots = Array.from(items, (_, index) => {
+      const dot = document.createElement('button')
+      dot.type = 'button'
+      dot.className = 'product-addons__dot'
+      dot.setAttribute('aria-label', this.dataset.labelGoTo.replace('__INDEX__', String(index + 1)))
+      dot.addEventListener('click', () => goTo(index))
+      dotsWrap.append(dot)
+      return dot
+    })
+
+    const goTo = (index) => {
+      this.#current = Math.max(0, Math.min(items.length - 1, index))
+      this.#list.scrollTo({ left: this.#list.offsetWidth * this.#current, behavior: 'smooth' })
+      refresh()
+    }
+    const refresh = () => {
+      dots.forEach((dot, index) => dot.classList.toggle('is-active', index === this.#current))
+      previous.disabled = this.#current === 0
+      next.disabled = this.#current === items.length - 1
+    }
+
+    previous.addEventListener('click', () => goTo(this.#current - 1))
+    next.addEventListener('click', () => goTo(this.#current + 1))
+
+    // Swiping moves the dots too.
+    let scrollTimer
+    this.#list.onscroll = () => {
+      window.clearTimeout(scrollTimer)
+      scrollTimer = window.setTimeout(() => {
+        const width = this.#list.offsetWidth
+        if (!width) return
+        const index = Math.round(this.#list.scrollLeft / width)
+        if (index !== this.#current) {
+          this.#current = index
+          refresh()
+        }
+      }, 80)
+    }
+
+    this.#controls.replaceChildren(previous, dotsWrap, next)
+    this.#controls.hidden = false
+    this.#current = Math.min(this.#current, items.length - 1)
+    refresh()
+  }
+}
+
+if (!customElements.get('product-addons')) customElements.define('product-addons', ProductAddons)
 
 class ProductInfo extends HTMLElement {
   #form
@@ -2078,6 +2483,19 @@ if (!customElements.get('product-info')) {
           "id": "label",
           "label": "Label",
           "default": "Share"
+        }
+      ]
+    },
+    {
+      "type": "addons",
+      "name": "Add-ons",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Shows the products in the product's add-ons metafield (custom.addons). Nothing shows when it is empty.",
+          "default": "Add to your order"
         }
       ]
     },
