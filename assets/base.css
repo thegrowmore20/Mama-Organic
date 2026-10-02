@@ -735,3 +735,50 @@ summary:focus-visible {
 .AirReviews-Widget .AirReviews-Widget__FloatButtonWrapper {
   display: none !important
 }
+
+
+
+
+
+
+/* Custom css */
+.header__menu-trigger {
+    padding: 0px 0.5rem;
+}
+
+.main-menu-container {
+    border-top: 1px solid #cccccc82;
+}
+
+header.header > .container {
+    padding: 8px 0px;
+    padding-inline: var(--space-5);
+}
+nav#HeaderNav {
+    margin: auto;
+}
+.header__nav-link, .header__menu-trigger {
+    text-transform: lowercase;
+}
+.header__nav-link:first-letter, .header__menu-trigger:first-letter span {
+    text-transform: capitalize;
+}
+.collection-banner__text {
+    display: none;
+}
+
+h1.collection-banner__heading.h0 {
+    color: #fff !important;
+}
+.collection-banner__content-wrap {
+}
+
+.collection-banner {
+    max-width: calc(100% - 40px);
+    margin: 0px auto 20px;
+    border-radius: 20px;
+}
+
+collection-results.collection-grid-section.section-padding {
+    padding-top: 10px;
+}

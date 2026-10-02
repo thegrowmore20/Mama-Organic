@@ -19,82 +19,7 @@
         </span>
       {%- endif -%}
     </a>
-
-    <nav class="header__nav" id="HeaderNav">
-      <button type="button" class="header__nav-close" id="HeaderNavClose" aria-label="{{ 'general.accessibility.close' | t }}">
-        {% render 'icon', name: 'close' %}
-      </button>
-      {%- for link in section.settings.menu.links -%}
-        {%- if link.links != blank -%}
-          <div class="u-flex u-items-center header__nav-item has-menu">
-            <a href="{{ link.url }}" class="u-inline-flex u-items-center header__nav-link header__menu-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="Menu-{{ forloop.index }}">
-              <span class="u-flex header__menu-trigger-label">
-                {{ link.title }}
-                <span class="header__menu-count">({{ link.links.size }})</span>
-              </span>
-              {% render 'icon', name: 'chevron-down' %}
-            </a>
-
-            {%- comment -%}
-              One panel, two presentations driven purely by CSS: a full-width card
-              dropdown on desktop, a collapsible accordion row-list on mobile.
-              See CLAUDE.md — only one .header__menu-panel may be open at a time.
-            {%- endcomment -%}
-            <div class="header__menu-panel" id="Menu-{{ forloop.index }}">
-              <div class="header__menu-panel-inner">
-                <div class="mega-menu__inner container">
-                  <div class="u-flex u-justify-center mega-menu__cards">
-                    {%- for sub in link.links limit: 6 -%}
-                      {%- if sub.type == 'product_link' and sub.object -%}
-                        {% render 'mega-menu-product-card', product: sub.object %}
-                      {%- else -%}
-                        <a class="mega-menu__text-link" href="{{ sub.url }}">{{ sub.title }}</a>
-                      {%- endif -%}
-                    {%- endfor -%}
-                    {%- if link.links.size > 6 -%}
-                      <a class="u-flex u-items-center u-justify-center mega-menu__view-all" href="{{ link.url }}">
-                        <span>{{ 'general.navigation.view_all' | t }}</span>
-                        {% render 'icon', name: 'arrow-right' %}
-                      </a>
-                    {%- endif -%}
-                  </div>
-                </div>
-                <div class="header__accordion-rows">
-                  {%- for sub in link.links -%}
-                    <a class="header__accordion-row" href="{{ sub.url }}">
-                      {%- if sub.type == 'product_link' and sub.object and sub.object.featured_image -%}
-                        {{ sub.object.featured_image | image_url: width: 64 | image_tag: loading: 'lazy', width: 32, height: 32, alt: '' }}
-                      {%- endif -%}
-                      <span>{{ sub.title }}</span>
-                    </a>
-                  {%- endfor -%}
-                  {%- if link.links.size > 10 -%}
-                    <a class="header__accordion-row header__accordion-row--view-all" href="{{ link.url }}">
-                      <span>{{ 'general.navigation.view_all' | t }}</span>
-                      {% render 'icon', name: 'arrow-right' %}
-                    </a>
-                  {%- endif -%}
-                </div>
-              </div>
-            </div>
-          </div>
-        {%- else -%}
-          <a class="header__nav-link" href="{{ link.url }}"{% if link.url == request.path %} aria-current="page"{% endif %}>
-            {{ link.title }}
-          </a>
-        {%- endif -%}
-      {%- else -%}
-        <a class="header__nav-link" href="{{ routes.root_url }}"{% if request.path == routes.root_url %} aria-current="page"{% endif %}>Home</a>
-        <a class="header__nav-link" href="{{ routes.all_products_collection_url }}">Shop Products</a>
-        <a class="header__nav-link" href="{{ routes.root_url }}">Shop Bundles</a>
-      {%- endfor -%}
-
-      <a class="header__nav-link header__nav-account" href="{{ routes.account_url }}">
-        {% render 'icon', name: 'account' %}
-        <span>Account</span>
-      </a>
-    </nav>
-
+    {% comment %} Seach Bar {% endcomment %}
     <div class="u-flex u-items-center header__icons">
       <button type="button" id="SearchToggle" aria-label="{{ 'general.search.placeholder' | t }}" aria-expanded="false" aria-controls="HeaderSearchPopup">
         {% render 'icon', name: 'search' %}
@@ -120,6 +45,84 @@
         {% render 'icon', name: 'cart' %}
         {% render 'cart-icon-bubble' %}
       </a>
+    </div>
+  </div>
+  <div class="main-menu-container">
+    <div class="container header__inner">
+      <nav class="header__nav" id="HeaderNav">
+        <button type="button" class="header__nav-close" id="HeaderNavClose" aria-label="{{ 'general.accessibility.close' | t }}">
+          {% render 'icon', name: 'close' %}
+        </button>
+        {%- for link in section.settings.menu.links -%}
+          {%- if link.links != blank -%}
+            <div class="u-flex u-items-center header__nav-item has-menu">
+              <a href="{{ link.url }}" class="u-inline-flex u-items-center header__nav-link header__menu-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="Menu-{{ forloop.index }}">
+                <span class="u-flex header__menu-trigger-label">
+                  {{ link.title }}
+                  <span class="header__menu-count">({{ link.links.size }})</span>
+                </span>
+                {% render 'icon', name: 'chevron-down' %}
+              </a>
+
+              {%- comment -%}
+                One panel, two presentations driven purely by CSS: a full-width card
+                dropdown on desktop, a collapsible accordion row-list on mobile.
+                See CLAUDE.md — only one .header__menu-panel may be open at a time.
+              {%- endcomment -%}
+              <div class="header__menu-panel" id="Menu-{{ forloop.index }}">
+                <div class="header__menu-panel-inner">
+                  <div class="mega-menu__inner container">
+                    <div class="u-flex u-justify-center mega-menu__cards">
+                      {%- for sub in link.links limit: 6 -%}
+                        {%- if sub.type == 'product_link' and sub.object -%}
+                          {% render 'mega-menu-product-card', product: sub.object %}
+                        {%- else -%}
+                          <a class="mega-menu__text-link" href="{{ sub.url }}">{{ sub.title }}</a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {%- if link.links.size > 6 -%}
+                        <a class="u-flex u-items-center u-justify-center mega-menu__view-all" href="{{ link.url }}">
+                          <span>{{ 'general.navigation.view_all' | t }}</span>
+                          {% render 'icon', name: 'arrow-right' %}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                  <div class="header__accordion-rows">
+                    {%- for sub in link.links -%}
+                      <a class="header__accordion-row" href="{{ sub.url }}">
+                        {%- if sub.type == 'product_link' and sub.object and sub.object.featured_image -%}
+                          {{ sub.object.featured_image | image_url: width: 64 | image_tag: loading: 'lazy', width: 32, height: 32, alt: '' }}
+                        {%- endif -%}
+                        <span>{{ sub.title }}</span>
+                      </a>
+                    {%- endfor -%}
+                    {%- if link.links.size > 10 -%}
+                      <a class="header__accordion-row header__accordion-row--view-all" href="{{ link.url }}">
+                        <span>{{ 'general.navigation.view_all' | t }}</span>
+                        {% render 'icon', name: 'arrow-right' %}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            <a class="header__nav-link" href="{{ link.url }}"{% if link.url == request.path %} aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          {%- endif -%}
+        {%- else -%}
+          <a class="header__nav-link" href="{{ routes.root_url }}"{% if request.path == routes.root_url %} aria-current="page"{% endif %}>Home</a>
+          <a class="header__nav-link" href="{{ routes.all_products_collection_url }}">Shop Products</a>
+          <a class="header__nav-link" href="{{ routes.root_url }}">Shop Bundles</a>
+        {%- endfor -%}
+
+        <a class="header__nav-link header__nav-account" href="{{ routes.account_url }}">
+          {% render 'icon', name: 'account' %}
+          <span>Account</span>
+        </a>
+      </nav>
     </div>
   </div>
 
@@ -181,7 +184,7 @@
    reserving 60px here too would add unwanted whitespace above the hero until
    JS corrects it back down. */
 body:not(:has(.banner--transparent-header)) {
-  padding-top: var(--header-height, 60px);
+  padding-top: var(--header-height, 90px);
 }
 
 .header {
@@ -386,11 +389,7 @@ body:not(:has(.banner--transparent-header)) {
   gap: 6px;
   font-size: 16px;
   color: var(--color-primary);
-  /* calc(): shaves 5px off top and bottom (10px total) to bring the desktop
-     header down to 60px, matching the mobile height — the max-width:990px
-     override just below already gives mobile/tablet drawer rows their own
-     0.5rem padding, so this only affects desktop. */
-  padding: calc(1.4rem - 5px) 0.5rem;
+  padding: 8px 20px;
 }
 
 @media screen and (max-width: 990px) {

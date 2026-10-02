@@ -90,6 +90,51 @@
         "padding_bottom": 30
       }
     },
+    "features_with_image_ymQnGd": {
+      "type": "features-with-image",
+      "blocks": {
+        "feature_mjiD84": {
+          "type": "feature",
+          "settings": {
+            "title": "Best of nature",
+            "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
+          }
+        },
+        "feature_dT8q8J": {
+          "type": "feature",
+          "settings": {
+            "title": "No toxin",
+            "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
+          }
+        },
+        "feature_bYW7py": {
+          "type": "feature",
+          "settings": {
+            "title": "Cruelty Free",
+            "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
+          }
+        },
+        "feature_tUjhbb": {
+          "type": "feature",
+          "settings": {
+            "title": "Safe and Certified",
+            "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
+          }
+        }
+      },
+      "block_order": [
+        "feature_mjiD84",
+        "feature_dT8q8J",
+        "feature_bYW7py",
+        "feature_tUjhbb"
+      ],
+      "name": "Features with image",
+      "settings": {
+        "heading": "Why Trust mamaorganic",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
     "collection_list_iYDEV6": {
       "type": "collection-list",
       "blocks": {
@@ -744,6 +789,7 @@
   "order": [
     "hero_slideshow_mamaorganic",
     "best-sellers",
+    "features_with_image_ymQnGd",
     "collection_list_iYDEV6",
     "featured_collection_7wxMW6",
     "shop-by-concern",
