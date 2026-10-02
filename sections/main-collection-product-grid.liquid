@@ -1,18 +1,6 @@
 {%- liquid
-  assign has_quick_links = false
-  if section.settings.quick_link_1_text != blank and section.settings.quick_link_1_url != blank
-    assign has_quick_links = true
-  elsif section.settings.quick_link_2_text != blank and section.settings.quick_link_2_url != blank
-    assign has_quick_links = true
-  elsif section.settings.quick_link_3_text != blank and section.settings.quick_link_3_url != blank
-    assign has_quick_links = true
-  elsif section.settings.quick_link_4_text != blank and section.settings.quick_link_4_url != blank
-    assign has_quick_links = true
-  endif
-
-  assign nav_menu = section.settings.nav_menu
   assign show_sidebar = false
-  if section.settings.enable_filtering or has_quick_links or nav_menu.links.size > 0
+  if section.settings.enable_filtering or section.blocks.size > 0
     assign show_sidebar = true
   endif
 -%}
@@ -62,7 +50,7 @@
                   </button>
                 </div>
                 <div class="collection-filters__panel-inner" data-filters-panel>
-                  {% render 'facets', results: collection, nav_menu: nav_menu, has_quick_links: has_quick_links, section: section %}
+                  {% render 'facets', results: collection, section: section %}
                 </div>
               </div>
             </collection-filters>
@@ -1076,60 +1064,6 @@ customElements.define('collection-results', CollectionResults)
       "default": true
     },
     {
-      "type": "link_list",
-      "id": "nav_menu",
-      "label": "Navigation-as-filter menu",
-      "info": "Renders this menu's links as an accordion group of checkboxes in the sidebar. Checking one navigates straight to that link — it isn't a real product filter."
-    },
-    {
-      "type": "header",
-      "content": "Quick links"
-    },
-    {
-      "type": "paragraph",
-      "content": "Up to 4 plain navigation rows shown above the filter groups (e.g. Accessories, Shop Enso). These are links, not filters."
-    },
-    {
-      "type": "text",
-      "id": "quick_link_1_text",
-      "label": "Quick link 1 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_1_url",
-      "label": "Quick link 1 URL"
-    },
-    {
-      "type": "text",
-      "id": "quick_link_2_text",
-      "label": "Quick link 2 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_2_url",
-      "label": "Quick link 2 URL"
-    },
-    {
-      "type": "text",
-      "id": "quick_link_3_text",
-      "label": "Quick link 3 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_3_url",
-      "label": "Quick link 3 URL"
-    },
-    {
-      "type": "text",
-      "id": "quick_link_4_text",
-      "label": "Quick link 4 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_4_url",
-      "label": "Quick link 4 URL"
-    },
-    {
       "type": "header",
       "content": "Section padding"
     },
@@ -1152,6 +1086,55 @@ customElements.define('collection-results', CollectionResults)
       "step": 2,
       "unit": "px",
       "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quick_link",
+      "name": "Quick link",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "A plain navigation row above the filters (e.g. Accessories, Shop bundles). It is a link, not a filter. Drag blocks to change the order."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "nav_menu",
+      "name": "Navigation filter menu",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows a menu's links as an accordion of checkboxes. Checking one goes straight to that link, it isn't a real product filter. Drag blocks to change the order."
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Defaults to the menu's title."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": true
+        }
+      ]
     }
   ]
 }

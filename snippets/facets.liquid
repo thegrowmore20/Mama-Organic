@@ -1,15 +1,16 @@
 {%- comment -%}
   Renders the filter sidebar body:
     1. Active filter pills (only when something is actually applied)
-    2. Quick links (fake accordion, chevron right, non-expanding)
-    3. Navigation-as-filter group (chevron down, checkboxes that navigate)
-    4. Real Search & Discovery filters (chevron down, actual facets)
+    2. Section blocks, in the order set in the theme editor:
+       - Quick link (fake accordion, chevron right, non-expanding)
+       - Navigation filter menu (chevron down, checkboxes that navigate)
+    3. Real Search & Discovery filters (chevron down, actual facets)
 
   Accepts:
     results         - collection or search object (.filters, .url, .sort_by)
-    nav_menu        - a linklist object (optional)
-    has_quick_links - boolean
-    section         - the parent section
+    has_quick_links - boolean, search results only (the old per-section quick link settings)
+    section         - the parent section. On the collection page its blocks (quick_link and
+                      nav_menu) render here in block order, so merchants can mix and reorder them.
 {%- endcomment -%}
 
 {%- liquid
@@ -65,7 +66,46 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} 2. Quick links — fake accordion rows, chevron right, plain navigation {%- endcomment -%}
+    {%- comment -%} 2. Section blocks, in editor order {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'quick_link' -%}
+          {%- if block.settings.text != blank and block.settings.url != blank -%}
+            {% render 'facets-quick-link', link_text: block.settings.text, link_url: block.settings.url, attributes: block.shopify_attributes %}
+          {%- endif -%}
+
+        {%- when 'nav_menu' -%}
+          {%- assign block_menu = block.settings.menu -%}
+          {%- if block_menu != blank and block_menu.links.size > 0 -%}
+            <details class="facets__group" data-filter-param="nav-{{ block.id }}" {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+              <summary class="facets__summary">
+                <span>{{ block.settings.heading | default: block_menu.title | escape }}</span>
+                <span class="facets__chevron facets__chevron--down" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+              </summary>
+              <div class="facets__body">
+                <ul class="facets__list" role="list">
+                  {%- for link in block_menu.links -%}
+                    <li class="facets__item">
+                      <label class="facets__checkbox-label">
+                        <input
+                          type="checkbox"
+                          class="facets__checkbox facets__checkbox--nav"
+                          id="FacetNav-{{ block.id }}-{{ forloop.index }}"
+                          data-nav-url="{{ link.url }}"
+                          {% if link.active %}checked{% endif %}
+                        >
+                        <span>{{ link.title | escape }}</span>
+                      </label>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </details>
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- comment -%} Search results: the section has no blocks, so it keeps its own quick link settings. {%- endcomment -%}
     {%- if has_quick_links -%}
       {%- for link_index in (1..4) -%}
         {%- assign link_text_key = 'quick_link_' | append: link_index | append: '_text' -%}
@@ -73,58 +113,12 @@
         {%- assign link_text = section.settings[link_text_key] -%}
         {%- assign link_url = section.settings[link_url_key] -%}
         {%- if link_text != blank and link_url != blank -%}
-          {%- comment -%}
-            Product count for links that point at a collection, so they read like the
-            "(n)" beside each filter value. Anything else (pages, external URLs) just
-            renders without one.
-          {%- endcomment -%}
-          {%- assign link_count = nil -%}
-          {%- if link_url contains '/collections/' -%}
-            {%- assign link_handle = link_url | split: '/collections/' | last | split: '?' | first | split: '/' | first -%}
-            {%- assign link_collection = collections[link_handle] -%}
-            {%- if link_collection != blank -%}
-              {%- assign link_count = link_collection.products_count -%}
-            {%- endif -%}
-          {%- endif -%}
-          <a href="{{ link_url }}" class="facets__group facets__group--link">
-            <span class="facets__summary">
-              <span>{{ link_text }}{% if link_count != nil %} <span class="facets__count text-muted">({{ link_count }})</span>{% endif %}</span>
-              <span class="facets__chevron facets__chevron--right" aria-hidden="true">{% render 'icon', name: 'chevron-right' %}</span>
-            </span>
-          </a>
+          {% render 'facets-quick-link', link_text: link_text, link_url: link_url %}
         {%- endif -%}
       {%- endfor -%}
     {%- endif -%}
 
-    {%- comment -%} 3. Navigation-as-filter — real accordion, checkboxes that redirect {%- endcomment -%}
-    {%- if nav_menu and nav_menu.links.size > 0 -%}
-      <details class="facets__group" data-filter-param="nav-menu" open>
-        <summary class="facets__summary">
-          <span>{{ nav_menu.title }}</span>
-          <span class="facets__chevron facets__chevron--down" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
-        </summary>
-        <div class="facets__body">
-          <ul class="facets__list" role="list">
-            {%- for link in nav_menu.links -%}
-              <li class="facets__item">
-                <label class="facets__checkbox-label">
-                  <input
-                    type="checkbox"
-                    class="facets__checkbox facets__checkbox--nav"
-                    id="FacetNav-{{ section.id }}-{{ forloop.index }}"
-                    data-nav-url="{{ link.url }}"
-                    {% if link.active %}checked{% endif %}
-                  >
-                  <span>{{ link.title | escape }}</span>
-                </label>
-              </li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      </details>
-    {%- endif -%}
-
-    {%- comment -%} 4. Real Search & Discovery filters {%- endcomment -%}
+    {%- comment -%} 3. Real Search & Discovery filters {%- endcomment -%}
     {%- for filter in results.filters -%}
       {%- if filter.type == 'price_range' -%}
         <details class="facets__group" data-filter-param="{{ filter.param_name }}" open>

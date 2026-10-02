@@ -19,10 +19,10 @@
           "settings": {
             "heading": "Contact",
             "link_label": "Get in touch",
-            "link_url": "/pages/contact-us",
+            "link_url": "shopify://pages/contact-us",
             "phone": "+92 311 146 4444",
             "email": "sales@mamaorganic.pk",
-            "address": "HSB Care Pvt\n249 E 1 Johar Town Lahore\nPakistan",
+            "address": "HSB Care Pvt\n249 E 1 Johar Town Lahore, Pakistan",
             "address_link": "https://maps.app.goo.gl/VSVfaNjfoY8v7vKP9"
           }
         }

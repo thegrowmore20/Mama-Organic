@@ -39,15 +39,6 @@
         "columns_mobile": "2",
         "enable_filtering": true,
         "enable_sorting": true,
-        "nav_menu": "",
-        "quick_link_1_text": "Shop Products",
-        "quick_link_1_url": "shopify://collections/products",
-        "quick_link_2_text": "Shop Bundles",
-        "quick_link_2_url": "shopify://collections/bundles",
-        "quick_link_3_text": "",
-        "quick_link_3_url": "",
-        "quick_link_4_text": "",
-        "quick_link_4_url": "",
         "padding_top": 60,
         "padding_bottom": 60
       }

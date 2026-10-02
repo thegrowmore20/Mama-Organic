@@ -1,0 +1,33 @@
+{%- comment -%}
+  One plain navigation row in the filter sidebar (looks like a collapsed
+  accordion group, but is just a link). Used by snippets/facets.liquid for the
+  collection page's Quick link blocks and the search page's quick link settings.
+
+  Accepts:
+    link_text  - {String} row label
+    link_url   - {String} destination
+    attributes - {String} optional extra attributes, e.g. block.shopify_attributes
+
+  Usage:
+  {% render 'facets-quick-link', link_text: 'Shop bundles', link_url: '/collections/offers' %}
+{%- endcomment -%}
+
+{%- comment -%}
+  Product count for links that point at a collection, so they read like the
+  "(n)" beside each filter value. Anything else (pages, external URLs) just
+  renders without one.
+{%- endcomment -%}
+{%- assign link_count = nil -%}
+{%- if link_url contains '/collections/' -%}
+  {%- assign link_handle = link_url | split: '/collections/' | last | split: '?' | first | split: '/' | first -%}
+  {%- assign link_collection = collections[link_handle] -%}
+  {%- if link_collection != blank -%}
+    {%- assign link_count = link_collection.products_count -%}
+  {%- endif -%}
+{%- endif -%}
+<a href="{{ link_url }}" class="facets__group facets__group--link" {{ attributes }}>
+  <span class="facets__summary">
+    <span>{{ link_text | escape }}{% if link_count != nil %} <span class="facets__count text-muted">({{ link_count }})</span>{% endif %}</span>
+    <span class="facets__chevron facets__chevron--right" aria-hidden="true">{% render 'icon', name: 'chevron-right' %}</span>
+  </span>
+</a>
