@@ -782,6 +782,14 @@ h1.product-title {
 
 .product-buy-box__payment .shopify-payment-button__button {
   min-height: 44px;
+  border-radius: var(--radius-m);
+}
+
+/* Shopify's accelerated checkout buttons (the newer "Buy it now" and the
+   wallet buttons) read their corner radius from this custom property, so the
+   rounded corners match the other buttons. */
+.product-buy-box__payment {
+  --shopify-accelerated-checkout-button-border-radius: var(--radius-m);
 }
 
 .product-buy-box__waitlist {
