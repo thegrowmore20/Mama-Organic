@@ -180,6 +180,7 @@
 
                 {%- when 'image' -%}
                   {%- if block.settings.image != blank -%}
+                    {%- assign image_alt = block.settings.image.alt | default: product.title -%}
                     <div
                       class="product-image-block product-image-block--{{ block.settings.alignment }}"
                       style="--product-image-width: {{ block.settings.width }}%;"
@@ -188,14 +189,13 @@
                       {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="product-image-block__link">{%- endif -%}
                       {{
                         block.settings.image
-                        | image_url: width: 1600
+                        | image_url: width: 1200
                         | image_tag:
+                          alt: image_alt,
                           loading: 'lazy',
-                          widths: '600, 900, 1200, 1600',
+                          widths: '750, 990, 1200, 1500, 1920',
                           sizes: '(min-width: 990px) 45vw, 100vw',
-                          alt: block.settings.image.alt | default: product.title,
-                          class: 'product-image-block__image',
-                          style: 'aspect-ratio: auto'
+                          class: 'product-image-block__image'
                       }}
                       {%- if block.settings.link != blank -%}</a>{%- endif -%}
                     </div>
@@ -975,39 +975,34 @@ h1.product-title {
 
 /* Image block: a picture placed anywhere in the product info column. */
 .product-image-block {
-  display: flex;
-  align-items: flex-start;
   margin: var(--space-4) 0;
-}
-
-.product-image-block--center {
-  justify-content: center;
-}
-
-.product-image-block--right {
-  justify-content: flex-end;
 }
 
 .product-image-block__link {
   display: block;
-  width: var(--product-image-width, 100%);
-  max-width: 100%;
 }
 
-/* Width follows the setting; height always follows the picture's own
-   proportions (height: auto, align-self: flex-start so the flex row can't
-   stretch it), so it never looks squashed or stretched. */
+/* Same approach as the Shivora theme's block image: the width follows the
+   setting and the height is always automatic, so the picture keeps its own
+   proportions. Alignment uses auto margins, no flex row. */
 .product-image-block__image {
   display: block;
-  align-self: flex-start;
   width: var(--product-image-width, 100%);
   max-width: 100%;
   height: auto;
   object-fit: contain;
 }
 
+.product-image-block--center .product-image-block__image {
+  margin-inline: auto;
+}
+
+.product-image-block--right .product-image-block__image {
+  margin-inline-start: auto;
+}
+
 .product-image-block__link .product-image-block__image {
-  width: 100%;
+  width: var(--product-image-width, 100%);
 }
 
 /* Share */
