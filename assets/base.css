@@ -148,14 +148,14 @@ h2[class] {
   font-family: var(--font-heading);
 }
 
-/* .h0 (hero): 56px on desktop. The clamp scales it down smoothly to a 36px
+/* .h0 (hero): 56px on desktop. The clamp scales it down smoothly to a 38px
    floor on phones (the same 390px-to-1200px range as the .h1-.h6 scale below),
    so there's no size jump at the 750px breakpoint. */
 .h0 {
   font-weight: 500;
   font-family: var(--font-heading);
   line-height: 1.1;
-  font-size: clamp(36px, calc(36px + 20 * (100vw - 390px) / 810), 56px);
+  font-size: clamp(38px, calc(38px + 18 * (100vw - 390px) / 810), 56px);
   text-wrap: balance;
 }
 
