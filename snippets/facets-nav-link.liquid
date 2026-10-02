@@ -1,28 +1,45 @@
 {%- comment -%}
-  One checkbox row for a navigation-as-filter menu link. Checking it navigates
-  to the link (see the data-nav-url handler in sections/main-collection-product-grid.liquid);
-  it isn't a real product filter. Links that point at a collection show their
-  product count in brackets, like the "(n)" beside each real filter value.
+  One row for a navigation-as-filter menu link. It is a plain link; links that
+  point at a collection show their product count in brackets, like the "(n)"
+  beside each real filter value. The active link is highlighted, and so is a
+  link that contains the active one (its child_active parent).
+
+  The checkbox version (checking it navigates to the link) is kept behind
+  show_checkbox so it can be switched back on later - pass show_checkbox: true.
+  It isn't a real product filter either way.
 
   Accepts:
-    link     - {Object} a menu link
-    input_id - {String} unique id for the checkbox
+    link          - {Object} a menu link
+    input_id      - {String} unique id, used only by the checkbox version
+    show_checkbox - {Boolean} optional, default false
 
   Usage:
   {% render 'facets-nav-link', link: child, input_id: 'FacetNav-abc-1-2' %}
+  {% render 'facets-nav-link', link: child, input_id: 'FacetNav-abc-1-2', show_checkbox: true %}
 {%- endcomment -%}
 
 {%- assign nav_count = nil -%}
 {%- if link.type == 'collection_link' and link.object != blank -%}
   {%- assign nav_count = link.object.products_count -%}
 {%- endif -%}
-<label class="facets__checkbox-label">
-  <input
-    type="checkbox"
-    class="facets__checkbox facets__checkbox--nav"
-    id="{{ input_id }}"
-    data-nav-url="{{ link.url }}"
-    {% if link.active %}checked{% endif %}
+
+{%- if show_checkbox -%}
+  <label class="facets__checkbox-label">
+    <input
+      type="checkbox"
+      class="facets__checkbox facets__checkbox--nav"
+      id="{{ input_id }}"
+      data-nav-url="{{ link.url }}"
+      {% if link.active %}checked{% endif %}
+    >
+    <span>{{ link.title | escape }}{% if nav_count != nil %} <span class="facets__count text-muted">({{ nav_count }})</span>{% endif %}</span>
+  </label>
+{%- else -%}
+  <a
+    href="{{ link.url }}"
+    class="facets__nav-link{% if link.active %} is-active{% elsif link.child_active %} is-parent-active{% endif %}"
+    {% if link.active %}aria-current="page"{% endif %}
   >
-  <span>{{ link.title | escape }}{% if nav_count != nil %} <span class="facets__count text-muted">({{ nav_count }})</span>{% endif %}</span>
-</label>
+    <span>{{ link.title | escape }}{% if nav_count != nil %} <span class="facets__count text-muted">({{ nav_count }})</span>{% endif %}</span>
+  </a>
+{%- endif -%}

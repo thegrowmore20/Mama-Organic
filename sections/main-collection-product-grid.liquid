@@ -512,7 +512,44 @@ details[open] > .facets__sub-summary .facets__chevron--down {
 
 .facets__list--nested {
   margin-top: 10px;
-  padding-inline-start: 26px;
+  padding-inline-start: 14px;
+}
+
+/* Navigation menu rows are plain links. The active link is highlighted with
+   the brand color and a soft background; a link that contains the active one
+   is tinted in the brand color too, so the open path reads at every level. */
+.facets__nav-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 8px;
+  margin-inline: -8px;
+  border-radius: var(--radius-s);
+  font-size: 14px;
+  color: var(--color-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.facets__nav-link.is-parent-active {
+  color: var(--color-secondary);
+}
+
+.facets__nav-link.is-active {
+  background: var(--color-surface);
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+.facets__group--active > .facets__summary > span:first-child,
+.facets__group--parent-active > .facets__summary > span:first-child {
+  color: var(--color-secondary);
+}
+
+/* A second-level link that has children: the link takes the row, the chevron
+   stays on the right and toggles the third level. */
+.facets__sub-summary .facets__nav-link {
+  flex: 1 1 auto;
+  width: auto;
 }
 
 /* The count on a quick-link row sits inside the bold group label - keep it
