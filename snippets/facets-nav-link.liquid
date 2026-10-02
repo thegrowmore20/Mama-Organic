@@ -1,0 +1,28 @@
+{%- comment -%}
+  One checkbox row for a navigation-as-filter menu link. Checking it navigates
+  to the link (see the data-nav-url handler in sections/main-collection-product-grid.liquid);
+  it isn't a real product filter. Links that point at a collection show their
+  product count in brackets, like the "(n)" beside each real filter value.
+
+  Accepts:
+    link     - {Object} a menu link
+    input_id - {String} unique id for the checkbox
+
+  Usage:
+  {% render 'facets-nav-link', link: child, input_id: 'FacetNav-abc-1-2' %}
+{%- endcomment -%}
+
+{%- assign nav_count = nil -%}
+{%- if link.type == 'collection_link' and link.object != blank -%}
+  {%- assign nav_count = link.object.products_count -%}
+{%- endif -%}
+<label class="facets__checkbox-label">
+  <input
+    type="checkbox"
+    class="facets__checkbox facets__checkbox--nav"
+    id="{{ input_id }}"
+    data-nav-url="{{ link.url }}"
+    {% if link.active %}checked{% endif %}
+  >
+  <span>{{ link.title | escape }}{% if nav_count != nil %} <span class="facets__count text-muted">({{ nav_count }})</span>{% endif %}</span>
+</label>

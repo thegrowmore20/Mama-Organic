@@ -1,0 +1,82 @@
+{%- comment -%}
+  Navigation-as-filter menu for the collection sidebar. Up to three menu levels:
+
+    1st level - each link is its own accordion group (the title; click to open).
+                A first-level link with no children is a plain navigation row.
+    2nd level - the items inside the group, as checkbox rows. When a second-level
+                link has children it becomes its own accordion, so its row opens
+                to show the third level.
+    3rd level - checkbox rows indented under their second-level link.
+
+  Links that point at a collection show their product count. Any group that
+  holds the active link opens by itself (first level down to third level).
+  Checking a row navigates to that link; none of this is a real product filter.
+
+  Accepts:
+    menu  - {Object} a linklist
+    block - {Object} the section block (id, settings.open_by_default, shopify_attributes)
+
+  Usage:
+  {% render 'facets-nav-menu', menu: block.settings.menu, block: block %}
+{%- endcomment -%}
+
+{%- for top in menu.links -%}
+  {%- assign top_index = forloop.index -%}
+  {%- assign top_key = 'nav-' | append: block.id | append: '-' | append: top_index -%}
+
+  {%- if top.links.size > 0 -%}
+    {%- assign top_count = nil -%}
+    {%- if top.type == 'collection_link' and top.object != blank -%}
+      {%- assign top_count = top.object.products_count -%}
+    {%- endif -%}
+    <details
+      class="facets__group"
+      data-filter-param="{{ top_key }}"
+      {% if block.settings.open_by_default or top.active or top.child_active %}open{% endif %}
+      {{ block.shopify_attributes }}
+    >
+      <summary class="facets__summary">
+        <span>{{ top.title | escape }}{% if top_count != nil %} <span class="facets__count text-muted">({{ top_count }})</span>{% endif %}</span>
+        <span class="facets__chevron facets__chevron--down" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+      </summary>
+      <div class="facets__body">
+        <ul class="facets__list" role="list">
+          {%- for item in top.links -%}
+            {%- assign item_index = forloop.index -%}
+            {%- assign item_key = top_key | append: '-' | append: item_index -%}
+            {%- assign item_id = 'FacetNav-' | append: block.id | append: '-' | append: top_index | append: '-' | append: item_index -%}
+
+            {%- if item.links.size > 0 -%}
+              <li class="facets__item">
+                <details
+                  class="facets__sub"
+                  data-filter-param="{{ item_key }}"
+                  {% if item.active or item.child_active %}open{% endif %}
+                >
+                  <summary class="facets__sub-summary">
+                    {% render 'facets-nav-link', link: item, input_id: item_id %}
+                    <span class="facets__chevron facets__chevron--down" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+                  </summary>
+                  <ul class="facets__list facets__list--nested" role="list">
+                    {%- for child in item.links -%}
+                      {%- assign child_id = item_id | append: '-' | append: forloop.index -%}
+                      <li class="facets__item">
+                        {% render 'facets-nav-link', link: child, input_id: child_id %}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              </li>
+            {%- else -%}
+              <li class="facets__item">
+                {% render 'facets-nav-link', link: item, input_id: item_id %}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </details>
+  {%- else -%}
+    {% render 'facets-quick-link', link_text: top.title, link_url: top.url, attributes: block.shopify_attributes %}
+  {%- endif -%}
+{%- endfor -%}

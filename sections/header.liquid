@@ -55,6 +55,15 @@
         </button>
         {%- for link in section.settings.menu.links -%}
           {%- if link.links != blank -%}
+            {%- liquid
+              assign has_third_level = false
+              for sub in link.links
+                if sub.links.size > 0
+                  assign has_third_level = true
+                  break
+                endif
+              endfor
+            -%}
             <div class="u-flex u-items-center header__nav-item has-menu">
               <a href="{{ link.url }}" class="u-inline-flex u-items-center header__nav-link header__menu-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="Menu-{{ forloop.index }}">
                 <span class="u-flex header__menu-trigger-label">
@@ -72,6 +81,26 @@
               <div class="header__menu-panel" id="Menu-{{ forloop.index }}">
                 <div class="header__menu-panel-inner">
                   <div class="mega-menu__inner container">
+                    {%- if has_third_level -%}
+                      {%- comment -%}
+                        Three-level menu: each second-level link is a column heading and its
+                        children are the links listed under it.
+                      {%- endcomment -%}
+                      <div class="mega-menu__columns">
+                        {%- for sub in link.links -%}
+                          <div class="mega-menu__column">
+                            <a class="mega-menu__column-title" href="{{ sub.url }}">{{ sub.title }}</a>
+                            {%- if sub.links.size > 0 -%}
+                              <ul class="mega-menu__column-links" role="list">
+                                {%- for child in sub.links -%}
+                                  <li><a class="mega-menu__column-link" href="{{ child.url }}">{{ child.title }}</a></li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- else -%}
                     <div class="u-flex u-justify-center mega-menu__cards">
                       {%- for sub in link.links limit: 6 -%}
                         {%- if sub.type == 'product_link' and sub.object -%}
@@ -87,15 +116,21 @@
                         </a>
                       {%- endif -%}
                     </div>
+                    {%- endif -%}
                   </div>
                   <div class="header__accordion-rows">
                     {%- for sub in link.links -%}
-                      <a class="header__accordion-row" href="{{ sub.url }}">
+                      <a class="header__accordion-row{% if sub.links.size > 0 %} header__accordion-row--parent{% endif %}" href="{{ sub.url }}">
                         {%- if sub.type == 'product_link' and sub.object and sub.object.featured_image -%}
                           {{ sub.object.featured_image | image_url: width: 64 | image_tag: loading: 'lazy', width: 32, height: 32, alt: '' }}
                         {%- endif -%}
                         <span>{{ sub.title }}</span>
                       </a>
+                      {%- for child in sub.links -%}
+                        <a class="header__accordion-row header__accordion-row--child" href="{{ child.url }}">
+                          <span>{{ child.title }}</span>
+                        </a>
+                      {%- endfor -%}
                     {%- endfor -%}
                     {%- if link.links.size > 10 -%}
                       <a class="header__accordion-row header__accordion-row--view-all" href="{{ link.url }}">
@@ -692,6 +727,45 @@ body:not(:has(.banner--transparent-header)) {
   color: var(--color-primary);
 }
 
+/* Three-level menus: a row of columns, each a heading (the second-level link)
+   over a list of its third-level links. */
+.mega-menu__columns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-8) var(--space-8);
+}
+
+.mega-menu__column {
+  flex: 0 1 220px;
+  min-width: 160px;
+}
+
+.mega-menu__column-title {
+  display: block;
+  margin-bottom: var(--space-4);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.mega-menu__column-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mega-menu__column-link {
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
 .mega-menu__view-all {
   align-self: center;
   flex: 0 1 160px;
@@ -903,6 +977,18 @@ html:has(body.search-popup-open) {
     @media screen and (max-width: 990px) {
       padding-inline:1rem;
     }
+  }
+
+  /* Second-level rows that have children read as headings; their
+     third-level rows are indented under them. */
+  .header__accordion-row--parent {
+    font-weight: 600;
+    font-family: var(--font-accent);
+  }
+
+  .header__accordion-row--child {
+    padding-inline-start: 2rem;
+    font-size: 13px;
   }
 
   .header__accordion-row img {

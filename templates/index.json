@@ -235,7 +235,7 @@
       "settings": {
         "heading": "Shop Bundles",
         "collection": "offers",
-        "products_to_show": 8,
+        "products_to_show": 4,
         "show_view_all": true,
         "enable_slider": false,
         "padding_top": 30,

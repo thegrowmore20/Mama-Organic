@@ -3,7 +3,7 @@
     1. Active filter pills (only when something is actually applied)
     2. Section blocks, in the order set in the theme editor:
        - Quick link (fake accordion, chevron right, non-expanding)
-       - Navigation filter menu (chevron down, checkboxes that navigate)
+       - Navigation filter menu (up to 3 levels: accordion groups, checkboxes that navigate)
     3. Real Search & Discovery filters (chevron down, actual facets)
 
   Accepts:
@@ -75,32 +75,8 @@
           {%- endif -%}
 
         {%- when 'nav_menu' -%}
-          {%- assign block_menu = block.settings.menu -%}
-          {%- if block_menu != blank and block_menu.links.size > 0 -%}
-            <details class="facets__group" data-filter-param="nav-{{ block.id }}" {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
-              <summary class="facets__summary">
-                <span>{{ block.settings.heading | default: block_menu.title | escape }}</span>
-                <span class="facets__chevron facets__chevron--down" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
-              </summary>
-              <div class="facets__body">
-                <ul class="facets__list" role="list">
-                  {%- for link in block_menu.links -%}
-                    <li class="facets__item">
-                      <label class="facets__checkbox-label">
-                        <input
-                          type="checkbox"
-                          class="facets__checkbox facets__checkbox--nav"
-                          id="FacetNav-{{ block.id }}-{{ forloop.index }}"
-                          data-nav-url="{{ link.url }}"
-                          {% if link.active %}checked{% endif %}
-                        >
-                        <span>{{ link.title | escape }}</span>
-                      </label>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              </div>
-            </details>
+          {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
+            {% render 'facets-nav-menu', menu: block.settings.menu, block: block %}
           {%- endif -%}
       {%- endcase -%}
     {%- endfor -%}
