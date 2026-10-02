@@ -108,7 +108,7 @@
                 {%- if social_markup != blank -%}
                   <div class="u-flex u-items-center u-justify-between contact-social" {{ block.shopify_attributes }}>
                     {%- if block.settings.label != blank -%}
-                      <h6 class="contact-social__label">{{ block.settings.label }}</h6>
+                      <h6 class="h6 contact-social__label">{{ block.settings.label }}</h6>
                     {%- endif -%}
                     {{ social_markup }}
                   </div>
@@ -311,14 +311,11 @@ a.contact-card:focus-visible {
   flex-wrap: wrap;
 }
 
+/* Size, weight and font come from the shared .h6 class (16px); only the
+   text case, spacing and color are set here. */
 .contact-social__label {
-  font-size: 12px;
-  line-height: 1.4;
-  font-weight: 600;
-  font-family: var(--font-accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   margin: 0;
+  text-transform: capitalize;
   color: var(--color-text-muted);
   white-space: nowrap;
 }
