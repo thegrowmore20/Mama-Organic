@@ -124,6 +124,7 @@
         "feature_mjiD84": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/Best_of_Nature.svg",
             "title": "Best of nature",
             "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
           }
@@ -131,6 +132,7 @@
         "feature_dT8q8J": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/No_toxins.svg",
             "title": "No toxin",
             "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
           }
@@ -138,6 +140,7 @@
         "feature_bYW7py": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/Cruelty_free.svg",
             "title": "Cruelty Free",
             "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
           }
@@ -145,6 +148,7 @@
         "feature_tUjhbb": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/SAFE_CERTIFIED.svg",
             "title": "Safe and Certified",
             "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
           }
