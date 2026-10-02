@@ -510,8 +510,19 @@ details[open] > .facets__sub-summary .facets__chevron--down {
   transform: rotate(180deg);
 }
 
+/* Navigation menu lists: 15px in from the group title, and a tighter 5px gap
+   between rows (the real filter lists keep their own 10px). */
+.facets__list--nav {
+  padding-inline-start: 15px;
+}
+
+.facets__list--nav,
 .facets__list--nested {
-  margin-top: 10px;
+  gap: 5px;
+}
+
+.facets__list--nested {
+  margin-top: 5px;
   padding-inline-start: 14px;
 }
 

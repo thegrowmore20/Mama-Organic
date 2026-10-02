@@ -41,7 +41,7 @@
         <span class="facets__chevron facets__chevron--down" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
       </summary>
       <div class="facets__body">
-        <ul class="facets__list" role="list">
+        <ul class="facets__list facets__list--nav" role="list">
           {%- for item in top.links -%}
             {%- assign item_index = forloop.index -%}
             {%- assign item_key = top_key | append: '-' | append: item_index -%}
