@@ -173,6 +173,11 @@
                     <span class="product-share__copied" data-share-copied hidden>{{ 'products.product.share_copied' | t }}</span>
                   </share-button>
 
+                {%- when 'delivery' -%}
+                  <div class="product-delivery-block" {{ block.shopify_attributes }}>
+                    {% render 'product-delivery-dates', days_from: block.settings.delivery_from, days_to: block.settings.delivery_to, skip: block.settings.skip_days %}
+                  </div>
+
                 {%- when 'image' -%}
                   {%- if block.settings.image != blank -%}
                     <div
@@ -947,6 +952,30 @@ h1.product-title {
   .icons-with-text--columns-2 {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Delivery date block (snippets/product-delivery-dates) */
+.product-delivery-block {
+  margin: var(--space-4) 0;
+}
+
+.product-delivery {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
+.product-delivery__icon {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.product-delivery__icon svg {
+  width: 22px;
+  height: 22px;
 }
 
 /* Image block: a picture placed anywhere in the product info column. */
@@ -1967,6 +1996,41 @@ if (!customElements.get('product-info')) {
           "id": "label",
           "label": "Label",
           "default": "Share"
+        }
+      ]
+    },
+    {
+      "type": "delivery",
+      "name": "Delivery date",
+      "settings": [
+        {
+          "type": "range",
+          "id": "delivery_from",
+          "label": "Delivery from (working days)",
+          "min": 1,
+          "max": 14,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "delivery_to",
+          "label": "Delivery to (working days)",
+          "min": 1,
+          "max": 21,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "select",
+          "id": "skip_days",
+          "label": "Days that don't count",
+          "options": [
+            { "value": "sunday", "label": "Sunday" },
+            { "value": "weekend", "label": "Saturday and Sunday" },
+            { "value": "none", "label": "None (count every day)" }
+          ],
+          "default": "sunday"
         }
       ]
     },

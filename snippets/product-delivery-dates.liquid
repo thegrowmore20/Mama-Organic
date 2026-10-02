@@ -1,0 +1,69 @@
+{%- comment -%}
+  Estimated delivery window, counted in working days from today:
+  "Receive by Oct 7 - Oct 9". Ported from the AirVape product page.
+
+  Accepts:
+    days_from - {Number} first working day of the window (default 3)
+    days_to   - {Number} last working day of the window (default 5)
+    skip      - {String} days that don't count as working days:
+                'sunday' (default), 'weekend' (Saturday and Sunday) or 'none'
+
+  Usage:
+  {% render 'product-delivery-dates', days_from: 3, days_to: 5, skip: 'sunday' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign days_from = days_from | default: 3
+  assign days_to = days_to | default: 5
+  assign skip = skip | default: 'sunday'
+  assign one_day = 86400
+  assign today = 'now' | date: '%s' | plus: 0
+
+  assign start_date = today
+  assign counted = 0
+  for i in (1..40)
+    assign start_date = start_date | plus: one_day
+    assign day_name = start_date | date: '%a'
+    assign is_working_day = true
+    if day_name == 'Sun' and skip != 'none'
+      assign is_working_day = false
+    endif
+    if day_name == 'Sat' and skip == 'weekend'
+      assign is_working_day = false
+    endif
+    if is_working_day
+      assign counted = counted | plus: 1
+    endif
+    if counted == days_from
+      break
+    endif
+  endfor
+
+  assign end_date = today
+  assign counted = 0
+  for i in (1..60)
+    assign end_date = end_date | plus: one_day
+    assign day_name = end_date | date: '%a'
+    assign is_working_day = true
+    if day_name == 'Sun' and skip != 'none'
+      assign is_working_day = false
+    endif
+    if day_name == 'Sat' and skip == 'weekend'
+      assign is_working_day = false
+    endif
+    if is_working_day
+      assign counted = counted | plus: 1
+    endif
+    if counted == days_to
+      break
+    endif
+  endfor
+
+  assign start_label = start_date | date: '%b %-d'
+  assign end_label = end_date | date: '%b %-d'
+-%}
+
+<p class="product-delivery">
+  <span class="product-delivery__icon" aria-hidden="true">{% render 'icon', name: 'truck' %}</span>
+  <span class="product-delivery__text">{{ 'products.product.delivery_estimate' | t: from: start_label, to: end_label }}</span>
+</p>
