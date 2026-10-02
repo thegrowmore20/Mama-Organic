@@ -23,7 +23,7 @@
         <div class="split-banner__text">{{ section.settings.text }}</div>
       {%- endif -%}
       {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: routes.root_url }}" class="button button--light">
+        <a href="{{ section.settings.button_link | default: routes.root_url }}" class="button button--light button--large">
           {{ section.settings.button_label }}
           {%- if section.settings.heading != blank -%}
             <span class="visually-hidden"> &ndash; {{ section.settings.heading }}</span>

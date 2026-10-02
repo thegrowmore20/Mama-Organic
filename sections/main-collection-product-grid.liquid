@@ -738,14 +738,10 @@ details[open] > .facets__sub-summary .facets__chevron--down {
   margin-top: var(--space-8);
 }
 
-/* Same font size and family at every screen size (the shared .button font size
-   differs between breakpoints), with tighter padding; only the minimum width
-   shrinks on phones. */
+/* Font, weight and padding come from the shared .button; only the minimum
+   width is set here, narrower on phones. */
 .collection-load-more__button {
   min-width: 100px;
-  padding: 0 20px;
-  font-size: 12px;
-  font-family: var(--font-subheading);
 }
 
 @media screen and (min-width: 750px) {
