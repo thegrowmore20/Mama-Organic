@@ -243,6 +243,12 @@ facet-filters-form {
   .collection-layout--has-sidebar {
     display: grid;
     grid-template-columns: 260px 1fr;
+    /* Three rows (toolbar, results, flexible spacer) with the sidebar spanning
+       all three, so a taller sidebar adds its height to the spacer row instead
+       of pushing the results down. Keep in step with the same rule in
+       main-collection-product-grid.liquid: Shopify bundles all section CSS
+       together, so whichever copy loads last wins. */
+    grid-template-rows: auto auto 1fr;
     column-gap: 36px;
     row-gap: var(--space-6);
   }
@@ -254,7 +260,7 @@ facet-filters-form {
   .collection-layout--has-sidebar .collection-filters,
   .collection-layout--has-sidebar > .collection-topbar > form.visually-hidden {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
   }
 
   .collection-layout--has-sidebar .collection-toolbar__count {
