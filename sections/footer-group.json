@@ -39,9 +39,17 @@
         "help_menu": "quick-links",
         "bottom_menu": "policies"
       }
+    },
+    "whatsapp": {
+      "type": "whatsapp-widget",
+      "settings": {
+        "whatsapp_number": "+92 311 146 4444",
+        "widget_size": 56
+      }
     }
   },
   "order": [
-    "footer"
+    "footer",
+    "whatsapp"
   ]
 }

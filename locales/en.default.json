@@ -39,6 +39,11 @@
       "footer_bottom_menu": "Footer legal links",
       "close": "Close"
     },
+    "whatsapp": {
+      "label": "Chat with us on WhatsApp",
+      "default_message": "Hello! I would like to know more about your products.",
+      "product_message": "Hi, I have a question regarding {{ title }} - {{ url }}"
+    },
     "social": {
       "label": "Social media",
       "links": {
