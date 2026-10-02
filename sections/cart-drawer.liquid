@@ -118,10 +118,49 @@
   </div>
 
   {%- if cart.item_count > 0 -%}
+    {%- liquid
+      comment
+        Total price is what the cart would cost before any saving: each line at its
+        compare-at (original) price when it is on sale, otherwise its price. The
+        saving is that figure minus what the shopper actually pays, so it covers
+        sale prices and discount codes together, and the percentage follows from it.
+      endcomment
+      assign original_total = 0
+      for item in cart.items
+        assign unit_price = item.variant.price
+        if item.variant.compare_at_price > unit_price
+          assign unit_price = item.variant.compare_at_price
+        endif
+        assign line_original = unit_price | times: item.quantity
+        assign original_total = original_total | plus: line_original
+      endfor
+      assign total_saved = original_total | minus: cart.total_price
+      assign saved_percent = 0
+      if total_saved > 0 and original_total > 0
+        assign saved_percent = total_saved | times: 100.0 | divided_by: original_total | round
+      endif
+    -%}
     <div id="CartDrawerFooter" class="cart-drawer__footer">
-      <div class="u-flex u-items-center u-justify-between cart-drawer__subtotal">
-        <span>{{ 'general.cart.subtotal' | t }}</span>
-        <span>{{ cart.total_price | money }}</span>
+      <div class="cart-drawer__summary">
+        {%- if total_saved > 0 -%}
+          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
+            <span>{{ 'general.cart.total_price' | t }}</span>
+            <span>{{ original_total | money }}</span>
+          </div>
+          <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--discount">
+            <span class="u-inline-flex u-items-center cart-drawer__summary-label">
+              {{ 'general.cart.discount' | t }}
+              <span class="u-inline-flex u-items-center cart-drawer__summary-percent">
+                {% render 'icon', name: 'tag' %}{{ saved_percent }}%
+              </span>
+            </span>
+            <span>-{{ total_saved | money }}</span>
+          </div>
+        {%- endif -%}
+        <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row cart-drawer__summary-row--total">
+          <span>{{ 'general.cart.total' | t }}</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
       </div>
       <a href="/checkout" class="button button--accent cart-drawer__checkout">{{ 'general.cart.checkout' | t }}</a>
     </div>
@@ -382,12 +421,44 @@
   border-top: 1px solid var(--color-surface);
 }
 
-.cart-drawer__subtotal {
+/* Price summary: total price, discount (only when something is saved), total. */
+.cart-drawer__summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.cart-drawer__summary-row {
   font-size: 15px;
+  font-family: var(--font-subheading);
+  font-weight: var(--font-subheading-weight);
+  color: var(--color-primary);
+}
+
+.cart-drawer__summary-row--discount {
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+.cart-drawer__summary-label {
+  gap: var(--space-2);
+}
+
+.cart-drawer__summary-percent {
+  gap: var(--space-1);
+  font-size: 13px;
+}
+
+.cart-drawer__summary-percent svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cart-drawer__summary-row--total {
+  font-size: 16px;
   font-weight: 600;
   font-family: var(--font-accent);
-  color: var(--color-primary);
-  margin-bottom: var(--space-4);
 }
 
 .cart-drawer__checkout {

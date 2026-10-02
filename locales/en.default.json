@@ -20,6 +20,8 @@
     "cart": {
       "title": "Cart",
       "subtotal": "Subtotal",
+      "total_price": "Total price",
+      "discount": "Discount",
       "checkout": "Checkout",
       "quantity": "Quantity",
       "decrease_quantity": "Decrease quantity",
