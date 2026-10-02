@@ -3,9 +3,12 @@
   (fields: faq_category, question, answer, order). Entries are grouped by faq_category
   and the categories are sorted by `order`; every category gets its own heading and its
   own accordion, so opening a question only closes the other questions in the same category.
+  faq_category is optional: entries without one are grouped together under no heading, so a
+  store that doesn't use categories still gets a single accordion.
 {%- endcomment -%}
 {%- liquid
   assign faq_entries = shop.metaobjects.general_faqs.values
+  assign none_token = '__uncategorized__'
   assign sort_keys = ''
   assign schema_questions = ''
   assign schema_count = 0
@@ -13,8 +16,8 @@
 
 {%- for faq in faq_entries -%}
   {%- liquid
-    assign category = faq.faq_category.value | strip
-    if category != blank and faq.question.value != blank and faq.answer.value != blank
+    assign category = faq.faq_category.value | strip | default: none_token
+    if faq.question.value != blank and faq.answer.value != blank
       assign order_number = 9999
       if faq.order.value != blank
         assign order_number = faq.order.value | plus: 0
@@ -70,10 +73,12 @@
           {%- assign category_index = forloop.index -%}
           {%- assign item_count = 0 -%}
           <div class="faqs__category">
-            {% render 'section-header', heading: category %}
+            {%- if category != none_token -%}
+              {% render 'section-header', heading: category %}
+            {%- endif -%}
             <faq-accordion class="faqs__accordion">
               {%- for faq in faq_entries -%}
-                {%- assign faq_category = faq.faq_category.value | strip -%}
+                {%- assign faq_category = faq.faq_category.value | strip | default: none_token -%}
                 {%- if faq_category == category and faq.question.value != blank and faq.answer.value != blank -%}
                   {%- assign item_count = item_count | plus: 1 -%}
                   {%- assign panel_id = 'Faq' | append: section.id | append: '-' | append: category_index | append: '-' | append: item_count -%}
