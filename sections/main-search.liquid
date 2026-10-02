@@ -13,19 +13,8 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign has_quick_links = false
-  if section.settings.quick_link_1_text != blank and section.settings.quick_link_1_url != blank
-    assign has_quick_links = true
-  elsif section.settings.quick_link_2_text != blank and section.settings.quick_link_2_url != blank
-    assign has_quick_links = true
-  elsif section.settings.quick_link_3_text != blank and section.settings.quick_link_3_url != blank
-    assign has_quick_links = true
-  elsif section.settings.quick_link_4_text != blank and section.settings.quick_link_4_url != blank
-    assign has_quick_links = true
-  endif
-
   assign show_sidebar = false
-  if section.settings.enable_filtering or has_quick_links
+  if section.settings.enable_filtering or section.blocks.size > 0
     assign show_sidebar = true
   endif
 
@@ -98,7 +87,7 @@
                     </button>
                   </div>
                   <div class="collection-filters__panel-inner" data-filters-panel>
-                    {% render 'facets', results: search, nav_menu: blank, has_quick_links: has_quick_links, section: section %}
+                    {% render 'facets', results: search, section: section %}
                   </div>
                 </div>
               </search-filters>
@@ -1115,54 +1104,6 @@ if (!customElements.get('search-results')) customElements.define('search-results
     },
     {
       "type": "header",
-      "content": "Quick links"
-    },
-    {
-      "type": "paragraph",
-      "content": "Up to 4 plain navigation rows shown above the filter groups. These are links, not filters."
-    },
-    {
-      "type": "text",
-      "id": "quick_link_1_text",
-      "label": "Quick link 1 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_1_url",
-      "label": "Quick link 1 URL"
-    },
-    {
-      "type": "text",
-      "id": "quick_link_2_text",
-      "label": "Quick link 2 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_2_url",
-      "label": "Quick link 2 URL"
-    },
-    {
-      "type": "text",
-      "id": "quick_link_3_text",
-      "label": "Quick link 3 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_3_url",
-      "label": "Quick link 3 URL"
-    },
-    {
-      "type": "text",
-      "id": "quick_link_4_text",
-      "label": "Quick link 4 text"
-    },
-    {
-      "type": "url",
-      "id": "quick_link_4_url",
-      "label": "Quick link 4 URL"
-    },
-    {
-      "type": "header",
       "content": "Section padding"
     },
     {
@@ -1184,6 +1125,35 @@ if (!customElements.get('search-results')) customElements.define('search-results
       "step": 2,
       "unit": "px",
       "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quick_link",
+      "name": "Quick link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "nav_menu",
+      "name": "Navigation filter menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
     }
   ]
 }

@@ -8,9 +8,9 @@
 
   Accepts:
     results         - collection or search object (.filters, .url, .sort_by)
-    has_quick_links - boolean, search results only (the old per-section quick link settings)
-    section         - the parent section. On the collection page its blocks (quick_link and
-                      nav_menu) render here in block order, so merchants can mix and reorder them.
+    section         - the parent section (collection grid or search results). Its blocks
+                      (quick_link and nav_menu) render here in block order, so merchants can
+                      mix and reorder them.
 {%- endcomment -%}
 
 {%- liquid
@@ -80,19 +80,6 @@
           {%- endif -%}
       {%- endcase -%}
     {%- endfor -%}
-
-    {%- comment -%} Search results: the section has no blocks, so it keeps its own quick link settings. {%- endcomment -%}
-    {%- if has_quick_links -%}
-      {%- for link_index in (1..4) -%}
-        {%- assign link_text_key = 'quick_link_' | append: link_index | append: '_text' -%}
-        {%- assign link_url_key = 'quick_link_' | append: link_index | append: '_url' -%}
-        {%- assign link_text = section.settings[link_text_key] -%}
-        {%- assign link_url = section.settings[link_url_key] -%}
-        {%- if link_text != blank and link_url != blank -%}
-          {% render 'facets-quick-link', link_text: link_text, link_url: link_url %}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
 
     {%- comment -%}
       3. Real Search & Discovery filters. Two passes put Product type first (it
