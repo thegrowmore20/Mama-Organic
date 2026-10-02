@@ -187,8 +187,9 @@
     gap: 1.5rem;
   }
 
+  /* Phones: brand and contact span the full width; Menu 1 and Menu 2 sit
+     side by side, half each. */
   .footer__brand,
-  .footer__col--policies,
   .footer__col--contact {
     grid-column: 1 / -1;
   }
@@ -203,7 +204,6 @@
       grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .footer__col--policies,
     .footer__col--contact {
       grid-column: auto;
     }
