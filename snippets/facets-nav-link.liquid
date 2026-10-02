@@ -34,6 +34,16 @@
     >
     <span>{{ link.title | escape }}{% if nav_count != nil %} <span class="facets__count text-muted">({{ nav_count }})</span>{% endif %}</span>
   </label>
+{%- elsif link.url == blank or link.url == '#' -%}
+  {%- comment -%}
+    A menu link with no real destination (a "#" heading that only holds a
+    submenu) is not a link: as an anchor, clicking it would jump the page to
+    the top. As plain text inside the <summary>, the click just toggles the
+    accordion.
+  {%- endcomment -%}
+  <span class="facets__nav-link{% if link.child_active %} is-parent-active{% endif %}">
+    <span>{{ link.title | escape }}{% if nav_count != nil %} <span class="facets__count text-muted">({{ nav_count }})</span>{% endif %}</span>
+  </span>
 {%- else -%}
   <a
     href="{{ link.url }}"
