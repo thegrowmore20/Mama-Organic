@@ -46,6 +46,14 @@
             "waitlist_style": "dark"
           }
         },
+        "delivery_FbrJ8k": {
+          "type": "delivery",
+          "settings": {
+            "delivery_from": 4,
+            "delivery_to": 7,
+            "skip_days": "sunday"
+          }
+        },
         "icons-with-text": {
           "type": "icons_with_text",
           "disabled": true,
@@ -120,6 +128,15 @@
             "open_by_default": false
           }
         },
+        "image_Ft9EMh": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Certified_Trust_Icon_Halla.webp",
+            "link": "",
+            "width": 100,
+            "alignment": "left"
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -133,6 +150,7 @@
         "price",
         "variant-picker",
         "quantity-buy-buttons",
+        "delivery_FbrJ8k",
         "icons-with-text",
         "accordion-description",
         "accordion_QwpEjW",
@@ -141,6 +159,7 @@
         "accordion_9WFKDV",
         "accordion_bnDt9W",
         "accordion_LWxRLg",
+        "image_Ft9EMh",
         "share"
       ],
       "settings": {

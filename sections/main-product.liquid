@@ -194,7 +194,8 @@
                           widths: '400, 600, 800, 1200',
                           sizes: '(min-width: 990px) 40vw, 100vw',
                           alt: block.settings.image.alt | default: product.title,
-                          class: 'product-image-block__image'
+                          class: 'product-image-block__image',
+                          style: 'aspect-ratio: auto'
                       }}
                       {%- if block.settings.link != blank -%}</a>{%- endif -%}
                     </div>
@@ -771,30 +772,34 @@ h1.product-title {
 }
 
 /* The Shopify dynamic checkout button ("Buy it now") loads late and brings its
-   own margins. Zeroing those below and reserving its 44px height keeps it in the
-   same place before and after it loads. The buy box already puts 16px between
-   its rows, and the -1rem margin here takes that gap back out so the button sits
-   16px under Add to Cart rather than 32px. */
+   own margins. It matches the other buttons' height (48px, 40px on phones - the
+   same as .button in base.css), every margin on it and on its wrappers is
+   zeroed, and no negative margins are used, so it sits exactly one buy-box gap
+   (16px) under Add to Cart both before and after it loads. */
 .product-buy-box__payment {
-  min-height: 44px;
-  margin: -1rem 0 0;
+  --payment-button-height: 48px;
+  --shopify-accelerated-checkout-button-block-size: var(--payment-button-height);
+  --shopify-accelerated-checkout-button-border-radius: var(--radius-m);
+  min-height: var(--payment-button-height);
+  margin: 0;
+  padding: 0;
 }
 
-.product-buy-box__payment :is(.shopify-payment-button, .shopify-payment-button__button, shopify-accelerated-checkout, shopify-accelerated-checkout-cart) {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+@media screen and (max-width: 749px) {
+  .product-buy-box__payment {
+    --payment-button-height: 40px;
+  }
+}
+
+.product-buy-box__payment > *,
+.product-buy-box__payment > * > * {
+  margin: 0 !important;
 }
 
 .product-buy-box__payment .shopify-payment-button__button {
-  min-height: 44px;
+  min-height: var(--payment-button-height);
+  height: var(--payment-button-height);
   border-radius: var(--radius-m);
-}
-
-/* Shopify's accelerated checkout buttons (the newer "Buy it now" and the
-   wallet buttons) read their corner radius from this custom property, so the
-   rounded corners match the other buttons. */
-.product-buy-box__payment {
-  --shopify-accelerated-checkout-button-border-radius: var(--radius-m);
 }
 
 .product-buy-box__waitlist {
@@ -965,6 +970,8 @@ h1.product-title {
   gap: var(--space-2);
   margin: 0;
   font-size: 14px;
+  font-weight: var(--font-subheading-weight);
+  font-family: var(--font-subheading);
   color: var(--color-primary);
 }
 
@@ -981,6 +988,7 @@ h1.product-title {
 /* Image block: a picture placed anywhere in the product info column. */
 .product-image-block {
   display: flex;
+  align-items: flex-start;
   margin: var(--space-4) 0;
 }
 
@@ -995,14 +1003,19 @@ h1.product-title {
 .product-image-block__link {
   display: block;
   width: var(--product-image-width, 100%);
+  max-width: 100%;
 }
 
+/* Width follows the setting; height always follows the picture's own
+   proportions (height: auto, align-self: flex-start so the flex row can't
+   stretch it), so it never looks squashed or stretched. */
 .product-image-block__image {
   display: block;
+  align-self: flex-start;
   width: var(--product-image-width, 100%);
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius-m);
+  object-fit: contain;
 }
 
 .product-image-block__link .product-image-block__image {
