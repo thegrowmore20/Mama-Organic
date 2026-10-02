@@ -240,6 +240,14 @@
   margin-bottom: var(--space-7);
 }
 
+/* Mobile: an odd last card (the location card) spans the full row. From
+   750px up it stays half width like the others. */
+@media screen and (max-width: 749px) {
+  .contact-cards > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
 @media screen and (max-width: 479px) {
   .contact-cards {
     grid-template-columns: 1fr;
