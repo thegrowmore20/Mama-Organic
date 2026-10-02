@@ -1021,7 +1021,14 @@ class SearchResults extends HTMLElement {
         // Product cards render Judge.me's preview badge. Its markup is
         // server-rendered, but re-run Judge.me's badge styling on the freshly
         // swapped-in DOM when its script exposes the hook.
-        window.jdgm?.customizeBadges?.()
+        // Judge.me only styles the rating badges that existed when its script ran,
+        // so ask it to render the ones just added (the call differs by version, and
+        // the script can still be busy, so run it again a moment later).
+        const refreshReviewBadges = () => {
+          for (const name of ['batchRenderBadges', 'customizeBadges']) window.jdgm?.[name]?.()
+        }
+        refreshReviewBadges()
+        setTimeout(refreshReviewBadges, 400)
       }
 
       const newCount = doc.querySelector('[data-product-count]')
