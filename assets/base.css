@@ -481,8 +481,48 @@ span.star-rating {
   }
 }
 
-.vensa-wl-badge{
+/* The wishlist count badge copies the cart count bubble exactly (same size,
+   corner position, font and colors; 15px and 0/0 on phones), so the two read as
+   a pair. !important because the Vensa app styles this element itself and it
+   came out oval and off-corner on phones. The display rule is limited to the
+   non-hidden state so the badge still hides while the count is 0. */
+.vensa-wl-badge {
+  position: absolute !important;
+  top: 4px !important;
+  right: 4px !important;
+  left: auto !important;
+  bottom: auto !important;
+  min-width: 18px !important;
+  width: auto !important;
+  height: 18px !important;
+  padding: 0 var(--space-1) !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
   background-color: var(--color-secondary) !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  font-family: var(--font-accent) !important;
+  line-height: 16px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+.vensa-wl-badge:not([hidden]) {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+@media screen and (max-width: 989px) {
+  .vensa-wl-badge {
+    top: 0 !important;
+    right: 0 !important;
+    min-width: 15px !important;
+    height: 15px !important;
+    font-size: 8px !important;
+    line-height: 13px !important;
+  }
 }
 
 /* Vensa wishlist buttons ("Continue shopping", "Add to cart") default to the

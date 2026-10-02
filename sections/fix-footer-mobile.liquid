@@ -185,6 +185,15 @@
       cursor: pointer;
     }
 
+    /* The wishlist count badge sits on the icon's top-right corner, using the same
+       size and look as the header's cart bubble (shared rule in base.css); only
+       the offset differs, since this icon button is the icon's size rather than
+       a 44px tap area. */
+    [data-section-id="{{ section.id }}"] .mobile-bottom-nav__icon .vensa-wl-badge {
+      top: -5px !important;
+      right: -7px !important;
+    }
+
     [data-section-id="{{ section.id }}"] .vensa-wl-header-btn.mobile-bottom-nav__icon {
       display: inline-flex;
       align-items: center;
