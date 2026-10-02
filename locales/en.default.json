@@ -164,6 +164,7 @@
   },
   "collections": {
     "general": {
+      "load_more": "Load more",
       "title": "Collection",
       "heading": "All collections",
       "empty": "No products found",
