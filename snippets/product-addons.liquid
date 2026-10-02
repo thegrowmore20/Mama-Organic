@@ -1,6 +1,6 @@
 {%- comment -%}
   Product add-ons, ported from the AirVape addons_and_free_gifts snippet.
-  The add-on products come from the product's custom.addons metafield (a list of
+  The add-on products come from the product's custom.bundle_products metafield (a list of
   product references). Each one is a row with a thumbnail, its title and a
   "+price" toggle; ticking it adds that product to the cart together with the
   main product when Add to Cart is pressed (assets/global.js reads the ticked
@@ -16,7 +16,7 @@
   {% render 'product-addons', product: product, heading: block.settings.heading %}
 {%- endcomment -%}
 
-{%- assign addon_products = product.metafields.custom.addons.value -%}
+{%- assign addon_products = product.metafields.custom.bundle_products.value -%}
 
 {%- if addon_products != blank and addon_products.size > 0 -%}
   <product-addons
