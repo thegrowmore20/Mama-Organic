@@ -379,11 +379,41 @@
   }
 }
 
+/* Thumbnail strip, modelled on the Horizon-style gallery on biocospk.com: it
+   scrolls sideways with the scrollbar hidden, a fade on the edge that still has
+   more thumbnails (the scroll hint) shows there is more to see, and the active
+   thumbnail is kept in view as the main picture changes. Thumbnails are small on
+   phones (44px at the narrowest, growing to 64px) so many fit on screen. */
 .product-gallery__thumbs {
+  --thumbs-fade-start: 0px;
+  --thumbs-fade-end: 0px;
   display: flex;
   gap: var(--space-2);
   overflow-x: auto;
   scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--thumbs-fade-start), #000 calc(100% - var(--thumbs-fade-end)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--thumbs-fade-start), #000 calc(100% - var(--thumbs-fade-end)), transparent 100%);
+}
+
+.product-gallery__thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.product-gallery__thumbs[data-overflow-start] {
+  --thumbs-fade-start: 28px;
+}
+
+.product-gallery__thumbs[data-overflow-end] {
+  --thumbs-fade-end: 28px;
+}
+
+@media screen and (max-width: 989px) {
+  .product-gallery .product-gallery__thumb {
+    width: clamp(44px, 12vw, 64px);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
 }
 
 .product-gallery__thumb {
@@ -1550,12 +1580,42 @@ class ProductGallery extends HTMLElement {
     this.#variantMedia = mediaScript ? JSON.parse(mediaScript.textContent) : {}
 
     this.addEventListener('click', (event) => this.#onClick(event))
+    this.#initThumbHints()
 
     if (this.#track && this.#slides.length > 1) {
       this.#track.addEventListener('pointerdown', (event) => this.#onPointerDown(event))
       this.#track.addEventListener('pointermove', (event) => this.#onPointerMove(event))
       this.#track.addEventListener('pointerup', (event) => this.#onPointerEnd(event))
       this.#track.addEventListener('pointercancel', (event) => this.#onPointerEnd(event))
+    }
+  }
+
+  // Scroll hint: mark the thumbnail strip when more thumbnails sit beyond its
+  // start or end edge (CSS fades those edges), and refresh on scroll and resize.
+  #initThumbHints() {
+    const strip = this.querySelector('[data-gallery-thumbs]')
+    if (!strip) return
+    const update = () => {
+      const max = strip.scrollWidth - strip.clientWidth
+      strip.toggleAttribute('data-overflow-start', strip.scrollLeft > 2)
+      strip.toggleAttribute('data-overflow-end', max > 2 && strip.scrollLeft < max - 2)
+    }
+    strip.addEventListener('scroll', update, { passive: true })
+    new ResizeObserver(update).observe(strip)
+    update()
+  }
+
+  // Centre the active thumbnail in its strip (sideways, or up/down when the
+  // strip is a column) without scrolling the page itself.
+  #scrollThumbIntoView(thumb) {
+    const strip = thumb?.parentElement
+    if (!strip) return
+    const stripBox = strip.getBoundingClientRect()
+    const thumbBox = thumb.getBoundingClientRect()
+    if (strip.scrollWidth > strip.clientWidth + 2) {
+      strip.scrollBy({ left: thumbBox.left - stripBox.left - (stripBox.width - thumbBox.width) / 2, behavior: 'smooth' })
+    } else if (strip.scrollHeight > strip.clientHeight + 2) {
+      strip.scrollBy({ top: thumbBox.top - stripBox.top - (stripBox.height - thumbBox.height) / 2, behavior: 'smooth' })
     }
   }
 
@@ -1637,6 +1697,7 @@ class ProductGallery extends HTMLElement {
       const active = thumb.dataset.mediaId === slide.dataset.mediaId
       thumb.classList.toggle('is-active', active)
       thumb.setAttribute('aria-selected', active ? 'true' : 'false')
+      if (active) this.#scrollThumbIntoView(thumb)
     }
   }
 
