@@ -94,6 +94,8 @@
       "add_to_cart": "Add to Cart",
       "delivery_estimate": "Receive by {{ from }} - {{ to }}",
       "addons_none": "No add-ons selected",
+      "addons_empty_no_field": "Add-ons: this product has no products in its Bundle Products field (custom.bundle_products).",
+      "addons_empty_unpublished": "Add-ons: Bundle Products is set, but none of those products are Active and published to the Online Store, so none can show.",
       "addons_one": "1 add-on selected",
       "addons_many": "{{ count }} add-ons selected",
       "addons_add_label": "Add {{ title }} for {{ price }}",

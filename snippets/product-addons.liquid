@@ -95,4 +95,16 @@
       <span class="product-addons__total" data-addons-total></span>
     </p>
   </product-addons>
+{%- elsif request.design_mode -%}
+  {%- comment -%}
+    Theme editor only: say why nothing shows, since the block is otherwise invisible.
+    Storefront visitors never see this.
+  {%- endcomment -%}
+  <p class="product-addons__empty">
+    {%- if product.metafields.custom.bundle_products != blank -%}
+      {{ 'products.product.addons_empty_unpublished' | t }}
+    {%- else -%}
+      {{ 'products.product.addons_empty_no_field' | t }}
+    {%- endif -%}
+  </p>
 {%- endif -%}
