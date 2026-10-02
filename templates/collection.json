@@ -33,6 +33,18 @@
     },
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "nav_menu_cHbNAj": {
+          "type": "nav_menu",
+          "settings": {
+            "menu": "main-menu",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "nav_menu_cHbNAj"
+      ],
       "settings": {
         "products_per_page": 12,
         "columns_desktop": 3,

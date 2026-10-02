@@ -190,6 +190,12 @@ facet-filters-form {
   .collection-layout--has-sidebar {
     display: grid;
     grid-template-columns: 260px 1fr;
+    /* Three rows: toolbar, product grid, and a flexible spacer. The sidebar
+       spans all three, so when a filter group opens and the sidebar grows, the
+       extra height lands in the spacer row (1fr). With only two rows it was
+       shared between the toolbar and grid rows, which pushed the product grid
+       down every time an accordion opened. */
+    grid-template-rows: auto auto 1fr;
     column-gap: 36px;
     row-gap: var(--space-6);
   }
@@ -205,7 +211,7 @@ facet-filters-form {
   .collection-layout--has-sidebar .collection-filters,
   .collection-layout--has-sidebar > .collection-topbar > form.visually-hidden {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
   }
 
   .collection-layout--has-sidebar .collection-toolbar__count {
@@ -421,6 +427,35 @@ details[open] > .facets__summary .facets__chevron--down {
 
 .facets__body {
   padding-top: var(--space-3);
+}
+
+/* Smooth open/close for the filter accordions. interpolate-size lets the
+   details content animate between 0 and its natural height; browsers without
+   ::details-content support simply open instantly, as before. */
+.facets__group,
+.facets__sub {
+  interpolate-size: allow-keywords;
+}
+
+@supports selector(::details-content) {
+  .facets__group::details-content,
+  .facets__sub::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.3s ease, content-visibility 0.3s ease allow-discrete;
+  }
+
+  .facets__group[open]::details-content,
+  .facets__sub[open]::details-content {
+    block-size: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .facets__group::details-content,
+  .facets__sub::details-content {
+    transition: none;
+  }
 }
 
 .facets__list {
