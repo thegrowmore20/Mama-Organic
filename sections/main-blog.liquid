@@ -1,6 +1,6 @@
 {%- comment -%}
   Blog listing page. Inspired by Dawn's main-blog.liquid structurally
-  (breadcrumb, heading, article grid, pagination) but rebuilt on this theme's
+  (breadcrumb, heading, article grid, load more) but rebuilt on this theme's
   own conventions: .container/.section-padding, plain-string schema names,
   and top-level checkbox settings instead of Dawn's block-based toggles.
 {%- endcomment -%}
@@ -22,7 +22,7 @@
     {%- paginate blog.articles by section.settings.articles_per_page -%}
       {%- if blog.articles.size > 0 -%}
         <h2 class="visually-hidden">{{ 'blogs.general.articles_heading' | t }}</h2>
-        <div class="u-grid blog-listing__grid">
+        <div class="u-grid blog-listing__grid" data-blog-grid data-section-id="{{ section.id }}">
           {%- for article in blog.articles -%}
             {%- render 'article-card',
               article: article,
@@ -36,22 +36,17 @@
           {%- endfor -%}
         </div>
 
-        {%- if paginate.pages > 1 -%}
-          <nav class="u-flex u-items-center u-justify-center pagination" aria-label="pagination">
-            {%- if paginate.previous -%}
-              <a href="{{ paginate.previous.url }}" class="u-inline-flex u-items-center u-justify-center pagination__link pagination__link--prev" aria-label="{{ 'collections.general.pagination_previous' | t }}">{% render 'icon', name: 'chevron-right' %}</a>
-            {%- endif -%}
-            {%- for part in paginate.parts -%}
-              {%- if part.is_link -%}
-                <a href="{{ part.url }}" class="u-inline-flex u-items-center u-justify-center pagination__link">{{ part.title }}</a>
-              {%- else -%}
-                <span class="pagination__link{% if part.title == paginate.current_page %} pagination__link--current{% endif %}" {% if part.title == paginate.current_page %}aria-current="page"{% endif %}>{{ part.title }}</span>
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if paginate.next -%}
-              <a href="{{ paginate.next.url }}" class="u-inline-flex u-items-center u-justify-center pagination__link" aria-label="{{ 'collections.general.pagination_next' | t }}">{% render 'icon', name: 'chevron-right' %}</a>
-            {%- endif -%}
-          </nav>
+        {%- comment -%}
+          Load more instead of numbered pages. It is a real link to the next page, so it
+          still works without JavaScript; the script below fetches that page and appends
+          its articles to the grid.
+        {%- endcomment -%}
+        {%- if paginate.next -%}
+          <div class="u-flex u-justify-center collection-load-more" data-load-more-wrap>
+            <a href="{{ paginate.next.url }}" class="button button--accent collection-load-more__button" data-blog-load-more>
+              {{ 'collections.general.load_more' | t }}
+            </a>
+          </div>
         {%- endif -%}
       {%- else -%}
         <p class="blog-listing__empty">{{ 'blogs.general.no_articles' | t }}</p>
@@ -166,12 +161,41 @@
   color: var(--color-primary);
   padding: 40px 0;
 }
-
-.pagination {
-  gap: var(--space-2);
-  margin-top: 40px;
-}
 {% endstylesheet %}
+
+{% javascript %}
+// Appends the next page of articles to the grid, then swaps in the next Load more button
+// (or removes it on the last page).
+document.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-blog-load-more]')
+  if (!button) return
+  event.preventDefault()
+  if (button.getAttribute('aria-busy') === 'true') return
+  button.setAttribute('aria-busy', 'true')
+  button.classList.add('is-loading')
+
+  try {
+    const grid = document.querySelector('[data-blog-grid]')
+    const url = new URL(button.href, window.location.origin)
+    url.searchParams.set('section_id', grid.dataset.sectionId)
+    const response = await fetch(url)
+    const doc = new DOMParser().parseFromString(await response.text(), 'text/html')
+
+    for (const article of doc.querySelectorAll('[data-blog-grid] > *')) {
+      grid.append(document.importNode(article, true))
+    }
+
+    const wrap = button.closest('[data-load-more-wrap]')
+    const nextWrap = doc.querySelector('[data-load-more-wrap]')
+    if (nextWrap) wrap?.replaceWith(document.importNode(nextWrap, true))
+    else wrap?.remove()
+  } catch (error) {
+    console.error('Load more error:', error)
+    button.removeAttribute('aria-busy')
+    button.classList.remove('is-loading')
+  }
+})
+{% endjavascript %}
 
 {% schema %}
 {

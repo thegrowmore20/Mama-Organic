@@ -1455,3 +1455,24 @@ details[open] > .facets__summary .facets__chevron--down {
       gap: var(--space-4);
     }
 }
+
+/* Load more button (collection and blog listings) */
+.collection-load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+/* Font size, weight and family come from the shared .button (nothing is
+   overridden here, so they match every other button on desktop and mobile).
+   Only the padding and the minimum width are set, narrower on phones. */
+.collection-load-more__button {
+  min-width: 100px;
+  padding: 0 20px;
+}
+
+@media screen and (min-width: 750px) {
+  .collection-load-more__button {
+    min-width: 180px;
+  }
+}
