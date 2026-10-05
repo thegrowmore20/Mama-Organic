@@ -3,6 +3,8 @@
     cards    - bordered cards with a round icon (default)
     band     - full-width dark green strip, compact icon + title + text (trust bar)
     tiles    - tinted tiles with a large number (left) and icon (right) above the title and text
+    panels   - dark green section with white cards: title and text on top, number bottom-left,
+               icon in a rounded corner notch bottom-right
     numbered - open list with a large 01, 02... number and a top rule (brand values)
   Hides when it has no blocks.
 {%- endcomment -%}
@@ -22,7 +24,7 @@
       <ul class="about-icon-grid__list" role="list">
         {%- for block in section.blocks -%}
           <li class="about-icon-grid__item" {{ block.shopify_attributes }}>
-            {%- if section.settings.style == 'numbered' or section.settings.style == 'tiles' -%}
+            {%- if section.settings.style == 'numbered' or section.settings.style == 'tiles' or section.settings.style == 'panels' -%}
               <span class="about-icon-grid__number" aria-hidden="true">{{ forloop.index | prepend: '0' }}</span>
             {%- endif -%}
             {%- if section.settings.style != 'numbered' -%}
@@ -186,6 +188,72 @@
   line-height: 1.6;
 }
 
+/* panels */
+.about-icon-grid--panels {
+  background: var(--color-primary);
+}
+
+.about-icon-grid--panels .section-header__eyebrow {
+  color: var(--color-surface);
+}
+
+.about-icon-grid--panels .section-header__heading,
+.about-icon-grid--panels .section-header__text {
+  color: var(--color-background);
+}
+
+.about-icon-grid--panels .about-icon-grid__list {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.about-icon-grid--panels .about-icon-grid__item {
+  position: relative;
+  align-items: flex-start;
+  min-height: 220px;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  overflow: hidden;
+  text-align: left;
+  background: var(--color-background);
+  border-radius: 20px;
+}
+
+.about-icon-grid--panels .about-icon-grid__body {
+  max-width: 85%;
+}
+
+.about-icon-grid--panels .about-icon-grid__title {
+  font-size: 24px;
+}
+
+.about-icon-grid--panels .about-icon-grid__number {
+  order: 2;
+  margin: auto 0 0;
+  font-size: 28px;
+  opacity: 0.55;
+}
+
+.about-icon-grid--panels .about-icon-grid__icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  align-items: flex-end;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 96px;
+  height: 96px;
+  margin: 0;
+  padding: var(--space-4);
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border-radius: 96px 0 0;
+}
+
+.about-icon-grid--panels .about-icon-grid__icon svg {
+  width: 36px;
+  height: 36px;
+}
+
 @media screen and (prefers-reduced-motion: reduce) {
   .about-icon-grid--tiles .about-icon-grid__item {
     transition: none;
@@ -199,6 +267,11 @@
 @media screen and (min-width: 750px) {
   .about-icon-grid--tiles .about-icon-grid__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-icon-grid--panels .about-icon-grid__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
   }
 
   .about-icon-grid__list {
@@ -219,6 +292,10 @@
   .about-icon-grid--tiles .about-icon-grid__list {
     grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
     gap: var(--space-5);
+  }
+
+  .about-icon-grid--panels .about-icon-grid__list {
+    grid-template-columns: repeat(min(var(--columns), 3), minmax(0, 1fr));
   }
 }
 {% endstylesheet %}
@@ -241,6 +318,7 @@
         { "value": "surface", "label": "Cards on tinted background" },
         { "value": "band", "label": "Dark green band" },
         { "value": "tiles", "label": "Numbered tiles with icon" },
+        { "value": "panels", "label": "White cards on dark green" },
         { "value": "numbered", "label": "Numbered list" }
       ],
       "default": "cards"

@@ -210,9 +210,9 @@
         "eyebrow": "Brand Values",
         "heading": "What We Stand For",
         "text": "<p>Six principles guide every product we make and every customer we serve.</p>",
-        "columns": 3,
-        "style": "tiles",
-        "padding_top": 40,
+        "columns": 2,
+        "style": "panels",
+        "padding_top": 60,
         "padding_bottom": 60
       }
     },
