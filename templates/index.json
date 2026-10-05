@@ -20,11 +20,11 @@
             "eyebrow": "",
             "heading": "Nourish The Roots, Strengthen Weak Strands",
             "heading_color": "#004236",
-            "heading_size": "h0",
+            "heading_size": "h1",
             "content": "<p>Target weakness, dryness & breakage with nourishing hair care.</p>",
             "button_label": "Shop Now",
             "link": "shopify://collections/vitamin-c",
-            "ratings": ""
+            "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
           }
         },
         "slide_RdnJCb": {
@@ -35,32 +35,17 @@
             "eyebrow": "",
             "heading": "Skin-first formulas for real concerns",
             "heading_color": "#004236",
-            "heading_size": "h0",
+            "heading_size": "h1",
             "content": "<p>Targeted care thoughtfully tailored to your skin’s unique needs.</p>",
             "button_label": "Shop Now",
             "link": "shopify://collections/tea-tree",
-            "ratings": ""
-          }
-        },
-        "slide_86jfiA": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "eyebrow": "",
-            "heading": "",
-            "heading_color": "#004236",
-            "heading_size": "h0",
-            "content": "",
-            "button_label": "",
-            "link": "",
-            "ratings": ""
+            "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
           }
         }
       },
       "block_order": [
         "slide_1",
-        "slide_RdnJCb",
-        "slide_86jfiA"
+        "slide_RdnJCb"
       ],
       "settings": {
         "height": "large",
