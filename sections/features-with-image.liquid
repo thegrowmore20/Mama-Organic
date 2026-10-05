@@ -60,12 +60,14 @@
 {% stylesheet %}
 .features-grid {
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 60px;
+  padding: var(--space-6) 0;
 }
 
 @media screen and (min-width: 990px) {
   .features-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
   }
 }
 
@@ -142,8 +144,16 @@
   }
 }
 
+/* Side padding on phones keeps the tilted shape and picture off the screen edges. */
 .features-media {
   position: relative;
+  padding: 0 var(--space-6);
+}
+
+@media screen and (min-width: 990px) {
+  .features-media {
+    padding: 0;
+  }
 }
 
 @media screen and (max-width: 989px) {
