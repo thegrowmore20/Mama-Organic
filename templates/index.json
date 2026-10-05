@@ -18,12 +18,12 @@
             "image": "shopify://shop_images/2.png",
             "mobile_image": "shopify://shop_images/2_286fb821-781a-439f-abb4-3bb6187293dd.png",
             "eyebrow": "",
-            "heading": "Nourish The Roots, Strengthen Weak Strands",
+            "heading": "Skin-first formulas for real concerns",
             "heading_color": "#004236",
             "heading_size": "h1",
-            "content": "<p>Target weakness, dryness & breakage with nourishing hair care.</p>",
+            "content": "<p>Targeted care thoughtfully tailored to your skin’s unique needs.</p>",
             "button_label": "Shop Now",
-            "link": "shopify://collections/vitamin-c",
+            "link": "shopify://collections/tea-tree",
             "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
           }
         },
@@ -33,12 +33,12 @@
             "image": "shopify://shop_images/3.png",
             "mobile_image": "shopify://shop_images/3_caa215a5-8073-4682-b508-a5e9ae7fe857.png",
             "eyebrow": "",
-            "heading": "Skin-first formulas for real concerns",
+            "heading": "Nourish The Roots, Strengthen Weak Strands",
             "heading_color": "#004236",
             "heading_size": "h1",
-            "content": "<p>Targeted care thoughtfully tailored to your skin’s unique needs.</p>",
+            "content": "<p>Target weakness, dryness & breakage with nourishing hair care.</p>",
             "button_label": "Shop Now",
-            "link": "shopify://collections/tea-tree",
+            "link": "shopify://collections/vitamin-c",
             "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
           }
         }
