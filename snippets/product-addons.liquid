@@ -75,7 +75,7 @@
               >
               <span class="product-addons__shell">
                 {%- if addon_variant.available -%}
-                  <span class="product-addons__price">+{{ addon_variant.price | money }}</span>
+                  <span class="product-addons__price">{{ 'products.product.addons_add' | t }} {{ addon_price }}</span>
                   <span class="product-addons__tick" aria-hidden="true">&#10003;</span>
                 {%- else -%}
                   <span class="product-addons__price">{{ 'products.product.sold_out' | t }}</span>
