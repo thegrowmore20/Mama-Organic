@@ -24,14 +24,14 @@
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="container">
-    <div class="about-founder__card">
+    <div class="about-founder__card u-grid">
       {%- if section.settings.image == blank -%}
         {%- assign name_parts = section.settings.name | split: ' ' -%}
         {%- assign first_initial = name_parts.first | slice: 0 -%}
         {%- assign last_initial = name_parts.last | slice: 0 -%}
         {%- assign initials = first_initial | append: last_initial | upcase -%}
         <div class="about-founder__media" aria-hidden="true">
-          <span class="about-founder__monogram">{{ initials }}</span>
+          <span class="about-founder__monogram u-flex u-items-center u-justify-center">{{ initials }}</span>
         </div>
       {%- else -%}
         <div class="about-founder__media">
@@ -60,10 +60,10 @@
         {%- endif -%}
 
         {%- if section.settings.email != blank or founder_links.size > 0 -%}
-          <ul class="about-founder__links" role="list">
+          <ul class="about-founder__links u-flex" role="list">
             {%- if section.settings.email != blank -%}
               <li>
-                <a class="about-founder__link" href="mailto:{{ section.settings.email }}">
+                <a class="about-founder__link u-inline-flex u-items-center" href="mailto:{{ section.settings.email }}">
                   <span aria-hidden="true">{% render 'icon', name: 'mail' %}</span>
                   {{ section.settings.email | escape }}
                 </a>
@@ -75,7 +75,7 @@
               {%- assign network_url = section.settings[setting_id] -%}
               {%- if network_url != blank -%}
                 <li>
-                  <a class="about-founder__link" href="{{ network_url }}" target="_blank" rel="noopener noreferrer">
+                  <a class="about-founder__link u-inline-flex u-items-center" href="{{ network_url }}" target="_blank" rel="noopener noreferrer">
                     {{ network | capitalize }}
                     <span class="visually-hidden">({{ section.settings.name | escape }})</span>
                   </a>
@@ -98,7 +98,6 @@
 
 {% stylesheet %}
 .about-founder__card {
-  display: grid;
   gap: var(--space-5);
   max-width: 880px;
   margin: 0 auto;
@@ -107,9 +106,12 @@
   border-radius: var(--radius-m);
 }
 
+.about-founder__media img {
+  display: block;
+}
+
 .about-founder__media img,
 .about-founder__monogram {
-  display: block;
   width: 160px;
   height: 160px;
   object-fit: cover;
@@ -117,9 +119,6 @@
 }
 
 .about-founder__monogram {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: var(--font-heading);
   font-size: 56px;
   line-height: 1;
@@ -156,7 +155,6 @@
 }
 
 .about-founder__links {
-  display: flex;
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-5);
   margin: var(--space-5) 0 0;
@@ -165,12 +163,10 @@
 }
 
 .about-founder__link {
-  display: inline-flex;
   padding: 0 var(--space-4);
   background: var(--color-background);
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  align-items: center;
   gap: var(--space-2);
   min-height: 44px;
   font-weight: 500;

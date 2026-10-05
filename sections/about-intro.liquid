@@ -16,7 +16,7 @@
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="container">
-    <div class="about-intro__grid{% if has_aside %} about-intro__grid--has-aside{% endif %}">
+    <div class="about-intro__grid u-grid{% if has_aside %} about-intro__grid--has-aside{% endif %}">
       <div class="about-intro__content">
         {% render 'section-header',
           eyebrow: section.settings.eyebrow,
@@ -33,7 +33,7 @@
       </div>
 
       {%- if has_aside -%}
-        <div class="about-intro__aside">
+        <div class="about-intro__aside u-grid">
           {%- if section.settings.image != blank -%}
             <div class="about-intro__media">
               {{
@@ -59,8 +59,8 @@
               {%- if section.blocks.size > 0 -%}
                 <ul class="about-intro__points" role="list">
                   {%- for block in section.blocks -%}
-                    <li class="about-intro__point" {{ block.shopify_attributes }}>
-                      <span class="about-intro__point-icon" aria-hidden="true">{% render 'icon', name: 'check' %}</span>
+                    <li class="about-intro__point u-flex u-items-center" {{ block.shopify_attributes }}>
+                      <span class="about-intro__point-icon u-inline-flex u-items-center u-justify-center" aria-hidden="true">{% render 'icon', name: 'check' %}</span>
                       {{ block.settings.text | escape }}
                     </li>
                   {%- endfor -%}
@@ -76,7 +76,6 @@
 
 {% stylesheet %}
 .about-intro__grid {
-  display: grid;
   gap: var(--space-7);
   align-items: start;
 }
@@ -86,7 +85,6 @@
 }
 
 .about-intro__aside {
-  display: grid;
   gap: var(--space-5);
 }
 
@@ -128,8 +126,6 @@
 }
 
 .about-intro__point {
-  display: flex;
-  align-items: center;
   gap: var(--space-3);
   font-family: var(--font-subheading);
   font-weight: 500;
@@ -137,10 +133,7 @@
 }
 
 .about-intro__point-icon {
-  display: inline-flex;
   flex: none;
-  align-items: center;
-  justify-content: center;
   width: 28px;
   height: 28px;
   color: var(--color-background);

@@ -21,14 +21,19 @@
         text: section.settings.text
       %}
 
-      <ul class="about-icon-grid__list" role="list">
+      <ul class="about-icon-grid__list u-grid" role="list">
         {%- for block in section.blocks -%}
-          <li class="about-icon-grid__item" {{ block.shopify_attributes }}>
+          <li class="about-icon-grid__item u-flex u-flex-col u-items-center" {{ block.shopify_attributes }}>
             {%- if section.settings.style == 'numbered' or section.settings.style == 'tiles' or section.settings.style == 'panels' -%}
               <span class="about-icon-grid__number" aria-hidden="true">{{ forloop.index | prepend: '0' }}</span>
             {%- endif -%}
             {%- if section.settings.style != 'numbered' -%}
-              <span class="about-icon-grid__icon" aria-hidden="true">{% render 'icon', name: block.settings.icon %}</span>
+              <span class="about-icon-grid__icon u-inline-flex u-items-center u-justify-center" aria-hidden="true">{%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60, 120', sizes: '36px', alt: '' }}
+              {%- else -%}
+                {% render 'icon', name: block.settings.icon %}
+              {%- endif -%}
+            </span>
             {%- endif -%}
             <div class="about-icon-grid__body">
               {%- if block.settings.title != blank -%}
@@ -47,7 +52,6 @@
 
 {% stylesheet %}
 .about-icon-grid__list {
-  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-5) var(--space-4);
   margin: var(--space-7) 0 0;
@@ -60,16 +64,10 @@
 }
 
 .about-icon-grid__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
 }
 
 .about-icon-grid__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 52px;
   height: 52px;
   margin-bottom: var(--space-3);
@@ -78,7 +76,9 @@
   border-radius: 50%;
 }
 
-.about-icon-grid__icon svg {
+.about-icon-grid__icon svg,
+
+.about-icon-grid__icon img {
   width: 26px;
   height: 26px;
 }
@@ -249,7 +249,9 @@
   border-radius: 64px 0 0;
 }
 
-.about-icon-grid--panels .about-icon-grid__icon svg {
+.about-icon-grid--panels .about-icon-grid__icon svg,
+
+.about-icon-grid--panels .about-icon-grid__icon img {
   width: 26px;
   height: 26px;
 }
@@ -298,7 +300,9 @@
     border-radius: 96px 0 0;
   }
 
-  .about-icon-grid--panels .about-icon-grid__icon svg {
+  .about-icon-grid--panels .about-icon-grid__icon svg,
+
+  .about-icon-grid--panels .about-icon-grid__icon img {
     width: 36px;
     height: 36px;
   }
@@ -361,10 +365,11 @@
       "type": "item",
       "name": "Item",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Icon image", "info": "Optional. Replaces the built-in icon below." },
         {
           "type": "select",
           "id": "icon",
-          "label": "Icon",
+          "label": "Built-in icon",
           "options": [
             { "value": "leaf", "label": "Leaf" },
             { "value": "drop", "label": "Drop" },

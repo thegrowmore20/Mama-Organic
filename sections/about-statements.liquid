@@ -11,10 +11,15 @@
     <div class="container">
       {% render 'section-header', eyebrow: section.settings.eyebrow, heading: section.settings.heading %}
 
-      <div class="about-statements__grid">
+      <div class="about-statements__grid u-grid">
         {%- for block in section.blocks -%}
           <article class="about-statements__card" {{ block.shopify_attributes }}>
-            <span class="about-statements__icon" aria-hidden="true">{% render 'icon', name: block.settings.icon %}</span>
+            <span class="about-statements__icon u-inline-flex u-items-center u-justify-center" aria-hidden="true">{%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60, 120', sizes: '28px', alt: '' }}
+            {%- else -%}
+              {% render 'icon', name: block.settings.icon %}
+            {%- endif -%}
+          </span>
             {%- if block.settings.label != blank -%}
               <h3 class="about-statements__label h4">{{ block.settings.label | escape }}</h3>
             {%- endif -%}
@@ -30,7 +35,6 @@
 
 {% stylesheet %}
 .about-statements__grid {
-  display: grid;
   margin-top: var(--space-7);
   overflow: hidden;
   color: var(--color-background);
@@ -51,9 +55,6 @@
 }
 
 .about-statements__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 56px;
   height: 56px;
   margin-bottom: var(--space-4);
@@ -62,7 +63,9 @@
   border-radius: 50%;
 }
 
-.about-statements__icon svg {
+.about-statements__icon svg,
+.about-statements__icon img {
+  object-fit: contain;
   width: 28px;
   height: 28px;
 }
@@ -110,10 +113,11 @@
       "type": "statement",
       "name": "Statement",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Icon image", "info": "Optional. Replaces the built-in icon below." },
         {
           "type": "select",
           "id": "icon",
-          "label": "Icon",
+          "label": "Built-in icon",
           "options": [
             { "value": "sun", "label": "Sun" },
             { "value": "target", "label": "Target" },
