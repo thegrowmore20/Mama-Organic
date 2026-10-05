@@ -101,8 +101,8 @@
         "heading": "Where we are headed",
         "text": "<p>A clear direction for the brand, and a clear promise to the people who use our products every day.</p>",
         "show_leaves": true,
-        "padding_top": 80,
-        "padding_bottom": 80
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "values": {
@@ -224,8 +224,9 @@
         "quote": "Natural care should be the standard for every family in Pakistan — not a luxury only a few can afford.",
         "body": "<p>That belief is why every Mama Organic formula is built from natural source ingredients, kept free from harsh chemicals, and priced so a full routine stays within reach — across face, hair, body and baby care.</p>",
         "primary_label": "Shop All Products",
-        "padding_top": 80,
-        "padding_bottom": 80
+        "primary_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     }
   },
