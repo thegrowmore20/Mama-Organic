@@ -142,42 +142,19 @@
             "heading": "Toxin-free care, for everyone",
             "text": "<p>To build natural and toxin-free products for skin, hair and body, for everyone, everywhere.</p>"
           }
-        },
-        "badge_1": {
-          "type": "badge",
-          "settings": {
-            "label": "100% Natural"
-          }
-        },
-        "badge_2": {
-          "type": "badge",
-          "settings": {
-            "label": "Toxin Free"
-          }
-        },
-        "badge_3": {
-          "type": "badge",
-          "settings": {
-            "label": "Doorstep Delivery"
-          }
         }
       },
       "block_order": [
         "vision",
-        "mission",
-        "badge_1",
-        "badge_2",
-        "badge_3"
+        "mission"
       ],
       "settings": {
         "eyebrow": "Our Mission",
         "heading": "Where we are headed",
         "text": "<p>A clear direction for the brand, and a clear promise to the people who use our products every day.</p>",
         "show_leaves": true,
-        "show_promise": true,
-        "promise_heading": "Natural source ingredients. No harsh chemicals. Fair prices.",
         "padding_top": 80,
-        "padding_bottom": 0
+        "padding_bottom": 80
       }
     },
     "values": {
