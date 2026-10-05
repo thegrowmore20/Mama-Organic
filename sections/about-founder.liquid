@@ -58,7 +58,9 @@
         {%- endif -%}
       </div>
 
-      {% render 'section-header', heading: section.settings.name, text: section.settings.role %}
+      <div class="about-founder__identity">
+        {% render 'section-header', heading: section.settings.name, text: section.settings.role %}
+      </div>
 
       {%- if section.blocks.size > 0 -%}
         <ul class="social-icons social-icons--center about-founder__socials" role="list">
@@ -168,8 +170,13 @@
   border-radius: 50%;
 }
 
+/* No gap between the name/role header and the social icons. */
+.about-founder__identity {
+  --section-header-gap: 0;
+}
+
 .about-founder__socials {
-  margin-top: var(--space-5);
+  margin-top: 0;
 }
 
 /* Mint circles (as before); the shared social-icons hover still turns the icon white. */
