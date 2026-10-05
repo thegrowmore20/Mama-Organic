@@ -280,37 +280,13 @@
             "platform": "email",
             "url_or_email": "mudassarjami@mamaorganic.pk"
           }
-        },
-        "st1": {
-          "type": "stat",
-          "settings": {
-            "value": "4 Ranges",
-            "label": "Face · Hair · Body · Baby"
-          }
-        },
-        "st2": {
-          "type": "stat",
-          "settings": {
-            "value": "100% Natural",
-            "label": "Source ingredients"
-          }
-        },
-        "st3": {
-          "type": "stat",
-          "settings": {
-            "value": "Nationwide",
-            "label": "Delivered in Pakistan"
-          }
         }
       },
       "block_order": [
         "s1",
         "s2",
         "s3",
-        "s4",
-        "st1",
-        "st2",
-        "st3"
+        "s4"
       ],
       "settings": {
         "eyebrow": "Meet the Founder",
@@ -322,9 +298,7 @@
         "role": "Founder & CEO, Mama Organic",
         "quote": "Natural care should be the standard for every family in Pakistan — not a luxury only a few can afford.",
         "body": "<p>That belief is why every Mama Organic formula is built from natural source ingredients, kept free from harsh chemicals, and priced so a full routine stays within reach — across face, hair, body and baby care.</p>",
-        "signature": "Mudassar Jami",
         "primary_label": "Shop All Products",
-        "secondary_label": "Email the Founder",
         "padding_top": 80,
         "padding_bottom": 80
       }
