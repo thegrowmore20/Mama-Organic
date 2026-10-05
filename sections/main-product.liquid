@@ -871,7 +871,7 @@ h1.product-title {
   border-top: 1px solid var(--color-border);
 }
 
-.product-accordion:last-of-type {
+.product-accordion:not(:has(+ .product-accordion)) {
   border-bottom: 1px solid var(--color-border);
 }
 
