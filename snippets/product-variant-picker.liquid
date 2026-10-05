@@ -77,9 +77,9 @@
               {%- endunless %}
             >
               {%- if swatch_image -%}
-                {{ swatch_image | image_url: width: 120 | image_tag: loading: 'lazy', width: 60, height: 60, class: 'variant-picker__value-image', alt: value_name }}
+                {{ swatch_image | image_url: width: 150 | image_tag: loading: 'lazy', width: 75, height: 75, class: 'variant-picker__value-image', alt: value_name }}
               {%- elsif media_image -%}
-                {{ media_image | image_url: width: 120 | image_tag: loading: 'lazy', width: 60, height: 60, class: 'variant-picker__value-image', alt: value_name }}
+                {{ media_image | image_url: width: 150 | image_tag: loading: 'lazy', width: 75, height: 75, class: 'variant-picker__value-image', alt: value_name }}
               {%- elsif swatch_color -%}
                 <span class="variant-picker__value-swatch" style="background-color: {{ swatch_color | escape }};"></span>
               {%- endif -%}
