@@ -54,6 +54,7 @@
       data-label-unavailable="{{ 'products.product.sold_out' | t }}"
       {% unless is_available %}disabled{% endunless %}
     >
+      <span class="product-buy-box__cart-icon u-inline-flex" aria-hidden="true">{% render 'icon', name: 'cart' %}</span>
       <span data-add-to-cart-text>
         {%- if is_available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
       </span>
