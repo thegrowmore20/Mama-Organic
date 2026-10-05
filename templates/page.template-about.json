@@ -154,7 +154,7 @@
           "settings": {
             "icon": "leaf",
             "title": "Natural",
-            "text": "Sustainability in every action"
+            "text": "Natural source ingredients, free from harsh chemicals, in everything we make."
           }
         },
         "item_2": {
@@ -162,7 +162,7 @@
           "settings": {
             "icon": "heart",
             "title": "Be the Customer's Champion",
-            "text": "Your needs come first, always"
+            "text": "Your needs come first. We stand beside you in every order and every question."
           }
         },
         "item_3": {
@@ -170,15 +170,15 @@
           "settings": {
             "icon": "sparkle",
             "title": "Be Better Everyday",
-            "text": "We keep improving what we make"
+            "text": "We keep improving our products and our service, a little more each day."
           }
         },
         "item_4": {
           "type": "item",
           "settings": {
-            "icon": "check",
+            "icon": "shield",
             "title": "Honesty",
-            "text": "Open and truthful with our customers"
+            "text": "Open and truthful about what is in our products and what they can do."
           }
         },
         "item_5": {
@@ -186,7 +186,15 @@
           "settings": {
             "icon": "star",
             "title": "Be Original",
-            "text": "Our own formulas, our own standards"
+            "text": "We build our own range with our own standards, never a copy of someone else's."
+          }
+        },
+        "item_6": {
+          "type": "item",
+          "settings": {
+            "icon": "drop",
+            "title": "Sustainability in Every Action",
+            "text": "Eco-friendly products and choices that respect the planet we all share."
           }
         }
       },
@@ -195,15 +203,17 @@
         "item_2",
         "item_3",
         "item_4",
-        "item_5"
+        "item_5",
+        "item_6"
       ],
       "settings": {
         "eyebrow": "Brand Values",
         "heading": "What We Stand For",
-        "columns": 5,
-        "style": "numbered",
+        "text": "<p>Six principles guide every product we make and every customer we serve.</p>",
+        "columns": 3,
+        "style": "tiles",
         "padding_top": 40,
-        "padding_bottom": 40
+        "padding_bottom": 60
       }
     },
     "founder": {
