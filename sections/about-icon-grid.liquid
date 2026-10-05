@@ -32,7 +32,7 @@
             {%- endif -%}
             <div class="about-icon-grid__body">
               {%- if block.settings.title != blank -%}
-                <h3 class="about-icon-grid__title h6">{{ block.settings.title | escape }}</h3>
+                <h3 class="about-icon-grid__title h4">{{ block.settings.title | escape }}</h3>
               {%- endif -%}
               {%- if block.settings.text != blank -%}
                 <p class="about-icon-grid__text">{{ block.settings.text | escape }}</p>
@@ -203,15 +203,15 @@
 }
 
 .about-icon-grid--panels .about-icon-grid__list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
 }
 
 .about-icon-grid--panels .about-icon-grid__item {
   position: relative;
   align-items: flex-start;
   min-height: 200px;
-  padding: var(--space-4) var(--space-3) var(--space-3);
+  padding: var(--space-5) var(--space-4) var(--space-4);
   overflow: hidden;
   text-align: left;
   background: var(--color-background);
@@ -219,7 +219,7 @@
 }
 
 .about-icon-grid--panels .about-icon-grid__body {
-  max-width: 100%;
+  max-width: 85%;
 }
 
 .about-icon-grid--panels .about-icon-grid__title {
@@ -270,6 +270,7 @@
   }
 
   .about-icon-grid--panels .about-icon-grid__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-5);
   }
 
