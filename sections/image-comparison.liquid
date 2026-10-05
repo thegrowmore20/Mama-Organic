@@ -25,7 +25,7 @@
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="container">
-    <div class="image-comparison-section__inner image-comparison-section__inner--{{ text_position }} image-comparison-section__inner--{{ section.settings.width }}">
+    <div class="image-comparison-section__inner u-grid u-items-center image-comparison-section__inner--{{ text_position }} image-comparison-section__inner--{{ section.settings.width }}">
       {%- if has_header -%}
         <div class="image-comparison-section__header">
           {% render 'section-header',
@@ -69,7 +69,7 @@
         {%- endif -%}
 
         <span class="image-comparison__divider" aria-hidden="true">
-          <span class="image-comparison__handle">
+          <span class="image-comparison__handle u-grid">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 3 12 9 18"></polyline><polyline points="15 6 21 12 15 18"></polyline></svg>
           </span>
         </span>
@@ -80,9 +80,7 @@
 
 {% stylesheet %}
 .image-comparison-section__inner {
-  display: grid;
   gap: var(--space-6);
-  align-items: center;
   margin-inline: auto;
 }
 
@@ -210,7 +208,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: grid;
   place-items: center;
   width: 40px;
   height: 40px;

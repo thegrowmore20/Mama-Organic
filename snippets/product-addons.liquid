@@ -40,6 +40,7 @@
           <li class="product-addons__item" data-addon-item>
             <span class="product-addons__thumb">
               {%- if addon.featured_image -%}
+                {%- assign addon_alt = addon.featured_image.alt | default: addon.title -%}
                 {{
                   addon.featured_image
                   | image_url: width: 160
@@ -48,7 +49,7 @@
                     sizes: '54px',
                     width: 54,
                     height: 54,
-                    alt: addon.featured_image.alt | default: addon.title,
+                    alt: addon_alt,
                     loading: 'lazy'
                 }}
               {%- else -%}

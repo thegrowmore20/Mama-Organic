@@ -30,14 +30,14 @@
         , text: section.settings.text
       %}
 
-      <div class="u-grid product-results__layout">
+      <div class="u-grid product-results__layout u-items-center">
         <div class="product-results__content">
           <ol class="product-results__timeline">
             {%- for item in timeline -%}
               {%- if item.title != blank -%}
-                <li class="product-results__step">
-                  <span class="product-results__step-badge">{{ item.label | default: forloop.index }}</span>
-                  <span class="product-results__step-body">
+                <li class="product-results__step u-flex">
+                  <span class="product-results__step-badge u-grid">{{ item.label | default: forloop.index }}</span>
+                  <span class="product-results__step-body u-flex u-flex-col">
                     <h3 class="product-results__step-title">{{ item.title | escape }}</h3>
                     {%- if item.desc != blank -%}
                       <span class="product-results__step-desc">{{ item.desc | escape }}</span>
@@ -125,7 +125,6 @@
   .product-results__layout {
     grid-template-columns: 1fr;
     gap: var(--space-4);
-    align-items: center;
   }
 
   @media screen and (min-width: 850px) {
@@ -142,7 +141,6 @@
   }
 
   .product-results__step {
-    display: flex;
     align-items: flex-start;
     gap: var(--space-4);
     padding-block: var(--space-4);
@@ -156,7 +154,6 @@
 
   .product-results__step-badge {
     flex: 0 0 auto;
-    display: grid;
     place-items: center;
     min-width: 40px;
     height: 40px;
@@ -171,8 +168,6 @@
   }
 
   .product-results__step-body {
-    display: flex;
-    flex-direction: column;
     gap: 2px;
   }
 

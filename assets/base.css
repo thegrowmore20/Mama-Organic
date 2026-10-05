@@ -869,3 +869,589 @@ h1.collection-banner__heading.h0 {
 collection-results.collection-grid-section.section-padding {
     padding-top: 10px;
 }
+
+/* Pagination (shared by blog, article, collection and search) */
+.pagination__link {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 6px;
+    border-radius: var(--radius-s);
+    color: var(--color-primary);
+    font-size: 13px;
+  }
+
+.pagination__link--current {
+    background: var(--color-secondary);
+    color: #fff;
+  }
+
+.pagination__link--prev svg {
+    transform: scaleX(-1);
+  }
+
+/* Shared by the collection, search, blog and related sections (moved out of the individual sections) */
+.blog-listing-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-listing-card__media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+}
+
+.blog-listing-card__media img,
+.blog-listing-card__media svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-listing-card__body {
+  padding-top: var(--space-4);
+}
+
+.blog-listing-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  line-height: 1.35;
+  margin: 0 0 10px;
+  /* Two lines max, and always two lines tall, so every card in a row keeps
+     its excerpt and "Read more" aligned whatever the title length. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(1.35em * 2);
+}
+
+.blog-listing-card__title a {
+  color: var(--color-primary);
+}
+
+.blog-listing-card__title a:hover {
+  color: var(--color-secondary);
+}
+
+.blog-listing-card__excerpt {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0 0 14px;
+  /* Three lines max, and always three lines tall. Sized in em, so it follows
+     the font size and the card width at every breakpoint. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.6em * 3);
+}
+
+.blog-listing-card__link {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-secondary-a11y, var(--color-secondary));
+  text-decoration: underline;
+}
+
+.blog-listing-card__comments svg {
+  width: 15px;
+  height: 15px;
+}
+
+facet-filters-form {
+  display: block;
+}
+
+.collection-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.collection-topbar {
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-3);
+}
+
+.collection-toolbar__count {
+  grid-column: 2;
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.collection-filters__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px var(--space-4);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  cursor: pointer;
+  white-space: nowrap;
+
+  @media screen and (max-width: 480px) {
+    padding: 7px 15px;
+  }
+}
+
+.collection-filters__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10010;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.collection-filters__backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.collection-filters__panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 90%;
+  max-width: 380px;
+  background: var(--color-background);
+  z-index: 10011;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.collection-filters__panel.is-open {
+  transform: translateX(0);
+}
+
+.collection-filters__panel-header {
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.collection-filters__panel-heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  color: var(--color-primary);
+}
+
+.collection-filters__panel-close {
+  min-width: 44px;
+  min-height: 44px;
+  margin: -11px;
+  padding: 11px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+.collection-filters__panel-inner {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5);
+}
+
+.facets {
+  display: flex;
+  flex-direction: column;
+}
+
+.facets__group {
+  border-bottom: 1px solid var(--color-border);
+  padding: 14px 0;
+}
+
+.facets__group:first-child {
+  padding-top: 0;
+}
+
+.facets__group--link {
+  display: block;
+  color: inherit;
+}
+
+.facets__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  cursor: pointer;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+}
+
+.facets__summary::-webkit-details-marker {
+  display: none;
+}
+
+.facets__chevron {
+  display: flex;
+  color: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+
+details[open] > .facets__summary .facets__chevron--down {
+  transform: rotate(180deg);
+}
+
+.facets__body {
+  padding-top: var(--space-3);
+}
+
+.facets__checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.facets__item--disabled .facets__checkbox-label {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.facets__checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.facets__count.text-muted {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.facets__summary .facets__count {
+  font-weight: 400;
+}
+
+.active-filters {
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.active-filters__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: 10px;
+}
+
+.active-filters__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--color-surface);
+  border-radius: var(--radius-s);
+  font-size: 12px;
+  color: var(--color-primary);
+  border: none;
+  cursor: pointer;
+}
+
+.active-filters__remove,
+.active-filters__remove-icon {
+  display: flex;
+  color: var(--color-primary);
+}
+
+.active-filters__remove {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.active-filters__clear-all.body-text {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  color: var(--color-secondary);
+}
+
+.price-range__slider {
+  position: relative;
+  height: 16px;
+  margin-bottom: 14px;
+}
+
+.price-range__track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  transform: translateY(-50%);
+}
+
+.price-range__progress {
+  position: absolute;
+  top: 50%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-secondary);
+  transform: translateY(-50%);
+}
+
+.price-range__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.price-range__thumb::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 16px;
+}
+
+.price-range__thumb::-moz-range-track {
+  background: transparent;
+  height: 16px;
+}
+
+.price-range__thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  margin-top: 0;
+}
+
+.price-range__thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+}
+
+.price-range__values {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.price-range__field label {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.price-range__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-s);
+  padding: 6px 10px;
+}
+
+.price-range__input {
+  width: 60px;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-primary);
+}
+
+.price-range__input:focus {
+  outline: none;
+}
+
+.price-range__separator {
+  padding-bottom: 6px;
+  color: var(--color-text-muted);
+}
+
+.collection-toolbar__select {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-s);
+  color: var(--color-primary);
+}
+
+.collection-grid {
+  grid-template-columns: repeat(var(--grid-columns-mobile, 2), minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+[data-grid-container].is-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+[data-grid-container].is-loading > * {
+  opacity: 0.4;
+}
+
+[data-grid-container].is-loading::after {
+  content: '';
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--button-primary, var(--color-secondary));
+  border-radius: 50%;
+  animation: button-spin 0.6s linear infinite;
+}
+
+.collection-empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-primary);
+}
+
+.collection-empty__link {
+  color: var(--color-secondary);
+  font-weight: 600;
+  font-family: var(--font-accent);
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 990px) {
+  .collection-layout--has-sidebar {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      /* Three rows: toolbar, product grid, and a flexible spacer. The sidebar
+         spans all three, so when a filter group opens and the sidebar grows, the
+         extra height lands in the spacer row (1fr). With only two rows it was
+         shared between the toolbar and grid rows, which pushed the product grid
+         down every time an accordion opened. */
+      grid-template-rows: auto auto 1fr;
+      column-gap: 36px;
+      row-gap: var(--space-6);
+    }
+
+  .collection-layout--has-sidebar .collection-topbar {
+      display: contents;
+    }
+
+  .collection-layout--has-sidebar .collection-filters,
+    .collection-layout--has-sidebar > .collection-topbar > form.visually-hidden {
+      grid-column: 1;
+      grid-row: 1 / span 3;
+    }
+
+  .collection-layout--has-sidebar .collection-toolbar__count {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: start;
+    }
+
+  .collection-layout--has-sidebar .collection-toolbar__sort {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+
+  .collection-layout--has-sidebar [data-grid-container] {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+  .collection-filters__toggle,
+    .collection-filters__backdrop,
+    .collection-filters__panel-header {
+      display: none;
+    }
+
+  .collection-filters__panel {
+      position: static;
+      width: auto;
+      max-width: none;
+      transform: none;
+      background: none;
+      z-index: auto;
+    }
+
+  .collection-filters__panel[hidden] {
+      display: block;
+    }
+
+  .collection-filters__panel-inner {
+      padding: 0;
+      overflow: visible;
+    }
+}
+
+@media screen and (max-width: 600px) {
+  .collection-toolbar__count {
+      display: none;
+    }
+}
+
+@media screen and (max-width: 989px) {
+  .collection-toolbar__sort-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .collection-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+  .collection-grid {
+      grid-template-columns: repeat(var(--grid-columns-desktop, 4), minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+}

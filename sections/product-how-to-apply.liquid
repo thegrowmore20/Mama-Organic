@@ -22,7 +22,7 @@
     style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
   >
     <div class="container">
-      <div class="u-grid product-how-to-apply__layout">
+      <div class="u-grid product-how-to-apply__layout u-items-center">
         <div class="product-how-to-apply__content">
           {% render 'section-header',
             eyebrow: section.settings.eyebrow,
@@ -42,7 +42,7 @@
                 {%- endif -%}
                 <li class="product-how-to-apply__step">
                   <span class="product-how-to-apply__step-index" aria-hidden="true">{{ step_num }}</span>
-                  <span class="product-how-to-apply__step-body">
+                  <span class="product-how-to-apply__step-body u-flex u-flex-col">
                     <span class="u-flex u-justify-between product-how-to-apply__step-head">
                       <h3 class="product-how-to-apply__step-title">{{ step_title | escape }}</h3>
                       {%- if step.time != blank -%}
@@ -57,7 +57,7 @@
           </ol>
         </div>
 
-        <div class="product-how-to-apply__visual">
+        <div class="product-how-to-apply__visual u-flex u-flex-col">
           <div class="product-how-to-apply__media">
             {%- if usage_image != blank -%}
               {%- assign usage_image_h = 900 | divided_by: usage_image.aspect_ratio | round -%}
@@ -84,7 +84,6 @@
 .product-how-to-apply__layout {
   grid-template-columns: 1fr;
   gap: var(--space-6);
-  align-items: center;
 }
 
 @media screen and (min-width: 750px) {
@@ -122,8 +121,6 @@
 }
 
 .product-how-to-apply__step-body {
-  display: flex;
-  flex-direction: column;
   flex: 1;
   gap: var(--space-1);
   min-width: 0;
@@ -154,8 +151,6 @@
 }
 
 .product-how-to-apply__visual {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-4);
 }
 

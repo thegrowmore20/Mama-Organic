@@ -16,14 +16,14 @@
 >
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
     <div class="container">
-      <div class="related-products__head">
+      <div class="related-products__head u-grid">
         {% render 'section-header',
           heading: section.settings.heading
         %}
         {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="related-products__action">
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="related-products__action u-inline-flex u-items-center">
             {{ section.settings.button_label | escape }}
-            <span class="related-products__action-icon" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+            <span class="related-products__action-icon u-flex" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
           </a>
         {%- endif -%}
       </div>
@@ -67,7 +67,6 @@
    750px there isn't room for both side by side, so the button drops to a
    right-aligned line under the heading. */
 .related-products__head {
-  display: grid;
   gap: var(--space-3);
   margin-bottom: var(--space-6);
 }
@@ -81,8 +80,6 @@
    brand teal on hover. The min-height keeps a 44px tap area around the
    single line of text. */
 .related-products__action {
-  display: inline-flex;
-  align-items: center;
   justify-self: end;
   gap: var(--space-1);
   min-height: 44px;
@@ -95,10 +92,6 @@
 
 .related-products__action:hover {
   color: var(--color-secondary);
-}
-
-.related-products__action-icon {
-  display: flex;
 }
 
 /* The arrow's hover nudge comes from base.css (.icon--arrow-right). */

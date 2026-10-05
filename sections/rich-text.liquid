@@ -60,7 +60,7 @@
                   </div>
                   <button
                     type="button"
-                    class="rich-text-section__toggle"
+                    class="rich-text-section__toggle u-items-center"
                     aria-expanded="false"
                     aria-controls="{{ content_id }}"
                     data-collapsible-toggle
@@ -69,7 +69,7 @@
                     hidden
                   >
                     <span data-collapsible-label>{{ 'general.collapsible.show_more' | t }}</span>
-                    <span class="rich-text-section__toggle-icon" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+                    <span class="rich-text-section__toggle-icon u-flex" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
                   </button>
                 </collapsible-text>
               {%- else -%}
@@ -186,7 +186,6 @@ collapsible-text.is-expanded .rich-text-section__clip::after {
 
 .rich-text-section__toggle {
   display: inline-flex;
-  align-items: center;
   gap: var(--space-1);
   margin-top: var(--space-2);
   padding: var(--space-2) 0;
@@ -214,7 +213,6 @@ collapsible-text.is-expanded .rich-text-section__clip::after {
 }
 
 .rich-text-section__toggle-icon {
-  display: flex;
   transition: transform 0.2s ease;
 }
 

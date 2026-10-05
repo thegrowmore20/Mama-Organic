@@ -18,7 +18,7 @@
   >
     <div class="container">
       {% render 'section-header', heading: section.settings.heading %}
-      <div class="recently-viewed__grid" data-recently-viewed-grid></div>
+      <div class="recently-viewed__grid u-flex u-justify-center" data-recently-viewed-grid></div>
     </div>
   </recently-viewed>
 {%- endif -%}
@@ -37,9 +37,7 @@ recently-viewed[hidden] {
 .recently-viewed__grid {
   --recently-viewed-columns: 2;
   --recently-viewed-gap: var(--space-3);
-  display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: var(--recently-viewed-gap);
 }
 

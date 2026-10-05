@@ -190,8 +190,8 @@
             {%- if cart.note != blank -%}{{ 'general.cart.edit_note' | t }}{%- else -%}{{ 'general.cart.add_note' | t }}{%- endif -%}
           </span>
         </button>
-        <div class="cart-drawer__note-panel" id="CartDrawerNotePanel" data-note-panel>
-          <div class="cart-drawer__note-inner">
+        <div class="cart-drawer__note-panel u-grid" id="CartDrawerNotePanel" data-note-panel>
+          <div class="cart-drawer__note-inner u-flex u-flex-col">
             <label class="visually-hidden" for="CartDrawerNote">{{ 'general.cart.note_label' | t }}</label>
             <textarea
               id="CartDrawerNote"
@@ -210,7 +210,7 @@
           </div>
         </div>
       </div>
-      <div class="cart-drawer__summary">
+      <div class="cart-drawer__summary u-flex u-flex-col">
         <div class="u-flex u-items-center u-justify-between cart-drawer__summary-row">
             <span>{{ 'general.cart.total_price' | t }}</span>
             <span>{{ compare_at_total | money }}</span>
@@ -489,8 +489,6 @@
 
 /* Price summary: total price, discount (only when something is saved), total. */
 .cart-drawer__summary {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-1);
   margin-bottom: var(--space-2);
 }
@@ -549,7 +547,6 @@
 }
 
 .cart-drawer__note-panel {
-  display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.3s ease;
 }
@@ -559,8 +556,6 @@
 }
 
 .cart-drawer__note-inner {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-2);
   min-height: 0;
   overflow: hidden;

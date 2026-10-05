@@ -83,13 +83,13 @@
                   {%- assign item_count = item_count | plus: 1 -%}
                   {%- assign panel_id = 'Faq' | append: section.id | append: '-' | append: category_index | append: '-' | append: item_count -%}
                   <div class="faqs__item" data-faq-item>
-                    <button type="button" class="faqs__question" aria-expanded="false" aria-controls="{{ panel_id }}" data-faq-trigger>
+                    <button type="button" class="faqs__question u-flex u-items-center u-justify-between" aria-expanded="false" aria-controls="{{ panel_id }}" data-faq-trigger>
                       <h3 class="faqs__question-text">
                         {% if section.settings.show_numbers %}<span>{{ item_count }}.</span> {% endif %}{{ faq.question.value | escape }}
                       </h3>
-                      <span class="faqs__icon" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+                      <span class="faqs__icon u-grid" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
                     </button>
-                    <div class="faqs__panel" id="{{ panel_id }}">
+                    <div class="faqs__panel u-grid" id="{{ panel_id }}">
                       <div class="faqs__panel-inner">
                         <div class="faqs__answer rte">{{ faq.answer | metafield_tag }}</div>
                       </div>
@@ -160,9 +160,6 @@
   }
 
   .faqs__question {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: var(--space-5);
     width: 100%;
     min-height: 52px;
@@ -190,7 +187,6 @@
   }
 
   .faqs__icon {
-    display: grid;
     place-items: center;
     flex: 0 0 30px;
     width: 30px;
@@ -206,7 +202,6 @@
   }
 
   .faqs__panel {
-    display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.25s ease;
   }

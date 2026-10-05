@@ -7,13 +7,13 @@
     {%- if faq.question.value != blank and faq.answer.value != blank -%}
       {%- assign faq_count = faq_count | plus: 1 -%}
       <div class="product-faq__item" data-faq-item>
-        <button type="button" class="product-faq__question" aria-expanded="false" data-faq-trigger>
+        <button type="button" class="product-faq__question u-flex u-items-center u-justify-between" aria-expanded="false" data-faq-trigger>
           <h3 class="product-faq__question-text">
             {% if section.settings.show_numbers %}<span>{{ faq_count }}.</span> {% endif %}{{ faq.question.value | escape }}
           </h3>
-          <span class="product-faq__icon" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+          <span class="product-faq__icon u-grid" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
         </button>
-        <div class="product-faq__panel">
+        <div class="product-faq__panel u-grid">
           <div class="product-faq__panel-inner">
             <div class="product-faq__answer rte">{{ faq.answer | metafield_tag }}</div>
           </div>
@@ -48,9 +48,6 @@
   }
 
   .product-faq__question {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: var(--space-5);
     min-height: 52px;
     padding-block: var(--space-3);
@@ -80,7 +77,6 @@
   }
 
   .product-faq__icon {
-    display: grid;
     place-items: center;
     flex: 0 0 30px;
     width: 30px;
@@ -96,7 +92,6 @@
   }
 
   .product-faq__panel {
-    display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.25s ease;
   }

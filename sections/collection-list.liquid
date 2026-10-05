@@ -2,7 +2,7 @@
   <div class="container">
     {% render 'section-header', heading: section.settings.heading %}
 
-    <div class="collections-grid" style="--collections-columns-desktop: {{ section.settings.columns_desktop }};">
+    <div class="collections-grid u-flex u-justify-center" style="--collections-columns-desktop: {{ section.settings.columns_desktop }};">
       {%- for block in section.blocks -%}
         {%- assign collection = block.settings.collection -%}
         {%- assign card_title = block.settings.title | default: collection.title -%}
@@ -16,7 +16,7 @@
             {%- endif -%}
           </div>
           {%- if card_title != blank -%}
-            <h3 class="collection-card__title">
+            <h3 class="collection-card__title u-flex u-items-center">
               {{ card_title }}
               <span class="collection-card__arrow" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
             </h3>
@@ -35,9 +35,7 @@
 .collections-grid {
   --collections-columns: 2;
   --collections-gap: var(--space-3);
-  display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: var(--collections-gap);
 
   @media screen and (min-width: 600px) {
@@ -82,8 +80,6 @@
 }
 
 .collection-card__title {
-  display: flex;
-  align-items: center;
   justify-content: flex-start;
   gap: var(--space-1);
   margin: var(--space-2) 0 0;

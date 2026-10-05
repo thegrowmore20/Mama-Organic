@@ -32,7 +32,7 @@
       <product-ingredients>
       <div class="product-ingredients__layout">
         <div class="product-ingredients__content">
-          <div class="product-ingredients__list" role="tablist">
+          <div class="product-ingredients__list u-flex u-flex-col" role="tablist">
             {%- assign visible_index = 0 -%}
             {%- for item in items -%}
               {%- if item.name != blank and item.desc != blank -%}
@@ -50,14 +50,14 @@
                   data-formula="{{ item.formula | escape }}"
                   data-percent="{{ item.percent | escape }}"
                 >
-                  <span class="product-ingredients__trigger-icon" aria-hidden="true">
+                  <span class="product-ingredients__trigger-icon u-grid" aria-hidden="true">
                     {%- if item.image != blank -%}
                       <img class="product-ingredients__trigger-img" src="{{ item.image | escape }}" alt="" width="20" height="20" loading="lazy">
                     {%- else -%}
                       {{ item.icon | default: '✦' }}
                     {%- endif -%}
                   </span>
-                  <span class="product-ingredients__trigger-info">
+                  <span class="product-ingredients__trigger-info u-flex u-flex-col">
                     <span class="product-ingredients__trigger-name">{{ item.short_name | default: item.name | escape }}</span>
                     {%- if item.claim != blank -%}
                       <span class="product-ingredients__trigger-claim">{{ item.claim | escape }}</span>
@@ -111,9 +111,9 @@
           </div>
         </div>
 
-        <div class="product-ingredients__visual">
+        <div class="product-ingredients__visual u-flex u-justify-center">
           {%- assign first_item = items | first -%}
-          <div class="product-ingredients__orb">
+          <div class="product-ingredients__orb u-flex u-flex-col u-items-center u-justify-center">
             <span class="product-ingredients__orb-name" data-orb-name>{{ first_item.short_name | default: first_item.name }}</span>
             {%- if first_item.formula != blank -%}
               <span class="product-ingredients__orb-formula" data-orb-formula>{{ first_item.formula }}</span>
@@ -132,14 +132,14 @@
           {%- endif -%}
 
           {%- if trust_badges.size > 0 -%}
-            <div class="product-ingredients__badges">
+            <div class="product-ingredients__badges u-grid">
               {%- for block in trust_badges -%}
                 {%- assign badge_icon = block.settings.icon -%}
                 {%- if badge_icon == 'ban' -%}
                   {%- assign badge_icon = 'no' -%}
                 {%- endif -%}
                 <div class="product-ingredients__badge" {{ block.shopify_attributes }}>
-                  <span class="product-ingredients__badge-icon" aria-hidden="true">
+                  <span class="product-ingredients__badge-icon u-grid" aria-hidden="true">
                     {%- if block.settings.icon_image != blank -%}
                       {{ block.settings.icon_image | image_url: width: 48 | image_tag: loading: 'lazy', widths: '24, 48', sizes: '24px', width: 24, height: 24, alt: '' }}
                     {%- else -%}
@@ -177,8 +177,6 @@ product-ingredients {
 }
 
 .product-ingredients__list {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-2);
 }
 
@@ -209,7 +207,6 @@ product-ingredients {
 
 .product-ingredients__trigger-icon {
   flex: 0 0 auto;
-  display: grid;
   place-items: center;
   width: 36px;
   height: 36px;
@@ -225,8 +222,6 @@ product-ingredients {
 }
 
 .product-ingredients__trigger-info {
-  display: flex;
-  flex-direction: column;
   gap: 2px;
   min-width: 0;
   flex: 1;
@@ -314,16 +309,10 @@ product-ingredients {
 
 .product-ingredients__visual {
   margin-top: var(--space-6);
-  display: flex;
-  justify-content: center;
 }
 
 .product-ingredients__orb {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 260px;
   height: 260px;
   border-radius: 50%;
@@ -424,7 +413,6 @@ product-ingredients {
 }
 
 .product-ingredients__badges {
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   background: #fff;
   border-radius: 14px;
@@ -442,7 +430,6 @@ product-ingredients {
 }
 
 .product-ingredients__badge-icon {
-  display: grid;
   place-items: center;
   width: 48px;
   height: 48px;

@@ -1,5 +1,5 @@
 <header class="header">
-  <div class="container header__inner">
+  <div class="container header__inner u-items-center u-justify-between">
     <button class="u-inline-flex u-items-center u-justify-center header__menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="HeaderNav" type="button">
       {% render 'icon', name: 'menu' %}
     </button>
@@ -41,14 +41,15 @@
           <a href="{{ routes.account_url }}" aria-label="Account">{% render 'icon', name: 'account' %}</a>
         {%- endif -%}
       </div>
-      <a href="{{ routes.cart_url }}" id="CartToggle" class="header__icon-btn--cart" aria-label="{{ 'general.cart.title' | t }}" aria-haspopup="dialog">
+      <a href="{{ routes.cart_url }}" id="CartToggle" class="header__icon-btn--cart" aria-haspopup="dialog">
         {% render 'icon', name: 'cart' %}
+        <span class="visually-hidden">{{ 'general.cart.title' | t }}</span>
         {% render 'cart-icon-bubble' %}
       </a>
     </div>
   </div>
   <div class="main-menu-container">
-    <div class="container header__inner">
+    <div class="container header__inner u-items-center u-justify-between">
       <nav class="header__nav" id="HeaderNav">
         <button type="button" class="header__nav-close" id="HeaderNavClose" aria-label="{{ 'general.accessibility.close' | t }}">
           {% render 'icon', name: 'close' %}
@@ -86,12 +87,12 @@
                         Three-level menu: each second-level link is a column heading and its
                         children are the links listed under it.
                       {%- endcomment -%}
-                      <div class="mega-menu__columns">
+                      <div class="mega-menu__columns u-flex">
                         {%- for sub in link.links -%}
                           <div class="mega-menu__column">
                             <a class="mega-menu__column-title" href="{{ sub.url }}">{{ sub.title }}</a>
                             {%- if sub.links.size > 0 -%}
-                              <ul class="mega-menu__column-links" role="list">
+                              <ul class="mega-menu__column-links u-flex u-flex-col" role="list">
                                 {%- for child in sub.links -%}
                                   <li><a class="mega-menu__column-link" href="{{ child.url }}">{{ child.title }}</a></li>
                                 {%- endfor -%}
@@ -327,8 +328,6 @@ body:not(:has(.banner--transparent-header)) {
 
 .header__inner {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 1rem;
 
    @media screen and (max-width: 990px) {
@@ -730,7 +729,6 @@ body:not(:has(.banner--transparent-header)) {
 /* Three-level menus: a row of columns, each a heading (the second-level link)
    over a list of its third-level links. */
 .mega-menu__columns {
-  display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: var(--space-8) var(--space-8);
@@ -753,8 +751,6 @@ body:not(:has(.banner--transparent-header)) {
 }
 
 .mega-menu__column-links {
-  display: flex;
-  flex-direction: column;
   gap: 12px;
   margin: 0;
   padding: 0;

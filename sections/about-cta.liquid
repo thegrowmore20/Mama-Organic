@@ -31,7 +31,7 @@
           {%- for block in section.blocks -%}
             <span class="u-inline-flex u-items-center about-cta__badge" {{ block.shopify_attributes }}>
               {%- if block.settings.icon_image != blank -%}
-                <span class="about-cta__badge-icon" aria-hidden="true">
+                <span class="about-cta__badge-icon u-inline-flex" aria-hidden="true">
                   {{ block.settings.icon_image | image_url: width: 48 | image_tag: loading: 'lazy', widths: '24, 48', sizes: '24px', width: 24, height: 24, alt: '' }}
                 </span>
               {%- endif -%}
@@ -88,10 +88,6 @@
   font-weight: 500;
   font-family: var(--font-subheading);
   color: var(--color-background);
-}
-
-.about-cta__badge-icon {
-  display: inline-flex;
 }
 
 .about-cta__badge-icon img {

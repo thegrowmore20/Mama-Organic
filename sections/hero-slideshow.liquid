@@ -91,7 +91,7 @@
           {%- endif -%}
 
           {%- if has_text_content or block.settings.button_label != blank -%}
-            <div class="hero-slideshow__content-wrap container">
+            <div class="hero-slideshow__content-wrap u-flex container">
               <div class="hero-slideshow__content">
                 {%- if block.settings.eyebrow != blank -%}
                   <p class="hero-slideshow__eyebrow">{{ block.settings.eyebrow | escape }}</p>
@@ -123,13 +123,13 @@
 
     {%- if section.blocks.size > 1 -%}
       <div class="hero-slideshow__controls" data-slideshow-controls>
-        <button type="button" class="hero-slideshow__arrow hero-slideshow__arrow--prev" aria-label="Previous slide">
+        <button type="button" class="hero-slideshow__arrow u-flex u-items-center u-justify-center hero-slideshow__arrow--prev" aria-label="Previous slide">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
         </button>
-        <button type="button" class="hero-slideshow__arrow hero-slideshow__arrow--next" aria-label="Next slide">
+        <button type="button" class="hero-slideshow__arrow u-flex u-items-center u-justify-center hero-slideshow__arrow--next" aria-label="Next slide">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         </button>
-        <div class="hero-slideshow__dots" data-slideshow-dots>
+        <div class="hero-slideshow__dots u-flex" data-slideshow-dots>
           {%- for block in section.blocks -%}
             <button type="button" class="hero-slideshow__dot{% if forloop.first %} is-active{% endif %}" aria-label="Go to slide {{ forloop.index }}" data-index="{{ forloop.index0 }}"></button>
           {%- endfor -%}
@@ -205,7 +205,6 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  display: flex;
   padding-block: 48px;
 }
 
@@ -264,9 +263,6 @@
   background: rgba(255, 255, 255, 0.7);
   border: none;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: var(--color-primary);
   cursor: pointer;
   z-index: 3;
@@ -290,16 +286,14 @@
   left: 50%;
   bottom: 20px;
   transform: translateX(-50%);
-  display: flex;
-  gap: 4px;
   z-index: 3;
 }
 
 .hero-slideshow__dot {
   display: grid;
   place-items: center;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   background: none;
   border: none;
   padding: 0;

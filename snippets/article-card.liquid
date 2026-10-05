@@ -21,7 +21,7 @@
 {%- endcomment -%}
 
 <article class="blog-listing-card">
-  <a class="blog-listing-card__media" href="{{ article.url }}">
+  <a class="blog-listing-card__media" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
     {%- if show_image and article.image -%}
       {{
         article.image

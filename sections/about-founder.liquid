@@ -41,6 +41,7 @@
 
       <div class="about-founder__photo{% if section.settings.show_ring %} about-founder__photo--ring{% endif %}">
         {%- if section.settings.photo != blank -%}
+          {%- assign photo_alt = section.settings.photo.alt | default: section.settings.name -%}
           {{
             section.settings.photo
             | image_url: width: 600
@@ -51,7 +52,7 @@
               height: section.settings.photo_size,
               loading: 'lazy',
               class: 'about-founder__image',
-              alt: section.settings.photo.alt | default: section.settings.name
+              alt: photo_alt
           }}
         {%- else -%}
           <span class="about-founder__monogram u-flex u-items-center u-justify-center" aria-hidden="true">{{ initials }}</span>

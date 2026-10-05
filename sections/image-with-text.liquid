@@ -24,7 +24,7 @@
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="container">
-    <div class="image-with-text__grid">
+    <div class="image-with-text__grid u-grid">
       <div class="image-with-text__media">
         {%- if section.settings.image -%}
           {%- assign media_alt = section.settings.image.alt | default: section.settings.heading -%}
@@ -36,7 +36,7 @@
 
       {%- if has_content -%}
         <div
-          class="image-with-text__content image-with-text__content--{{ text_align }}{% if text_bg != blank %} image-with-text__content--custom{% endif %}"
+          class="image-with-text__content u-flex u-flex-col u-justify-center image-with-text__content--{{ text_align }}{% if text_bg != blank %} image-with-text__content--custom{% endif %}"
           {%- if text_bg != blank %} style="--image-with-text-bg: {{ text_bg }}; --image-with-text-color: {{ text_color }};"{% endif -%}
         >
           {% render 'section-header',
@@ -48,8 +48,9 @@
             <div class="image-with-text__text rte">{{ section.settings.text }}</div>
           {%- endif -%}
           {%- if section.settings.text_image != blank -%}
+            {%- assign text_image_alt = section.settings.text_image.alt | default: section.settings.heading -%}
             <div class="image-with-text__text-image" style="--image-with-text-image-width: {{ section.settings.text_image_width }}px;">
-              {{ section.settings.text_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 750px) 40vw, 90vw', alt: section.settings.text_image.alt | default: section.settings.heading }}
+              {{ section.settings.text_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 750px) 40vw, 90vw', alt: text_image_alt }}
             </div>
           {%- endif -%}
           {%- if has_button -%}
@@ -75,7 +76,6 @@
 
 {% stylesheet %}
 .image-with-text__grid {
-  display: grid;
   grid-template-columns: 1fr;
   overflow: hidden;
   border-radius: var(--radius-m);
@@ -99,10 +99,7 @@
 }
 
 .image-with-text__content {
-  display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
   gap: var(--space-4);
   padding: 40px var(--space-4);
   background: var(--color-surface);

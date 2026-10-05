@@ -6,12 +6,12 @@
 {%- endif -%}
 <section class="product-grid-section section-padding" style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div class="container">
-    <div class="product-grid-section__head">
+    <div class="product-grid-section__head u-grid">
       {% render 'section-header', heading: section.settings.heading %}
       {%- if show_view_all -%}
-        <a href="{{ collection.url }}" class="product-grid-section__action product-grid-section__action--head">
+        <a href="{{ collection.url }}" class="product-grid-section__action u-items-center product-grid-section__action--head">
           {{ 'general.navigation.view_all' | t }}
-          <span class="product-grid-section__action-icon" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+          <span class="product-grid-section__action-icon u-flex" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
         </a>
       {%- endif -%}
     </div>
@@ -29,10 +29,10 @@
       {%- endif -%}
     </div>
     {%- if is_slider -%}
-      <button type="button" class="product-grid-slider__arrow product-grid-slider__arrow--prev" aria-label="{{ 'sections.product_grid.previous' | t }}" data-slider-prev disabled>
+      <button type="button" class="product-grid-slider__arrow u-flex u-items-center u-justify-center product-grid-slider__arrow--prev" aria-label="{{ 'sections.product_grid.previous' | t }}" data-slider-prev disabled>
         {% render 'icon', name: 'chevron-right' %}
       </button>
-      <button type="button" class="product-grid-slider__arrow product-grid-slider__arrow--next" aria-label="{{ 'sections.product_grid.next' | t }}" data-slider-next disabled>
+      <button type="button" class="product-grid-slider__arrow u-flex u-items-center u-justify-center product-grid-slider__arrow--next" aria-label="{{ 'sections.product_grid.next' | t }}" data-slider-next disabled>
         {% render 'icon', name: 'chevron-right' %}
       </button>
     </product-grid-slider>
@@ -40,10 +40,10 @@
 
     {%- if show_view_all -%}
       {%- comment -%} Phones: the link sits below the grid instead of under the heading. {%- endcomment -%}
-      <div class="product-grid-section__foot">
-        <a href="{{ collection.url }}" class="product-grid-section__action">
+      <div class="product-grid-section__foot u-justify-center">
+        <a href="{{ collection.url }}" class="product-grid-section__action u-items-center">
           {{ 'general.navigation.view_all' | t }}
-          <span class="product-grid-section__action-icon" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+          <span class="product-grid-section__action-icon u-flex" aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
         </a>
       </div>
     {%- endif -%}
@@ -108,9 +108,6 @@
   position: absolute;
   top: 40%;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 35px;
   height: 35px;
   padding: 0;
@@ -169,7 +166,6 @@
    the related products section). Below 750px the heading-row copy is hidden
    and a centred copy shows below the product grid instead. */
 .product-grid-section__head {
-  display: grid;
   gap: var(--space-3);
   margin-bottom: var(--space-6);
 }
@@ -180,7 +176,6 @@
 
 .product-grid-section__action {
   display: inline-flex;
-  align-items: center;
   justify-self: center;
   gap: var(--space-1);
   min-height: 44px;
@@ -197,16 +192,11 @@
 
 .product-grid-section__foot {
   display: flex;
-  justify-content: center;
   margin-top: var(--space-4);
 }
 
 .product-grid-section__action:hover {
   color: var(--color-secondary);
-}
-
-.product-grid-section__action-icon {
-  display: flex;
 }
 
 .product-grid-section__action-icon svg {
