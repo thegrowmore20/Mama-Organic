@@ -12,8 +12,6 @@
     "hero_banner_WLE4wk": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/About_Us_Banner.webp",
-        "mobile_image": "shopify://shop_images/About_us_Mobile.webp",
         "height": "custom",
         "custom_height": 360,
         "mobile_height": "custom",
@@ -61,7 +59,13 @@
         "point_3"
       ],
       "settings": {
-        "image": "shopify://shop_images/About_Us_Main_Image.webp",
+        "eyebrow": "About Mama Organic",
+        "heading": "100% Natural, Toxin-Free Care for Skin, Hair & Body",
+        "text": "<p>Mama Organic is a brand owned, maintained and run by Interlink Global. We provide 100% natural and toxin-free products for your skin, hair, body and baby care in Pakistan.</p><p>We believe in the power of nature, which is why every product is made with natural, toxin-free ingredients, free from harsh chemicals.</p>",
+        "button_label": "Shop All Products",
+        "button_link": "",
+        "what_heading": "What We Do",
+        "what_text": "<p>We offer high-quality products at affordable prices, with an extensive range that has something for everyone, delivered to your doorstep.</p>",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -109,8 +113,11 @@
         "item_4"
       ],
       "settings": {
-        "columns": 4,
+        "eyebrow": "",
+        "heading": "",
+        "text": "",
         "style": "band",
+        "columns": 4,
         "padding_top": 30,
         "padding_bottom": 30
       }
@@ -210,8 +217,8 @@
         "eyebrow": "Brand Values",
         "heading": "What We Stand For",
         "text": "<p>Six principles guide every product we make and every customer we serve.</p>",
-        "columns": 3,
         "style": "panels",
+        "columns": 3,
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -222,45 +229,12 @@
         "eyebrow": "Meet the Founder",
         "name": "Mudassar Jami",
         "role": "Founder & CEO, Mama Organic",
+        "bio": "",
         "email": "mudassarjami@mamaorganic.pk",
+        "linkedin_url": "",
+        "facebook_url": "",
+        "instagram_url": "",
         "padding_top": 40,
-        "padding_bottom": 60
-      }
-    },
-    "cta": {
-      "type": "about-cta",
-      "blocks": {
-        "b1": {
-          "type": "badge",
-          "settings": {
-            "label": "100% Natural"
-          }
-        },
-        "b2": {
-          "type": "badge",
-          "settings": {
-            "label": "Toxin Free"
-          }
-        },
-        "b3": {
-          "type": "badge",
-          "settings": {
-            "label": "Doorstep Delivery"
-          }
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3"
-      ],
-      "settings": {
-        "eyebrow": "Ready to Try Nature?",
-        "heading": "Shop Natural Care for Skin, Hair & Body",
-        "description": "<p>Explore our range of pure essential oils, carrier oils and natural care products.</p>",
-        "button_1_label": "Shop All Products",
-        "button_1_link": "shopify://collections/all",
-        "padding_top": 60,
         "padding_bottom": 60
       }
     }
@@ -271,7 +245,6 @@
     "trust",
     "statements",
     "values",
-    "founder",
-    "cta"
+    "founder"
   ]
 }
