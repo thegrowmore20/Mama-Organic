@@ -128,9 +128,12 @@
             {%- else -%}
               <ul class="u-grid collection-grid" id="search-grid-{{ section.id }}">
                 {%- for item in search.results -%}
-                  <li class="collection-grid__item">
-                    {% render 'product-card', product: item %}
-                  </li>
+                  {%- comment -%} Articles and pages can also match a search; the product card only works with products. {%- endcomment -%}
+                  {%- if item.object_type == 'product' -%}
+                    <li class="collection-grid__item">
+                      {% render 'product-card', product: item %}
+                    </li>
+                  {%- endif -%}
                 {%- endfor -%}
               </ul>
 
