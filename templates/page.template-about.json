@@ -70,58 +70,6 @@
         "padding_bottom": 60
       }
     },
-    "trust": {
-      "type": "about-icon-grid",
-      "blocks": {
-        "item_1": {
-          "type": "item",
-          "settings": {
-            "icon": "leaf",
-            "title": "100% Natural",
-            "text": "Made with natural source ingredients"
-          }
-        },
-        "item_2": {
-          "type": "item",
-          "settings": {
-            "icon": "shield",
-            "title": "Toxin Free",
-            "text": "Free from harsh chemicals"
-          }
-        },
-        "item_3": {
-          "type": "item",
-          "settings": {
-            "icon": "package",
-            "title": "Affordable Prices",
-            "text": "High quality, fairly priced"
-          }
-        },
-        "item_4": {
-          "type": "item",
-          "settings": {
-            "icon": "truck",
-            "title": "Doorstep Delivery",
-            "text": "Delivered across Pakistan"
-          }
-        }
-      },
-      "block_order": [
-        "item_1",
-        "item_2",
-        "item_3",
-        "item_4"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "",
-        "text": "",
-        "style": "band",
-        "columns": 4,
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
     "statements": {
       "type": "about-statements",
       "blocks": {
@@ -284,7 +232,6 @@
   "order": [
     "hero_banner_WLE4wk",
     "intro",
-    "trust",
     "statements",
     "values",
     "founder"
