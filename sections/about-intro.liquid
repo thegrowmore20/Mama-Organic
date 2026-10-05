@@ -1,0 +1,188 @@
+{%- comment -%}
+  About page intro: image beside the "Who we are" story, an optional "What we do"
+  paragraph with check-marked highlights, and a CTA button. Every part hides when empty.
+{%- endcomment -%}
+
+<section
+  class="about-intro section-padding"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="container">
+    <div class="about-intro__grid{% if section.settings.image != blank %} about-intro__grid--has-image{% endif %}">
+      {%- if section.settings.image != blank -%}
+        <div class="about-intro__media">
+          {{
+            section.settings.image
+            | image_url: width: 1000
+            | image_tag:
+              widths: '400, 600, 800, 1000',
+              sizes: '(min-width: 990px) 480px, calc(100vw - 32px)',
+              loading: 'lazy',
+              alt: section.settings.image.alt | default: section.settings.heading
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="about-intro__content">
+        {% render 'section-header',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          text: section.settings.text,
+          alignment: 'left'
+        %}
+
+        {%- if section.settings.what_heading != blank or section.settings.what_text != blank -%}
+          <div class="about-intro__what">
+            {%- if section.settings.what_heading != blank -%}
+              <h3 class="about-intro__what-heading h5">{{ section.settings.what_heading | escape }}</h3>
+            {%- endif -%}
+            {%- if section.settings.what_text != blank -%}
+              <div class="about-intro__what-text">{{ section.settings.what_text }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="about-intro__points" role="list">
+            {%- for block in section.blocks -%}
+              <li class="about-intro__point" {{ block.shopify_attributes }}>
+                <span class="about-intro__point-icon" aria-hidden="true">{% render 'icon', name: 'check' %}</span>
+                {{ block.settings.text | escape }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="button button--accent about-intro__button">
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.about-intro__grid {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.about-intro__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-m);
+}
+
+.about-intro__what {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-secondary);
+  border-radius: var(--radius-s);
+}
+
+.about-intro__what-heading {
+  margin: 0 0 var(--space-2);
+  color: var(--color-primary);
+}
+
+.about-intro__what-text > :first-child {
+  margin-top: 0;
+}
+
+.about-intro__what-text > :last-child {
+  margin-bottom: 0;
+}
+
+.about-intro__points {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-intro__point {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-subheading);
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.about-intro__point-icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--color-secondary-a11y, var(--color-secondary));
+}
+
+.about-intro__button {
+  margin-top: var(--space-6);
+}
+
+@media screen and (min-width: 990px) {
+  .about-intro__grid--has-image {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About intro",
+  "class": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "header", "content": "Who we are" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About Mama Organic" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "100% Natural, Toxin-Free Care for Skin, Hair & Body" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Mama Organic is a brand owned, maintained and run by Interlink Global. We provide 100% natural and toxin-free products for your skin, hair, body and baby care in Pakistan.</p><p>We believe in the power of nature, which is why every product is made with natural, toxin-free ingredients, free from harsh chemicals.</p>"
+    },
+    { "type": "header", "content": "What we do" },
+    { "type": "text", "id": "what_heading", "label": "Heading", "default": "What We Do" },
+    {
+      "type": "richtext",
+      "id": "what_text",
+      "label": "Text",
+      "default": "<p>We offer high-quality products at affordable prices, with an extensive range that has something for everyone, delivered to your doorstep.</p>"
+    },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Label", "default": "Shop All Products" },
+    { "type": "url", "id": "button_link", "label": "Link" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Highlight",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Natural & toxin-free ingredients" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About intro",
+      "blocks": [
+        { "type": "point", "settings": { "text": "Natural & toxin-free ingredients" } },
+        { "type": "point", "settings": { "text": "High quality at affordable prices" } },
+        { "type": "point", "settings": { "text": "Delivered to your doorstep" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

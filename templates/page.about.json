@@ -33,450 +33,223 @@
         "button_link": ""
       }
     },
-    "hero": {
-      "type": "about-hero",
-      "settings": {
-        "eyebrow": "Our Story",
-        "heading": "Science is Our Foundation",
-        "description": "<p>Mama Organic was born from a simple belief: skincare should work. Not just feel good, work. We combine cutting-edge dermatological research with the most potent bioactive ingredients on earth.</p>",
-        "image": "shopify://shop_images/About_Us_Main_Image.webp",
-        "button_1_label": "Explore Our Products",
-        "button_1_link": "shopify://collections/products",
-        "button_2_label": "Our Science",
-        "button_2_link": "#mission",
-        "padding_top": 60,
-        "padding_bottom": 30
-      }
-    },
-    "quote": {
-      "type": "about-quote",
+    "intro": {
+      "type": "about-intro",
       "blocks": {
-        "stat-1": {
-          "type": "stat",
+        "point_1": {
+          "type": "point",
           "settings": {
-            "icon_image": "shopify://shop_images/clinical_efficacy.svg",
-            "number": "95%",
-            "label": "Clinical Efficacy",
-            "description": "Average results across all product lines in independent trials."
+            "text": "Natural & toxin-free ingredients"
           }
         },
-        "stat-2": {
-          "type": "stat",
+        "point_2": {
+          "type": "point",
           "settings": {
-            "icon_image": "shopify://shop_images/Countries_Served.svg",
-            "number": "5+",
-            "label": "Countries Served",
-            "description": "Trusted by customers on every continent."
+            "text": "High quality at affordable prices"
           }
         },
-        "stat-3": {
-          "type": "stat",
+        "point_3": {
+          "type": "point",
           "settings": {
-            "icon_image": "shopify://shop_images/Happy_Customers.svg",
-            "number": "1500+",
-            "label": "Happy Customers",
-            "description": "With a 4.9-star average across 1500+ reviews."
-          }
-        },
-        "stat-4": {
-          "type": "stat",
-          "settings": {
-            "icon_image": "shopify://shop_images/Clinical_Studies.svg",
-            "number": "12+",
-            "label": "Clinical Studies",
-            "description": "Published in peer-reviewed dermatology journals worldwide."
+            "text": "Delivered to your doorstep"
           }
         }
       },
       "block_order": [
-        "stat-1",
-        "stat-2",
-        "stat-3",
-        "stat-4"
+        "point_1",
+        "point_2",
+        "point_3"
       ],
       "settings": {
-        "quote": "<p>We believe in results, not marketing promises.</p>",
-        "quote_attribution": "Formulated by industry specialists",
-        "padding_top": 30,
-        "padding_bottom": 30
+        "image": "shopify://shop_images/About_Us_Main_Image.webp",
+        "padding_top": 60,
+        "padding_bottom": 40
       }
     },
-    "mission": {
-      "type": "about-mission",
+    "trust": {
+      "type": "about-icon-grid",
       "blocks": {
-        "feature-1": {
-          "type": "feature",
+        "item_1": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/Lab_Tested.svg",
-            "heading": "Lab Tested",
-            "text": "Every product is checked for safety."
+            "icon": "leaf",
+            "title": "100% Natural",
+            "text": "Made with natural source ingredients"
           }
         },
-        "feature-2": {
-          "type": "feature",
+        "item_2": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/High_Potency.svg",
-            "heading": "High Potency",
-            "text": "We use strong, active ingredients that actually work."
+            "icon": "shield",
+            "title": "Toxin Free",
+            "text": "Free from harsh chemicals"
           }
         },
-        "feature-3": {
-          "type": "feature",
+        "item_3": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/hyaluronic_acid_616c7e65-a182-4e23-9aec-20a20fc62c49.svg",
-            "heading": "Cruelty Free",
-            "text": "100% natural extracts. No animal testing."
+            "icon": "package",
+            "title": "Affordable Prices",
+            "text": "High quality, fairly priced"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Doorstep Delivery",
+            "text": "Delivered across Pakistan"
           }
         }
       },
       "block_order": [
-        "feature-1",
-        "feature-2",
-        "feature-3"
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "settings": {
+        "columns": 4,
+        "style": "surface",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "statements": {
+      "type": "about-statements",
+      "blocks": {
+        "vision": {
+          "type": "statement",
+          "settings": {
+            "icon": "sun",
+            "label": "Our Vision",
+            "text": "We are committed to building eco-friendly products that enhance the natural beauty of skin and hair around the world."
+          }
+        },
+        "mission": {
+          "type": "statement",
+          "settings": {
+            "icon": "target",
+            "label": "Our Mission",
+            "text": "To build natural and toxin-free products for skin, hair and body, for everyone and everywhere."
+          }
+        }
+      },
+      "block_order": [
+        "vision",
+        "mission"
       ],
       "settings": {
         "eyebrow": "Our Mission",
-        "heading": "Built to Perform",
-        "description": "<p>Every ingredient we use has been selected for one reason: clinical proof of efficacy. We work directly with dermatologists, biochemists, and researchers at leading institutions.</p><p>Our formulations are never diluted for cost, never padded with filler. Every concentration is set at the level shown to produce measurable results in peer-reviewed studies.</p>",
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "story": {
-      "type": "about-story",
-      "blocks": {
-        "milestone-2022": {
-          "type": "milestone",
-          "settings": {
-            "year": "2022",
-            "title": "The Idea",
-            "description": "Dr. Elena Vasquez begins formulating in her UCL research lab, frustrated by the gap between dermatological science and consumer skincare."
-          }
-        },
-        "milestone-2023": {
-          "type": "milestone",
-          "settings": {
-            "year": "2023",
-            "title": "First Formula",
-            "description": "The Radiance Serum prototype is validated in a double-blind study with 120 participants. 91% show measurable improvement in 28 days."
-          }
-        },
-        "milestone-2024": {
-          "type": "milestone",
-          "settings": {
-            "year": "2024",
-            "title": "Mama Organic Launches",
-            "description": "Brand launches online with three products. Sells out in 72 hours."
-          }
-        },
-        "milestone-2025": {
-          "type": "milestone",
-          "settings": {
-            "year": "2025",
-            "title": "Pharmacy Trusted",
-            "description": "Mama Organic products become available in pharmacies, reflecting our commitment to quality, safety, and real results you can trust."
-          }
-        },
-        "milestone-2026": {
-          "type": "milestone",
-          "settings": {
-            "year": "2026",
-            "title": "Today",
-            "description": "A team of scientists, formulators, and clinicians continuing to push the boundary of what premium skincare can be."
-          }
-        }
-      },
-      "block_order": [
-        "milestone-2022",
-        "milestone-2023",
-        "milestone-2024",
-        "milestone-2025",
-        "milestone-2026"
-      ],
-      "settings": {
-        "eyebrow": "The Founder Story",
-        "heading": "A Lab, a Conviction, a Brand",
-        "description": "<p>Mama Organic began driven by a growing frustration with skincare products that overpromised but failed to deliver real results.</p><p>Working closely with experienced formulation chemists, the brand was built on a simple standard: every product should meet high-performance benchmarks inspired by clinical research and real-world effectiveness.</p>",
-        "founder_name": "Dr. Elena Vasquez",
-        "founder_role": "Co-Founder & Chief Scientist",
-        "padding_top": 30,
-        "padding_bottom": 30
+        "heading": "Where We Are Headed",
+        "padding_top": 60,
+        "padding_bottom": 40
       }
     },
     "values": {
-      "type": "about-values",
+      "type": "about-icon-grid",
       "blocks": {
-        "value-1": {
-          "type": "value",
+        "item_1": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/Science_First.svg",
-            "heading": "Science First",
-            "text": "Every formula starts in the lab, not the marketing suite. If it cannot be clinically proven, it does not get made."
+            "icon": "leaf",
+            "title": "Natural",
+            "text": "Sustainability in every action"
           }
         },
-        "value-2": {
-          "type": "value",
+        "item_2": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/Uncompromised_Purity.svg",
-            "heading": "Uncompromised Purity",
-            "text": "No fillers, no artificial fragrances, no greenwashing. Every ingredient earns its place at clinical-grade concentrations."
+            "icon": "heart",
+            "title": "Be the Customer's Champion",
+            "text": "Your needs come first, always"
           }
         },
-        "value-3": {
-          "type": "value",
+        "item_3": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/Planet_Positive.svg",
-            "heading": "Planet Positive",
-            "text": "Cruelty-free, vegan, and sustainably packaged. We believe premium and responsibility are not mutually exclusive."
+            "icon": "sparkle",
+            "title": "Be Better Everyday",
+            "text": "We keep improving what we make"
           }
         },
-        "value-4": {
-          "type": "value",
+        "item_4": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/Radical_Transparency.svg",
-            "heading": "Radical Transparency",
-            "text": "Full ingredient lists, clinical data, and honest photography. We hide nothing because we have nothing to hide."
+            "icon": "check",
+            "title": "Honesty",
+            "text": "Open and truthful with our customers"
           }
         },
-        "value-5": {
-          "type": "value",
+        "item_5": {
+          "type": "item",
           "settings": {
-            "icon_image": "shopify://shop_images/Continuous_Research.svg",
-            "heading": "Continuous Research",
-            "text": "Our lab never stops. We reinvest into dermatological research every year to ensure our formulas stay at the scientific frontier."
-          }
-        },
-        "value-6": {
-          "type": "value",
-          "settings": {
-            "icon_image": "shopify://shop_images/Community_Trust.svg",
-            "heading": "Community Trust",
-            "text": "We earn trust through results, not promises. Our Glow Guarantee exists because we believe every customer should see a real difference."
+            "icon": "star",
+            "title": "Be Original",
+            "text": "Our own formulas, our own standards"
           }
         }
       },
       "block_order": [
-        "value-1",
-        "value-2",
-        "value-3",
-        "value-4",
-        "value-5",
-        "value-6"
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5"
       ],
       "settings": {
-        "eyebrow": "What We Stand For",
-        "heading": "Our Core Values",
-        "description": "<p>Six principles that shape every formula, every decision, and every interaction with our community.</p>",
-        "padding_top": 30,
-        "padding_bottom": 30
+        "eyebrow": "Brand Values",
+        "heading": "What We Stand For",
+        "columns": 5,
+        "style": "plain",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
-    "process": {
-      "type": "about-process",
-      "blocks": {
-        "step-1": {
-          "type": "step",
-          "settings": {
-            "icon_image": "shopify://shop_images/Literature_Review.svg",
-            "heading": "Literature Review",
-            "text": "Our scientists review thousands of peer-reviewed papers to identify the most clinically supported actives.",
-            "caption": "200+ studies reviewed per formula"
-          }
-        },
-        "step-2": {
-          "type": "step",
-          "settings": {
-            "icon_image": "shopify://shop_images/Compound_Selection.svg",
-            "heading": "Compound Selection",
-            "text": "We select only the most bioavailable form of each active, proven to penetrate the skin barrier.",
-            "caption": "FDA GRAS & EU approved ingredients only"
-          }
-        },
-        "step-3": {
-          "type": "step",
-          "settings": {
-            "icon_image": "shopify://shop_images/Lab_Formulation.svg",
-            "heading": "Lab Formulation",
-            "text": "Compounds are combined at peer-reviewed concentrations. pH and delivery system are optimised for absorption.",
-            "caption": "100+ iterations before finalised"
-          }
-        },
-        "step-4": {
-          "type": "step",
-          "settings": {
-            "icon_image": "shopify://shop_images/Lab_Formulation.svg",
-            "heading": "Clinical Validation",
-            "text": "Double-blind clinical testing with 100+ participants. No passing data means back to the lab.",
-            "caption": "Independent CRO testing, no internal bias"
-          }
-        },
-        "step-5": {
-          "type": "step",
-          "settings": {
-            "icon_image": "shopify://shop_images/Safety_Stability.svg",
-            "heading": "Safety & Stability",
-            "text": "Patch testing, dermatologist review, and 12-month accelerated stability testing before any product ships.",
-            "caption": "Dermatologist-tested, hypoallergenic"
-          }
-        },
-        "step-6": {
-          "type": "step",
-          "settings": {
-            "icon_image": "shopify://shop_images/Sustainable_Launch.svg",
-            "heading": "Sustainable Launch",
-            "text": "Recyclable packaging, fulfilled with care from our warehouse.",
-            "caption": "Carbon-neutral shipping on all orders"
-          }
-        }
-      },
-      "block_order": [
-        "step-1",
-        "step-2",
-        "step-3",
-        "step-4",
-        "step-5",
-        "step-6"
-      ],
+    "founder": {
+      "type": "about-founder",
       "settings": {
-        "eyebrow": "How We Formulate",
-        "heading": "From Research to Your Skin",
-        "description": "<p>Every Mama Organic formula undergoes a rigorous multi-stage development process before it earns the right to exist. Here is exactly how a product is born.</p>",
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "certifications": {
-      "type": "about-certifications",
-      "blocks": {
-        "badge-1": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/cruelty_free_Standard.svg",
-            "heading": "Cruelty-Free",
-            "text": "Certified by Leaping Bunny. No animal testing at any stage."
-          }
-        },
-        "badge-2": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/Vegan_Cruelty-Free.svg",
-            "heading": "Vegan",
-            "text": "Certified by The Vegan Society. Zero animal-derived ingredients."
-          }
-        },
-        "badge-3": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/Clinically_Proven_real.svg",
-            "heading": "Clinically Proven",
-            "text": "Clinically tested formula. Proven results for visible skin improvement."
-          }
-        },
-        "badge-4": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/dermatologist_tested_154c3fca-1e49-41e2-9a2d-49e946b1db08.svg",
-            "heading": "Dermatologist Tested",
-            "text": "Signed off by board-certified dermatologists before every release."
-          }
-        },
-        "compliance-1": {
-          "type": "compliance_item",
-          "settings": {
-            "text": "EU Cosmetics Regulation 1223/2009"
-          }
-        },
-        "compliance-2": {
-          "type": "compliance_item",
-          "settings": {
-            "text": "FDA 21 CFR Cosmetics"
-          }
-        },
-        "compliance-3": {
-          "type": "compliance_item",
-          "settings": {
-            "text": "ISO 22716 GMP"
-          }
-        },
-        "compliance-4": {
-          "type": "compliance_item",
-          "settings": {
-            "text": "Leaping Bunny"
-          }
-        },
-        "compliance-5": {
-          "type": "compliance_item",
-          "settings": {
-            "text": "The Vegan Society"
-          }
-        }
-      },
-      "block_order": [
-        "badge-1",
-        "badge-2",
-        "badge-3",
-        "badge-4",
-        "compliance-1",
-        "compliance-2",
-        "compliance-3",
-        "compliance-4",
-        "compliance-5"
-      ],
-      "settings": {
-        "eyebrow": "Certifications & Standards",
-        "heading": "Held to the Highest Standard",
-        "description": "<p>Every product meets or exceeds the strictest international safety, efficacy, and environmental standards.</p>",
-        "compliance_label": "Compliant With",
-        "padding_top": 30,
+        "eyebrow": "Meet the Founder",
+        "name": "Mudassar Jami",
+        "role": "Founder & CEO, Mama Organic",
+        "email": "mudassarjami@mamaorganic.pk",
+        "padding_top": 40,
         "padding_bottom": 60
       }
     },
     "cta": {
       "type": "about-cta",
       "blocks": {
-        "badge-1": {
+        "b1": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Free_Shipping.svg",
-            "label": "Free Shipping"
+            "label": "100% Natural"
           }
         },
-        "badge-2": {
+        "b2": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Glow_Guarantee.svg",
-            "label": "Glow Guarantee"
+            "label": "Toxin Free"
           }
         },
-        "badge-3": {
+        "b3": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Clinically_Proven_real.svg",
-            "label": "Clinically Proven"
-          }
-        },
-        "badge-4": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/Vegan_Cruelty-Free.svg",
-            "label": "Vegan & Cruelty-Free"
+            "label": "Doorstep Delivery"
           }
         }
       },
       "block_order": [
-        "badge-1",
-        "badge-2",
-        "badge-3",
-        "badge-4"
+        "b1",
+        "b2",
+        "b3"
       ],
       "settings": {
-        "eyebrow": "Ready to Experience the Difference",
-        "heading": "Your Skin Deserves Real Science",
-        "description": "<p>Browse our full collection and find your perfect formula. Every product ships with our Glow Guarantee, see real results or your money back.</p>",
+        "eyebrow": "Ready to Try Nature?",
+        "heading": "Shop Natural Care for Skin, Hair & Body",
+        "description": "<p>Explore our range of pure essential oils, carrier oils and natural care products.</p>",
         "button_1_label": "Shop All Products",
-        "button_1_link": "shopify://collections/products",
-        "button_2_label": "",
-        "button_2_link": "",
+        "button_1_link": "shopify://collections/all",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -484,13 +257,11 @@
   },
   "order": [
     "hero_banner_WLE4wk",
-    "hero",
-    "quote",
-    "mission",
-    "story",
+    "intro",
+    "trust",
+    "statements",
     "values",
-    "process",
-    "certifications",
+    "founder",
     "cta"
   ]
 }

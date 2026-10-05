@@ -1,0 +1,196 @@
+{%- comment -%}
+  Founder profile: photo, name, role, optional bio, email and profile links.
+  Also outputs the page JSON-LD (AboutPage, Organization and the founder Person).
+  Hides the photo, bio, email and links individually when empty.
+{%- endcomment -%}
+
+{%- liquid
+  assign founder_links = blank
+  assign link_list = ''
+  assign setting_ids = 'linkedin_url,facebook_url,instagram_url' | split: ','
+  for setting_id in setting_ids
+    assign link_value = section.settings[setting_id]
+    if link_value != blank
+      assign link_list = link_list | append: link_value | append: '||'
+    endif
+  endfor
+  if link_list != blank
+    assign founder_links = link_list | split: '||' | compact
+  endif
+-%}
+
+<section
+  class="about-founder section-padding"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="container">
+    <div class="about-founder__card{% if section.settings.image != blank %} about-founder__card--has-image{% endif %}">
+      {%- if section.settings.image != blank -%}
+        <div class="about-founder__media">
+          {{
+            section.settings.image
+            | image_url: width: 600
+            | image_tag:
+              widths: '240, 360, 480, 600',
+              sizes: '(min-width: 750px) 240px, 160px',
+              loading: 'lazy',
+              alt: section.settings.image.alt | default: section.settings.name
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="about-founder__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="about-founder__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 class="about-founder__name h3">{{ section.settings.name | escape }}</h2>
+        {%- if section.settings.role != blank -%}
+          <p class="about-founder__role">{{ section.settings.role | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.bio != blank -%}
+          <div class="about-founder__bio">{{ section.settings.bio }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.email != blank or founder_links.size > 0 -%}
+          <ul class="about-founder__links" role="list">
+            {%- if section.settings.email != blank -%}
+              <li>
+                <a class="about-founder__link" href="mailto:{{ section.settings.email }}">
+                  <span aria-hidden="true">{% render 'icon', name: 'mail' %}</span>
+                  {{ section.settings.email | escape }}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- assign networks = 'linkedin,facebook,instagram' | split: ',' -%}
+            {%- for network in networks -%}
+              {%- assign setting_id = network | append: '_url' -%}
+              {%- assign network_url = section.settings[setting_id] -%}
+              {%- if network_url != blank -%}
+                <li>
+                  <a class="about-founder__link" href="{{ network_url }}" target="_blank" rel="noopener noreferrer">
+                    {{ network | capitalize }}
+                    <span class="visually-hidden">({{ section.settings.name | escape }})</span>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% render 'about-schema',
+  founder_name: section.settings.name,
+  founder_role: section.settings.role,
+  founder_email: section.settings.email,
+  founder_links: founder_links
+%}
+
+{% stylesheet %}
+.about-founder__card {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5);
+  background: var(--color-surface);
+  border-radius: var(--radius-m);
+}
+
+.about-founder__media img {
+  display: block;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.about-founder__eyebrow {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-secondary-a11y, var(--color-secondary));
+}
+
+.about-founder__name {
+  margin: 0;
+  color: var(--color-primary);
+}
+
+.about-founder__role {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-subheading);
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.about-founder__bio {
+  margin-top: var(--space-4);
+}
+
+.about-founder__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-founder__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-weight: 500;
+  color: var(--color-secondary-a11y, var(--color-secondary));
+  overflow-wrap: anywhere;
+}
+
+@media screen and (min-width: 750px) {
+  .about-founder__card {
+    padding: var(--space-7);
+  }
+
+  .about-founder__card--has-image {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .about-founder__media img {
+    width: 240px;
+    height: 240px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About founder",
+  "class": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Meet the Founder" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Mudassar Jami" },
+    { "type": "text", "id": "role", "label": "Role", "default": "Founder & CEO, Mama Organic" },
+    { "type": "richtext", "id": "bio", "label": "Bio" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "email", "label": "Email", "default": "mudassarjami@mamaorganic.pk" },
+    { "type": "url", "id": "linkedin_url", "label": "LinkedIn" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 }
+  ],
+  "presets": [
+    { "name": "About founder" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,66 @@
+{%- comment -%}
+  JSON-LD for the About page: AboutPage + Organization (+ founder Person when a name is given).
+  Only uses facts entered in the section settings.
+
+  Accepts:
+    founder_name - {String} optional founder name
+    founder_role - {String} optional founder job title
+    founder_email - {String} optional founder email
+    founder_links - {Array} optional list of founder profile URLs
+
+  Usage:
+  {% render 'about-schema', founder_name: name, founder_role: role %}
+{%- endcomment -%}
+
+{%- liquid
+  assign org_id = shop.url | append: '/#organization'
+  assign founder_id = shop.url | append: '/#founder'
+  assign page_id = canonical_url | append: '#aboutpage'
+-%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": {{ page_id | json }},
+        "url": {{ canonical_url | json }},
+        "name": {{ page.title | json }},
+        "description": {{ page_description | default: shop.description | default: shop.name | json }},
+        "inLanguage": {{ request.locale.iso_code | json }},
+        "about": { "@id": {{ org_id | json }} }
+      },
+      {
+        "@type": "Organization",
+        "@id": {{ org_id | json }},
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }}
+        {%- if shop.description != blank -%}
+          , "description": {{ shop.description | json }}
+        {%- endif -%}
+        {%- if founder_name != blank -%}
+          , "founder": { "@id": {{ founder_id | json }} }
+        {%- endif -%}
+      }
+      {%- if founder_name != blank -%}
+        ,
+        {
+          "@type": "Person",
+          "@id": {{ founder_id | json }},
+          "name": {{ founder_name | json }},
+          "worksFor": { "@id": {{ org_id | json }} }
+          {%- if founder_role != blank -%}
+            , "jobTitle": {{ founder_role | json }}
+          {%- endif -%}
+          {%- if founder_email != blank -%}
+            , "email": {{ founder_email | json }}
+          {%- endif -%}
+          {%- if founder_links.size > 0 -%}
+            , "sameAs": {{ founder_links | json }}
+          {%- endif -%}
+        }
+      {%- endif -%}
+    ]
+  }
+</script>
