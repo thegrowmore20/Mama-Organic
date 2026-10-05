@@ -1,90 +1,170 @@
 {%- comment -%}
-  Founder profile: photo, name, role, optional bio, email and profile links.
+  Meet the Founder: centred profile with a round photo (or monogram), name, role, social icon
+  circles, a pull quote, supporting text, signature, stat cards and two buttons.
   Also outputs the page JSON-LD (AboutPage, Organization and the founder Person).
-  Hides the photo, bio, email and links individually when empty.
+  Every part hides when empty. No JavaScript.
+
+  NOTE: the default quote is a placeholder written for the founder. Get his approval before
+  publishing, or replace it in the theme editor.
 {%- endcomment -%}
 
 {%- liquid
   assign founder_links = blank
   assign link_list = ''
-  assign setting_ids = 'linkedin_url,facebook_url,instagram_url' | split: ','
-  for setting_id in setting_ids
-    assign link_value = section.settings[setting_id]
-    if link_value != blank
-      assign link_list = link_list | append: link_value | append: '||'
+  assign email_address = ''
+  for block in section.blocks
+    if block.type == 'social' and block.settings.url_or_email != blank
+      if block.settings.platform == 'email'
+        assign email_address = block.settings.url_or_email
+      else
+        assign link_list = link_list | append: block.settings.url_or_email | append: '||'
+      endif
     endif
   endfor
   if link_list != blank
     assign founder_links = link_list | split: '||' | compact
   endif
+
+  assign secondary_link = section.settings.secondary_link
+  if secondary_link == blank and email_address != blank
+    assign secondary_link = 'mailto:' | append: email_address
+  endif
+
+  assign stat_count = 0
+  for block in section.blocks
+    if block.type == 'stat'
+      assign stat_count = stat_count | plus: 1
+    endif
+  endfor
+
+  assign name_parts = section.settings.name | split: ' '
+  assign first_initial = name_parts.first | slice: 0
+  assign last_initial = name_parts.last | slice: 0
+  assign initials = first_initial | append: last_initial | upcase
 -%}
 
 <section
   class="about-founder section-padding"
-  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+  aria-labelledby="FounderHeading-{{ section.id }}"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --photo-size: {{ section.settings.photo_size }}px; --photo-focus: {{ section.settings.photo_focus_y }}%; --stats: {{ stat_count | at_most: 4 | at_least: 1 }};"
 >
   <div class="container">
-    <div class="about-founder__card u-grid">
-      {%- if section.settings.image == blank -%}
-        {%- assign name_parts = section.settings.name | split: ' ' -%}
-        {%- assign first_initial = name_parts.first | slice: 0 -%}
-        {%- assign last_initial = name_parts.last | slice: 0 -%}
-        {%- assign initials = first_initial | append: last_initial | upcase -%}
-        <div class="about-founder__media" aria-hidden="true">
-          <span class="about-founder__monogram u-flex u-items-center u-justify-center">{{ initials }}</span>
-        </div>
-      {%- else -%}
-        <div class="about-founder__media">
-          {{
-            section.settings.image
-            | image_url: width: 600
-            | image_tag:
-              widths: '240, 360, 480, 600',
-              sizes: '(min-width: 750px) 240px, 160px',
-              loading: 'lazy',
-              alt: section.settings.image.alt | default: section.settings.name
-          }}
-        </div>
+    <div class="about-founder__inner u-flex u-flex-col u-items-center">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="about-founder__eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
 
-      <div class="about-founder__content">
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="about-founder__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <div class="about-founder__photo{% if section.settings.show_ring %} about-founder__photo--ring{% endif %}">
+        {%- if section.settings.photo != blank -%}
+          {{
+            section.settings.photo
+            | image_url: width: 600
+            | image_tag:
+              widths: '200, 300, 400, 600',
+              sizes: '(min-width: 750px) 280px, 200px',
+              width: section.settings.photo_size,
+              height: section.settings.photo_size,
+              loading: 'lazy',
+              class: 'about-founder__image',
+              alt: section.settings.photo.alt | default: section.settings.name
+          }}
+        {%- else -%}
+          <span class="about-founder__monogram u-flex u-items-center u-justify-center" aria-hidden="true">{{ initials }}</span>
         {%- endif -%}
-        <h2 class="about-founder__name h3">{{ section.settings.name | escape }}</h2>
-        {%- if section.settings.role != blank -%}
-          <p class="about-founder__role">{{ section.settings.role | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.bio != blank -%}
-          <div class="about-founder__bio">{{ section.settings.bio }}</div>
-        {%- endif -%}
+      </div>
 
-        {%- if section.settings.email != blank or founder_links.size > 0 -%}
-          <ul class="about-founder__links u-flex" role="list">
-            {%- if section.settings.email != blank -%}
-              <li>
-                <a class="about-founder__link u-inline-flex u-items-center" href="mailto:{{ section.settings.email }}">
-                  <span aria-hidden="true">{% render 'icon', name: 'mail' %}</span>
-                  {{ section.settings.email | escape }}
+      <h2 class="about-founder__name" id="FounderHeading-{{ section.id }}">{{ section.settings.name | escape }}</h2>
+      {%- if section.settings.role != blank -%}
+        <p class="about-founder__role">{{ section.settings.role | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 and section.settings.name != blank -%}
+        <ul class="about-founder__socials u-flex u-justify-center" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'social' and block.settings.url_or_email != blank -%}
+              {%- liquid
+                assign platform = block.settings.platform
+                assign social_href = block.settings.url_or_email
+                case platform
+                  when 'linkedin'
+                    assign platform_label = 'LinkedIn'
+                  when 'facebook'
+                    assign platform_label = 'Facebook'
+                  when 'instagram'
+                    assign platform_label = 'Instagram'
+                  when 'youtube'
+                    assign platform_label = 'YouTube'
+                  when 'tiktok'
+                    assign platform_label = 'TikTok'
+                  else
+                    assign platform_label = 'Email'
+                    assign social_href = 'mailto:' | append: block.settings.url_or_email
+                endcase
+              -%}
+              <li {{ block.shopify_attributes }}>
+                <a
+                  class="about-founder__social u-inline-flex u-items-center u-justify-center"
+                  href="{{ social_href }}"
+                  aria-label="{{ section.settings.name | escape }} – {{ platform_label }}"
+                  {% unless platform == 'email' %}target="_blank" rel="noopener noreferrer"{% endunless %}
+                >
+                  {%- if platform == 'email' -%}
+                    {% render 'icon', name: 'mail' %}
+                  {%- else -%}
+                    {% render 'icon', name: platform %}
+                  {%- endif -%}
                 </a>
               </li>
             {%- endif -%}
-            {%- assign networks = 'linkedin,facebook,instagram' | split: ',' -%}
-            {%- for network in networks -%}
-              {%- assign setting_id = network | append: '_url' -%}
-              {%- assign network_url = section.settings[setting_id] -%}
-              {%- if network_url != blank -%}
-                <li>
-                  <a class="about-founder__link u-inline-flex u-items-center" href="{{ network_url }}" target="_blank" rel="noopener noreferrer">
-                    {{ network | capitalize }}
-                    <span class="visually-hidden">({{ section.settings.name | escape }})</span>
-                  </a>
-                </li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-      </div>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="about-founder__quote">
+          <span class="about-founder__quote-mark" aria-hidden="true">&ldquo;</span>
+          <p class="about-founder__quote-text">{{ section.settings.quote | escape }}</p>
+        </blockquote>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="about-founder__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.signature != blank -%}
+        <p class="about-founder__signature">{{ section.settings.signature | escape }}</p>
+      {%- endif -%}
+
+      {%- if stat_count > 0 -%}
+        <ul class="about-founder__stats u-grid" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <li class="about-founder__stat" {{ block.shopify_attributes }}>
+                <p class="about-founder__stat-value">{{ block.settings.value | escape }}</p>
+                {%- if block.settings.label != blank -%}
+                  <p class="about-founder__stat-label">{{ block.settings.label | escape }}</p>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+        <div class="about-founder__buttons u-flex u-justify-center">
+          {%- if section.settings.primary_label != blank -%}
+            <a href="{{ section.settings.primary_link | default: routes.all_products_collection_url }}" class="about-founder__button about-founder__button--primary u-inline-flex u-items-center u-justify-center">
+              {{- section.settings.primary_label | escape -}}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_label != blank and secondary_link != blank -%}
+            <a href="{{ secondary_link }}" class="about-founder__button about-founder__button--secondary u-inline-flex u-items-center u-justify-center">
+              <span class="about-founder__button-icon u-inline-flex" aria-hidden="true">{% render 'icon', name: 'mail' %}</span>
+              {{ section.settings.secondary_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -92,107 +172,243 @@
 {% render 'about-schema',
   founder_name: section.settings.name,
   founder_role: section.settings.role,
-  founder_email: section.settings.email,
+  founder_email: email_address,
   founder_links: founder_links
 %}
 
 {% stylesheet %}
-.about-founder__card {
-  gap: var(--space-5);
-  max-width: 880px;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-5);
-  background: var(--color-surface);
-  border-radius: var(--radius-m);
-}
-
-.about-founder__media img {
-  display: block;
-}
-
-.about-founder__media img,
-.about-founder__monogram {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.about-founder__monogram {
-  font-family: var(--font-heading);
-  font-size: 56px;
-  line-height: 1;
-  color: var(--color-background);
-  background: var(--color-primary);
-  border: 6px solid var(--color-background);
-  box-shadow: 0 0 0 2px var(--color-secondary);
+.about-founder__inner {
+  text-align: center;
 }
 
 .about-founder__eyebrow {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-6);
   font-family: var(--font-accent);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--color-secondary-a11y, var(--color-secondary));
 }
 
+.about-founder__photo {
+  position: relative;
+  width: var(--photo-size);
+  height: var(--photo-size);
+  margin-bottom: var(--space-4);
+}
+
+.about-founder__photo--ring::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px dashed var(--color-border);
+  border-radius: 50%;
+}
+
+.about-founder__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center var(--photo-focus);
+  border-radius: 50%;
+}
+
+.about-founder__monogram {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-heading);
+  font-size: calc(var(--photo-size) * 0.36);
+  line-height: 1;
+  color: var(--color-background);
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
 .about-founder__name {
-  margin: 0;
-  color: var(--color-primary);
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--color-dark);
 }
 
 .about-founder__role {
-  margin: var(--space-1) 0 0;
-  font-family: var(--font-subheading);
-  font-weight: 500;
-  color: var(--color-primary);
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--color-text-muted);
 }
 
-.about-founder__bio {
-  margin-top: var(--space-4);
-}
-
-.about-founder__links {
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-5);
-  margin: var(--space-5) 0 0;
+.about-founder__socials {
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
   padding: 0;
   list-style: none;
 }
 
-.about-founder__link {
-  padding: 0 var(--space-4);
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
+.about-founder__social {
+  width: 44px;
+  height: 44px;
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border-radius: 50%;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.about-founder__social svg {
+  width: 18px;
+  height: 18px;
+}
+
+.about-founder__social:hover {
+  color: var(--color-background);
+  background: var(--color-dark);
+}
+
+.about-founder__quote {
+  max-width: 760px;
+  margin: var(--space-6) 0 0;
+}
+
+.about-founder__quote-mark {
+  display: block;
+  height: 28px;
+  font-family: var(--font-heading);
+  font-size: 56px;
+  line-height: 0.9;
+  color: var(--color-secondary);
+  opacity: 0.4;
+}
+
+.about-founder__quote-text {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.6vw, 29px);
+  font-weight: 600;
+  line-height: 1.52;
+  color: var(--color-dark);
+}
+
+.about-founder__body {
+  max-width: 660px;
+  margin-top: var(--space-5);
+  line-height: 1.85;
+  color: var(--color-text-muted);
+}
+
+.about-founder__body > :first-child {
+  margin-top: 0;
+}
+
+.about-founder__body > :last-child {
+  margin-bottom: 0;
+}
+
+.about-founder__signature {
+  margin: var(--space-5) 0 0;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.about-founder__stats {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 760px;
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-founder__stat {
+  padding: var(--space-5) var(--space-4);
+  background: var(--color-surface);
+  border-radius: 16px;
+}
+
+.about-founder__stat-value {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.about-founder__stat-label {
+  margin: var(--space-1) 0 0;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.about-founder__buttons {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+  width: 100%;
+  margin-top: var(--space-7);
+}
+
+.about-founder__button {
   gap: var(--space-2);
   min-height: 44px;
-  font-weight: 500;
-  color: var(--color-secondary-a11y, var(--color-secondary));
-  overflow-wrap: anywhere;
+  padding: 0 28px;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--color-dark);
+  border-radius: 999px;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.about-founder__button--primary {
+  color: var(--color-background);
+  background: var(--color-dark);
+}
+
+.about-founder__button--primary:hover {
+  background: var(--color-secondary-a11y, var(--color-secondary));
+  border-color: var(--color-secondary-a11y, var(--color-secondary));
+}
+
+.about-founder__button--secondary {
+  color: var(--color-dark);
+  background: transparent;
+  border-color: var(--color-border);
+}
+
+.about-founder__button--secondary:hover {
+  background: var(--color-surface);
+}
+
+.about-founder__button-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.about-founder__social:focus-visible,
+.about-founder__button:focus-visible {
+  outline: 2px solid var(--color-secondary-a11y, var(--color-secondary));
+  outline-offset: 2px;
+}
+
+@media screen and (min-width: 480px) {
+  .about-founder__buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+  }
 }
 
 @media screen and (min-width: 750px) {
-  .about-founder__card {
-    padding: var(--space-7);
-  }
-
-  .about-founder__card {
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-7);
-    align-items: center;
-  }
-
-  .about-founder__media img,
-  .about-founder__monogram {
-    width: 200px;
-    height: 200px;
-  }
-
-  .about-founder__monogram {
-    font-size: 72px;
+  .about-founder__stats {
+    grid-template-columns: repeat(var(--stats), minmax(0, 1fr));
+    gap: 20px;
   }
 }
 {% endstylesheet %}
@@ -202,22 +418,78 @@
   "name": "About founder",
   "class": "section",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Photo" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Meet the Founder" },
+    { "type": "header", "content": "Photo" },
+    { "type": "image_picker", "id": "photo", "label": "Photo" },
+    { "type": "range", "id": "photo_size", "label": "Photo size", "min": 140, "max": 280, "step": 10, "unit": "px", "default": 200 },
+    { "type": "range", "id": "photo_focus_y", "label": "Photo focus (vertical)", "min": 0, "max": 100, "step": 2, "unit": "%", "default": 14, "info": "Lower values show more of the top of the photo." },
+    { "type": "checkbox", "id": "show_ring", "label": "Show dashed ring", "default": true },
+    { "type": "header", "content": "Profile" },
     { "type": "text", "id": "name", "label": "Name", "default": "Mudassar Jami" },
     { "type": "text", "id": "role", "label": "Role", "default": "Founder & CEO, Mama Organic" },
-    { "type": "richtext", "id": "bio", "label": "Bio" },
-    { "type": "header", "content": "Contact" },
-    { "type": "text", "id": "email", "label": "Email", "default": "mudassarjami@mamaorganic.pk" },
-    { "type": "url", "id": "linkedin_url", "label": "LinkedIn" },
-    { "type": "url", "id": "facebook_url", "label": "Facebook" },
-    { "type": "url", "id": "instagram_url", "label": "Instagram" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "Natural care should be the standard for every family in Pakistan — not a luxury only a few can afford.", "info": "Placeholder wording: confirm with the founder before publishing." },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Text",
+      "default": "<p>That belief is why every Mama Organic formula is built from natural source ingredients, kept free from harsh chemicals, and priced so a full routine stays within reach — across face, hair, body and baby care.</p>"
+    },
+    { "type": "text", "id": "signature", "label": "Signature", "default": "Mudassar Jami" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_label", "label": "Primary label", "default": "Shop All Products" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary label", "default": "Email the Founder" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link", "info": "Leave empty to use the Email social icon." },
     { "type": "header", "content": "Padding" },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 }
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "social",
+      "name": "Social link",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select",
+          "id": "platform",
+          "label": "Platform",
+          "options": [
+            { "value": "linkedin", "label": "LinkedIn" },
+            { "value": "facebook", "label": "Facebook" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "youtube", "label": "YouTube" },
+            { "value": "tiktok", "label": "TikTok" },
+            { "value": "email", "label": "Email" }
+          ],
+          "default": "linkedin"
+        },
+        { "type": "text", "id": "url_or_email", "label": "URL or email address" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "100% Natural" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Source ingredients" }
+      ]
+    }
   ],
   "presets": [
-    { "name": "About founder" }
+    {
+      "name": "About founder",
+      "blocks": [
+        { "type": "social", "settings": { "platform": "linkedin" } },
+        { "type": "social", "settings": { "platform": "facebook" } },
+        { "type": "social", "settings": { "platform": "instagram" } },
+        { "type": "social", "settings": { "platform": "email" } },
+        { "type": "stat", "settings": { "value": "4 Ranges", "label": "Face · Hair · Body · Baby" } },
+        { "type": "stat", "settings": { "value": "100% Natural", "label": "Source ingredients" } },
+        { "type": "stat", "settings": { "value": "Nationwide", "label": "Delivered in Pakistan" } }
+      ]
+    }
   ]
 }
 {% endschema %}

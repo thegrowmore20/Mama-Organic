@@ -18,12 +18,12 @@
             "image": "shopify://shop_images/2.png",
             "mobile_image": "shopify://shop_images/2_286fb821-781a-439f-abb4-3bb6187293dd.png",
             "eyebrow": "",
-            "heading": "",
+            "heading": "Nourish The Roots, Strengthen Weak Strands",
             "heading_color": "#004236",
             "heading_size": "h0",
-            "content": "",
-            "button_label": "",
-            "link": "",
+            "content": "<p>Target weakness, dryness & breakage with nourishing hair care.</p>",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/vitamin-c",
             "ratings": ""
           }
         },
@@ -33,12 +33,12 @@
             "image": "shopify://shop_images/3.png",
             "mobile_image": "shopify://shop_images/3_caa215a5-8073-4682-b508-a5e9ae7fe857.png",
             "eyebrow": "",
-            "heading": "",
+            "heading": "Skin-first formulas for real concerns",
             "heading_color": "#004236",
             "heading_size": "h0",
-            "content": "",
-            "button_label": "",
-            "link": "",
+            "content": "<p>Targeted care thoughtfully tailored to your skin’s unique needs.</p>",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/tea-tree",
             "ratings": ""
           }
         },

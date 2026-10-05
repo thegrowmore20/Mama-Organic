@@ -126,31 +126,58 @@
       "type": "about-statements",
       "blocks": {
         "vision": {
-          "type": "statement",
+          "type": "card",
           "settings": {
-            "icon": "sun",
+            "icon": "globe",
             "label": "Our Vision",
-            "text": "We are committed to building eco-friendly products that enhance the natural beauty of skin and hair around the world."
+            "heading": "Eco-friendly beauty, around the world",
+            "text": "<p>We are committed to building eco-friendly products that enhance the natural beauty of skin and hair around the world.</p>"
           }
         },
         "mission": {
-          "type": "statement",
+          "type": "card",
           "settings": {
-            "icon": "target",
+            "icon": "marker-pin",
             "label": "Our Mission",
-            "text": "To build natural and toxin-free products for skin, hair and body, for everyone and everywhere."
+            "heading": "Toxin-free care, for everyone",
+            "text": "<p>To build natural and toxin-free products for skin, hair and body, for everyone, everywhere.</p>"
+          }
+        },
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "label": "100% Natural"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "label": "Toxin Free"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "label": "Doorstep Delivery"
           }
         }
       },
       "block_order": [
         "vision",
-        "mission"
+        "mission",
+        "badge_1",
+        "badge_2",
+        "badge_3"
       ],
       "settings": {
         "eyebrow": "Our Mission",
-        "heading": "Where We Are Headed",
-        "padding_top": 60,
-        "padding_bottom": 40
+        "heading": "Where we are headed",
+        "text": "<p>A clear direction for the brand, and a clear promise to the people who use our products every day.</p>",
+        "show_leaves": true,
+        "show_promise": true,
+        "promise_heading": "Natural source ingredients. No harsh chemicals. Fair prices.",
+        "padding_top": 80,
+        "padding_bottom": 0
       }
     },
     "values": {
@@ -225,17 +252,81 @@
     },
     "founder": {
       "type": "about-founder",
+      "blocks": {
+        "s1": {
+          "type": "social",
+          "settings": {
+            "platform": "linkedin",
+            "url_or_email": "https://www.linkedin.com/in/mudassar-jami-071452360/"
+          }
+        },
+        "s2": {
+          "type": "social",
+          "settings": {
+            "platform": "facebook",
+            "url_or_email": "https://www.facebook.com/MudassarJami"
+          }
+        },
+        "s3": {
+          "type": "social",
+          "settings": {
+            "platform": "instagram",
+            "url_or_email": "https://www.instagram.com/mudassar1793/"
+          }
+        },
+        "s4": {
+          "type": "social",
+          "settings": {
+            "platform": "email",
+            "url_or_email": "mudassarjami@mamaorganic.pk"
+          }
+        },
+        "st1": {
+          "type": "stat",
+          "settings": {
+            "value": "4 Ranges",
+            "label": "Face · Hair · Body · Baby"
+          }
+        },
+        "st2": {
+          "type": "stat",
+          "settings": {
+            "value": "100% Natural",
+            "label": "Source ingredients"
+          }
+        },
+        "st3": {
+          "type": "stat",
+          "settings": {
+            "value": "Nationwide",
+            "label": "Delivered in Pakistan"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "st1",
+        "st2",
+        "st3"
+      ],
       "settings": {
         "eyebrow": "Meet the Founder",
+        "photo": "shopify://shop_images/Mudassar_Jami.jpg",
+        "photo_size": 200,
+        "photo_focus_y": 14,
+        "show_ring": true,
         "name": "Mudassar Jami",
         "role": "Founder & CEO, Mama Organic",
-        "bio": "",
-        "email": "mudassarjami@mamaorganic.pk",
-        "linkedin_url": "",
-        "facebook_url": "",
-        "instagram_url": "",
-        "padding_top": 40,
-        "padding_bottom": 60
+        "quote": "Natural care should be the standard for every family in Pakistan — not a luxury only a few can afford.",
+        "body": "<p>That belief is why every Mama Organic formula is built from natural source ingredients, kept free from harsh chemicals, and priced so a full routine stays within reach — across face, hair, body and baby care.</p>",
+        "signature": "Mudassar Jami",
+        "primary_label": "Shop All Products",
+        "secondary_label": "Email the Founder",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     }
   },
