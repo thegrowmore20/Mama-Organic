@@ -32,40 +32,16 @@
       }
     },
     "intro": {
-      "type": "about-intro",
-      "blocks": {
-        "point_1": {
-          "type": "point",
-          "settings": {
-            "text": "Natural & toxin-free ingredients"
-          }
-        },
-        "point_2": {
-          "type": "point",
-          "settings": {
-            "text": "High quality at affordable prices"
-          }
-        },
-        "point_3": {
-          "type": "point",
-          "settings": {
-            "text": "Delivered to your doorstep"
-          }
-        }
-      },
-      "block_order": [
-        "point_1",
-        "point_2",
-        "point_3"
-      ],
+      "type": "image-with-text",
       "settings": {
-        "eyebrow": "About Mama Organic",
+        "image": "shopify://shop_images/Asset_3-8.webp",
+        "image_position": "left",
+        "text_alignment": "left",
         "heading": "100% Natural, Toxin-Free Care for Skin, Hair & Body",
+        "subheading": "",
         "text": "<p>Mama Organic is a brand owned, maintained and run by Interlink Global. We provide 100% natural and toxin-free products for your skin, hair, body and baby care in Pakistan.</p><p>We believe in the power of nature, which is why every product is made with natural, toxin-free ingredients, free from harsh chemicals.</p>",
         "button_label": "Shop All Products",
-        "button_link": "",
-        "what_heading": "What We Do",
-        "what_text": "<p>We offer high-quality products at affordable prices, with an extensive range that has something for everyone, delivered to your doorstep.</p>",
+        "button_link": "shopify://collections/all",
         "padding_top": 60,
         "padding_bottom": 60
       }
