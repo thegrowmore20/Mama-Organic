@@ -909,6 +909,17 @@ collection-results.collection-grid-section.section-padding {
   object-fit: cover;
 }
 
+/* Shown instead of an article image: a light icon, not a ~80 KB inline placeholder illustration per card. */
+.blog-listing-card__placeholder {
+  height: 100%;
+  color: var(--color-secondary);
+}
+
+.blog-listing-card__media .blog-listing-card__placeholder svg {
+  width: 48px;
+  height: 48px;
+}
+
 .blog-listing-card__body {
   padding-top: var(--space-4);
 }

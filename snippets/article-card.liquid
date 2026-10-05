@@ -35,7 +35,7 @@
           alt: article.title
       }}
     {%- else -%}
-      {{ 'lifestyle-2' | placeholder_svg_tag: 'blog-listing-card__placeholder' }}
+      <span class="blog-listing-card__placeholder u-flex u-items-center u-justify-center">{% render 'icon', name: 'leaf' %}</span>
     {%- endif -%}
   </a>
   <div class="blog-listing-card__body">

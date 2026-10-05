@@ -30,7 +30,7 @@
         {%- assign placeholder_titles = 'Discover Natural Skincare Secrets,The Truth About Active Ingredients,Building a Routine That Actually Works' | split: ',' -%}
         {%- for placeholder_title in placeholder_titles limit: section.settings.articles_count -%}
           <article class="u-flex u-flex-col blog-listing-card">
-            <span class="blog-listing-card__media">{{ 'lifestyle-2' | placeholder_svg_tag: 'blog-listing-card__placeholder' }}</span>
+            <span class="blog-listing-card__media"><span class="blog-listing-card__placeholder u-flex u-items-center u-justify-center">{% render 'icon', name: 'leaf' %}</span></span>
             <div class="blog-listing-card__body">
               {%- if section.settings.show_date or section.settings.show_author -%}
                 <p class="u-flex u-items-center blog-listing-card__meta">
