@@ -61,12 +61,29 @@
   background: var(--color-surface);
 }
 
+/* Leaves scale with the viewport and keep the same corner offsets, so they never jump onto the cards. */
+.about-mission {
+  --leaf-size: 110px;
+}
+
 .about-mission__leaf {
-  display: none;
   position: absolute;
+  width: var(--leaf-size);
   fill: var(--color-secondary);
   opacity: 0.12;
   pointer-events: none;
+}
+
+.about-mission__leaf--top {
+  top: calc(var(--leaf-size) * -0.2);
+  left: calc(var(--leaf-size) * -0.25);
+  transform: rotate(18deg);
+}
+
+.about-mission__leaf--bottom {
+  right: calc(var(--leaf-size) * -0.25);
+  bottom: calc(var(--leaf-size) * 0.1);
+  transform: rotate(-24deg);
 }
 
 .about-mission__container {
@@ -82,7 +99,7 @@
   padding: var(--space-6) var(--space-5);
   background: var(--color-background);
   border: 1px solid var(--color-border);
-  border-radius: 22px;
+  border-radius: var(--radius-m);
   box-shadow: 0 18px 44px rgba(0, 46, 37, 0.09);
   backface-visibility: hidden;
   transition: transform 0.25s ease;
@@ -139,27 +156,11 @@
   }
 }
 
-@media screen and (min-width: 600px) {
-  .about-mission__leaf {
-    display: block;
-  }
-
-  .about-mission__leaf--top {
-    top: -60px;
-    left: -70px;
-    width: 280px;
-    transform: rotate(18deg);
-  }
-
-  .about-mission__leaf--bottom {
-    right: -60px;
-    bottom: 60px;
-    width: 240px;
-    transform: rotate(-24deg);
-  }
-}
-
 @media screen and (min-width: 750px) {
+  .about-mission {
+    --leaf-size: clamp(150px, 20vw, 280px);
+  }
+
   .about-mission__cards {
     grid-template-columns: repeat(min(var(--cards), 2), minmax(0, 1fr));
     gap: 26px;
