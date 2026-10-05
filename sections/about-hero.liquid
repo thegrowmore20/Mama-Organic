@@ -14,7 +14,7 @@
           <p class="about-hero__eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h1 class="about-hero__heading h1">{{ section.settings.heading }}</h1>
+          <h2 class="about-hero__heading h2">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- if section.settings.description != blank -%}
           <div class="about-hero__description">{{ section.settings.description }}</div>
@@ -82,6 +82,10 @@
 
 .about-hero__description p {
   margin: 0;
+}
+
+.about-hero__description p + p {
+  margin-top: var(--space-3);
 }
 
 .about-hero__actions {
