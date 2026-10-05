@@ -24,8 +24,16 @@
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="container">
-    <div class="about-founder__card{% if section.settings.image != blank %} about-founder__card--has-image{% endif %}">
-      {%- if section.settings.image != blank -%}
+    <div class="about-founder__card">
+      {%- if section.settings.image == blank -%}
+        {%- assign name_parts = section.settings.name | split: ' ' -%}
+        {%- assign first_initial = name_parts.first | slice: 0 -%}
+        {%- assign last_initial = name_parts.last | slice: 0 -%}
+        {%- assign initials = first_initial | append: last_initial | upcase -%}
+        <div class="about-founder__media" aria-hidden="true">
+          <span class="about-founder__monogram">{{ initials }}</span>
+        </div>
+      {%- else -%}
         <div class="about-founder__media">
           {{
             section.settings.image
@@ -99,12 +107,26 @@
   border-radius: var(--radius-m);
 }
 
-.about-founder__media img {
+.about-founder__media img,
+.about-founder__monogram {
   display: block;
   width: 160px;
   height: 160px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.about-founder__monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 56px;
+  line-height: 1;
+  color: var(--color-background);
+  background: var(--color-primary);
+  border: 6px solid var(--color-background);
+  box-shadow: 0 0 0 2px var(--color-secondary);
 }
 
 .about-founder__eyebrow {
@@ -144,6 +166,10 @@
 
 .about-founder__link {
   display: inline-flex;
+  padding: 0 var(--space-4);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
   align-items: center;
   gap: var(--space-2);
   min-height: 44px;
@@ -157,15 +183,20 @@
     padding: var(--space-7);
   }
 
-  .about-founder__card--has-image {
+  .about-founder__card {
     grid-template-columns: auto minmax(0, 1fr);
     gap: var(--space-7);
     align-items: center;
   }
 
-  .about-founder__media img {
-    width: 240px;
-    height: 240px;
+  .about-founder__media img,
+  .about-founder__monogram {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-founder__monogram {
+    font-size: 72px;
   }
 }
 {% endstylesheet %}

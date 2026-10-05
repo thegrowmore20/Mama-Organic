@@ -63,7 +63,7 @@
       "settings": {
         "image": "shopify://shop_images/About_Us_Main_Image.webp",
         "padding_top": 60,
-        "padding_bottom": 40
+        "padding_bottom": 60
       }
     },
     "trust": {
@@ -110,9 +110,9 @@
       ],
       "settings": {
         "columns": 4,
-        "style": "surface",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "style": "band",
+        "padding_top": 30,
+        "padding_bottom": 30
       }
     },
     "statements": {
@@ -201,7 +201,7 @@
         "eyebrow": "Brand Values",
         "heading": "What We Stand For",
         "columns": 5,
-        "style": "plain",
+        "style": "numbered",
         "padding_top": 40,
         "padding_bottom": 40
       }

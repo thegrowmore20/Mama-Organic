@@ -1,6 +1,9 @@
 {%- comment -%}
-  Icon grid: optional section header + a responsive grid of icon / title / text items.
-  Used on the About page for the trust bar and the brand values. Hides when it has no blocks.
+  Icon grid with three looks, chosen by the Style setting:
+    cards    - bordered cards with a round icon (default)
+    band     - full-width dark green strip, compact icon + title + text (trust bar)
+    numbered - open list with a large 01, 02... number and a top rule (brand values)
+  Hides when it has no blocks.
 {%- endcomment -%}
 
 {%- if section.blocks.size > 0 -%}
@@ -18,13 +21,19 @@
       <ul class="about-icon-grid__list" role="list">
         {%- for block in section.blocks -%}
           <li class="about-icon-grid__item" {{ block.shopify_attributes }}>
-            <span class="about-icon-grid__icon" aria-hidden="true">{% render 'icon', name: block.settings.icon %}</span>
-            {%- if block.settings.title != blank -%}
-              <h3 class="about-icon-grid__title h6">{{ block.settings.title | escape }}</h3>
+            {%- if section.settings.style == 'numbered' -%}
+              <span class="about-icon-grid__number" aria-hidden="true">{{ forloop.index | prepend: '0' }}</span>
+            {%- else -%}
+              <span class="about-icon-grid__icon" aria-hidden="true">{% render 'icon', name: block.settings.icon %}</span>
             {%- endif -%}
-            {%- if block.settings.text != blank -%}
-              <p class="about-icon-grid__text">{{ block.settings.text | escape }}</p>
-            {%- endif -%}
+            <div class="about-icon-grid__body">
+              {%- if block.settings.title != blank -%}
+                <h3 class="about-icon-grid__title h6">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="about-icon-grid__text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
           </li>
         {%- endfor -%}
       </ul>
@@ -33,10 +42,6 @@
 {%- endif -%}
 
 {% stylesheet %}
-.about-icon-grid--surface {
-  background: var(--color-surface);
-}
-
 .about-icon-grid__list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -55,10 +60,6 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: var(--space-5) var(--space-3);
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-m);
 }
 
 .about-icon-grid__icon {
@@ -89,6 +90,54 @@
   line-height: 1.5;
 }
 
+/* cards */
+.about-icon-grid--cards .about-icon-grid__item,
+.about-icon-grid--surface .about-icon-grid__item {
+  padding: var(--space-5) var(--space-3);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+}
+
+.about-icon-grid--surface {
+  background: var(--color-surface);
+}
+
+/* band */
+.about-icon-grid--band {
+  background: var(--color-primary);
+}
+
+.about-icon-grid--band .about-icon-grid__icon {
+  color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.about-icon-grid--band .about-icon-grid__title,
+.about-icon-grid--band .about-icon-grid__text {
+  color: var(--color-background);
+}
+
+.about-icon-grid--band .about-icon-grid__text {
+  opacity: 0.85;
+}
+
+/* numbered */
+.about-icon-grid--numbered .about-icon-grid__item {
+  align-items: flex-start;
+  padding-top: var(--space-4);
+  text-align: left;
+  border-top: 2px solid var(--color-secondary);
+}
+
+.about-icon-grid__number {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--color-secondary-a11y, var(--color-secondary));
+}
+
 @media screen and (min-width: 750px) {
   .about-icon-grid__list {
     grid-template-columns: repeat(min(var(--columns), 3), minmax(0, 1fr));
@@ -99,6 +148,10 @@
 @media screen and (min-width: 990px) {
   .about-icon-grid__list {
     grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  }
+
+  .about-icon-grid--numbered .about-icon-grid__list {
+    gap: var(--space-6);
   }
 }
 {% endstylesheet %}
@@ -112,17 +165,19 @@
     { "type": "text", "id": "heading", "label": "Heading" },
     { "type": "richtext", "id": "text", "label": "Text" },
     { "type": "header", "content": "Layout" },
-    { "type": "range", "id": "columns", "label": "Columns on desktop", "min": 2, "max": 6, "step": 1, "default": 4 },
     {
       "type": "select",
       "id": "style",
-      "label": "Background",
+      "label": "Style",
       "options": [
-        { "value": "plain", "label": "Plain" },
-        { "value": "surface", "label": "Tinted" }
+        { "value": "cards", "label": "Cards" },
+        { "value": "surface", "label": "Cards on tinted background" },
+        { "value": "band", "label": "Dark green band" },
+        { "value": "numbered", "label": "Numbered list" }
       ],
-      "default": "plain"
+      "default": "cards"
     },
+    { "type": "range", "id": "columns", "label": "Columns on desktop", "min": 2, "max": 6, "step": 1, "default": 4 },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 }
   ],

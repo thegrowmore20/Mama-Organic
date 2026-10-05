@@ -18,10 +18,10 @@
       {%- if section.settings.button_1_label != blank or section.settings.button_2_label != blank -%}
         <div class="u-flex u-items-center u-justify-center about-cta__actions">
           {%- if section.settings.button_1_label != blank -%}
-            <a href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}" class="button button--accent">{{ section.settings.button_1_label }}</a>
+            <a href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}" class="button button--light">{{ section.settings.button_1_label }}</a>
           {%- endif -%}
           {%- if section.settings.button_2_label != blank and section.settings.button_2_link != blank -%}
-            <a href="{{ section.settings.button_2_link }}" class="button button--light">{{ section.settings.button_2_label }}</a>
+            <a href="{{ section.settings.button_2_link }}" class="button about-cta__button-outline">{{ section.settings.button_2_label }}</a>
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -46,13 +46,27 @@
 
 {% stylesheet %}
 .about-cta {
-  background: var(--color-surface);
+  background: var(--color-primary);
+}
+
+.about-cta .section-header__eyebrow {
+  color: var(--color-surface);
+}
+
+.about-cta .section-header__heading,
+.about-cta .section-header__text {
+  color: var(--color-background);
 }
 
 .about-cta__inner {
   text-align: center;
   max-width: 640px;
   margin: 0 auto;
+}
+
+.about-cta__button-outline {
+  color: var(--color-background);
+  border: 1px solid var(--color-background);
 }
 
 .about-cta__actions {
@@ -65,7 +79,7 @@
   flex-wrap: wrap;
   gap: 10px var(--space-6);  
   padding-top: var(--space-7);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-secondary);
 }
 
 .about-cta__badge {
@@ -73,7 +87,7 @@
   font-size: 13px;
   font-weight: 500;
   font-family: var(--font-subheading);
-  color: var(--color-primary);
+  color: var(--color-background);
 }
 
 .about-cta__badge-icon {
