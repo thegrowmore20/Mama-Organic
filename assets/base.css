@@ -860,10 +860,6 @@ h1.collection-banner__heading.h0 {
 .collection-banner__content-wrap {
 }
 
-collection-results.collection-grid-section.section-padding {
-    padding-top: 10px;
-}
-
 /* Pagination (shared by blog, article, collection and search) */
 .pagination__link {
     min-width: 36px;
