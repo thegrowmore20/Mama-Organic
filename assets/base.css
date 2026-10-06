@@ -397,7 +397,6 @@ h2[class] {
  
 }
 
-
  @media screen and (max-width: 600px) {    
     .AirReviews-Widget.AirReviews-Widget--Stars{
           margin-bottom: 5px;
@@ -452,7 +451,6 @@ span.star-rating {
     font-size: 13px;
   }
 }
-
 
 .price-item--regular {
   color: var(--color-primary);
@@ -758,8 +756,6 @@ summary:focus-visible {
   margin-bottom: 0;
 }
 
-
-
 /* custom app css */
 /* The star-rating widget (rendered via a Custom Liquid block right under the
    product title) starts empty and is populated by the AirReviews app's own
@@ -823,11 +819,6 @@ summary:focus-visible {
   display: none !important
 }
 
-
-
-
-
-
 /* Custom css */
 .header__menu-trigger {
     padding: 0px 0.5rem;
@@ -856,8 +847,6 @@ nav#HeaderNav {
 
 h1.collection-banner__heading.h0 {
     color: #fff !important;
-}
-.collection-banner__content-wrap {
 }
 
 /* Pagination (shared by blog, article, collection and search) */
