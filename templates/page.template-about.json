@@ -12,6 +12,8 @@
     "hero_banner_WLE4wk": {
       "type": "hero-banner",
       "settings": {
+        "image": "shopify://shop_images/About_us.jpg",
+        "mobile_image": "shopify://shop_images/About_us-mbl.jpg",
         "height": "custom",
         "custom_height": 360,
         "mobile_height": "custom",
@@ -25,7 +27,7 @@
         "content_position_y_mobile": "top",
         "heading": "{{ page.title }}",
         "heading_color": "#004236",
-        "heading_size": "h0",
+        "heading_size": "h2",
         "text": "",
         "button_label": "",
         "button_link": ""
@@ -40,6 +42,7 @@
         "button_1_label": "Shop All Products",
         "button_1_link": "shopify://collections/all",
         "button_2_label": "",
+        "button_2_link": "",
         "padding_top": 60,
         "padding_bottom": 60
       }

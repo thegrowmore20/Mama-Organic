@@ -12,7 +12,8 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
-        "image": "shopify://shop_images/Rosemary_Essential_Oil_3.jpg",
+        "image": "shopify://shop_images/Collection_page.jpg",
+        "mobile_image": "shopify://shop_images/Collection_page-mbl.jpg",
         "height": "custom",
         "custom_height": 360,
         "mobile_height": "custom",
@@ -26,7 +27,7 @@
         "content_position_y_mobile": "top",
         "heading": "",
         "heading_color": "#004236",
-        "heading_size": "h0",
+        "heading_size": "h2",
         "text": "",
         "show_collection_description": true
       }

@@ -860,12 +860,6 @@ h1.collection-banner__heading.h0 {
 .collection-banner__content-wrap {
 }
 
-.collection-banner {
-    max-width: calc(100% - 40px);
-    margin: 0px auto 20px;
-    border-radius: 20px;
-}
-
 collection-results.collection-grid-section.section-padding {
     padding-top: 10px;
 }

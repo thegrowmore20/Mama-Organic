@@ -15,8 +15,8 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/2.png",
-            "mobile_image": "shopify://shop_images/2_286fb821-781a-439f-abb4-3bb6187293dd.png",
+            "image": "shopify://shop_images/Main_Banner-2.jpg",
+            "mobile_image": "shopify://shop_images/Main_Banner-2-mbl.jpg",
             "eyebrow": "",
             "heading": "Skin-first formulas for real concerns",
             "heading_color": "#004236",
@@ -30,8 +30,8 @@
         "slide_RdnJCb": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/3.png",
-            "mobile_image": "shopify://shop_images/3_caa215a5-8073-4682-b508-a5e9ae7fe857.png",
+            "image": "shopify://shop_images/Main_Banner-1.jpg",
+            "mobile_image": "shopify://shop_images/Main_Banner-1-mbl.jpg",
             "eyebrow": "",
             "heading": "Nourish The Roots, Strengthen Weak Strands",
             "heading_color": "#004236",

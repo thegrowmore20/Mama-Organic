@@ -12,8 +12,8 @@
     "hero_banner_Fq7x2Kp": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/About_Us_Banner.webp",
-        "mobile_image": "shopify://shop_images/About_us_Mobile.webp",
+        "image": "shopify://shop_images/FAQ.jpg",
+        "mobile_image": "shopify://shop_images/FAQ-Mobile.jpg",
         "height": "custom",
         "custom_height": 360,
         "mobile_height": "custom",
@@ -27,7 +27,7 @@
         "content_position_y_mobile": "top",
         "heading": "{{ page.title }}",
         "heading_color": "#004236",
-        "heading_size": "h0",
+        "heading_size": "h2",
         "text": "",
         "button_label": "",
         "button_link": ""
