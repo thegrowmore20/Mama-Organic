@@ -360,44 +360,13 @@
     "about_hero_7qjLN6": {
       "type": "about-hero",
       "name": "About hero",
-      "blocks": {
-        "badge_gmp": {
-          "type": "badge",
-          "settings": {
-            "image": ""
-          }
-        },
-        "badge_iso": {
-          "type": "badge",
-          "settings": {
-            "image": ""
-          }
-        },
-        "badge_halal": {
-          "type": "badge",
-          "settings": {
-            "image": ""
-          }
-        },
-        "badge_ps": {
-          "type": "badge",
-          "settings": {
-            "image": ""
-          }
-        }
-      },
-      "block_order": [
-        "badge_gmp",
-        "badge_iso",
-        "badge_halal",
-        "badge_ps"
-      ],
       "settings": {
         "background_color": "#faf6f1",
         "image": "shopify://shop_images/Our_Mission.png",
-        "eyebrow": "",
+        "subheading": "",
         "heading": "Our Mission – Goodness Of Nature",
         "description": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>",
+        "certifications_image": "",
         "button_label": "Learn More",
         "button_link": "shopify://pages/about-us",
         "padding_top": 60,
