@@ -110,16 +110,16 @@
           "type": "feature",
           "settings": {
             "image": "shopify://shop_images/Best_of_Nature.svg",
-            "title": "Best of nature",
-            "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
+            "title": "Nature-Inspired Care",
+            "text": "Made with carefully selected natural ingredients to support gentle, effective care for your skin, hair, and body."
           }
         },
         "feature_dT8q8J": {
           "type": "feature",
           "settings": {
             "image": "shopify://shop_images/No_toxins.svg",
-            "title": "No toxin",
-            "text": "Pure, organic, and halal-certified skincare made with nature's finest ingredients. Free from harsh chemicals for gentle, effective care."
+            "title": "Clean & Conscious",
+            "text": "Thoughtfully formulated without unnecessary harsh ingredients for clean, gentle, and dependable everyday personal care."
           }
         },
         "feature_bYW7py": {
@@ -127,15 +127,15 @@
           "settings": {
             "image": "shopify://shop_images/Cruelty_free.svg",
             "title": "Cruelty Free",
-            "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
+            "text": "Created without animal testing, bringing together thoughtful formulations and compassionate beauty for your everyday routine."
           }
         },
         "feature_tUjhbb": {
           "type": "feature",
           "settings": {
             "image": "shopify://shop_images/SAFE_CERTIFIED.svg",
-            "title": "Safe and Certified",
-            "text": "Science-backed skincare combining natural ingredients with proven formulas for effective results."
+            "title": "Safe & Certified",
+            "text": "Developed with quality and safety standards in mind, giving you dependable products you can use with confidence."
           }
         }
       },
@@ -148,8 +148,9 @@
       "name": "Features with image",
       "settings": {
         "heading": "Pure Ingredients. Formulated With Purpose.",
-        "padding_top": 30,
-        "padding_bottom": 30
+        "image": "shopify://shop_images/img12.png",
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
     "collection_list_iYDEV6": {
@@ -356,25 +357,20 @@
         "padding_bottom": 30
       }
     },
-    "image_with_text_HCBzik": {
-      "type": "image-with-text",
-      "name": "Image with text",
+    "about_hero_7qjLN6": {
+      "type": "about-hero",
+      "name": "About hero",
       "settings": {
-        "image": "shopify://shop_images/Asset_3-8.webp",
-        "image_position": "left",
-        "text_alignment": "left",
-        "heading": "Our Mission – Goodness Of Nature",
-        "subheading": "",
-        "text": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>",
-        "text_image": "shopify://shop_images/Certified_Trust_Icon_Halla.webp",
-        "text_image_width": 300,
-        "text_background": "#eef6e4",
-        "button_label": "Learn More",
-        "button_link": "shopify://pages/about-us",
-        "button_color": "#108474",
-        "button_text_color": "#ffffff",
-        "padding_top": 30,
-        "padding_bottom": 30
+        "eyebrow": "Our Story",
+        "heading": "Science is Our Foundation",
+        "description": "<p>Mama Organic was born from a simple belief: skincare should work. Not just feel good, work. We combine cutting-edge dermatological research with the most potent bioactive ingredients on earth.</p>",
+        "image": "shopify://shop_images/Our_Mission.png",
+        "button_1_label": "Explore Our Products",
+        "button_1_link": "",
+        "button_2_label": "Our Science",
+        "button_2_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "custom_section_GRHE7m": {
@@ -434,362 +430,6 @@
         "padding_top": 30,
         "padding_bottom": 60
       }
-    },
-    "animated_pharmacies_qEMVb4": {
-      "type": "animated-pharmacies",
-      "blocks": {
-        "logo_7kxHXM": {
-          "type": "logo",
-          "settings": {
-            "name": "Bashir Sons Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_h7dr8Y": {
-          "type": "logo",
-          "settings": {
-            "name": "Al Noor Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_htT7yp": {
-          "type": "logo",
-          "settings": {
-            "name": "Servaid Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_ACHDCp": {
-          "type": "logo",
-          "settings": {
-            "name": "Fazal Deen Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_CF7tnc": {
-          "type": "logo",
-          "settings": {
-            "name": "Mahmood & Sons Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_TjHVXG": {
-          "type": "logo",
-          "settings": {
-            "name": "Clinix Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_E3bcbh": {
-          "type": "logo",
-          "settings": {
-            "name": "Nova Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_thP3P6": {
-          "type": "logo",
-          "settings": {
-            "name": "Get Well Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_Xmyx3f": {
-          "type": "logo",
-          "settings": {
-            "name": "Green Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_xeLDar": {
-          "type": "logo",
-          "settings": {
-            "name": "New Mahmood Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_yDWnTp": {
-          "type": "logo",
-          "settings": {
-            "name": "National Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_tjmVFH": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/2.png",
-            "name": "Impluse Pharmacy",
-            "link": ""
-          }
-        },
-        "logo_W67Gt8": {
-          "type": "logo",
-          "settings": {
-            "name": "Health Zone Pharmacy",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "logo_7kxHXM",
-        "logo_h7dr8Y",
-        "logo_htT7yp",
-        "logo_ACHDCp",
-        "logo_CF7tnc",
-        "logo_TjHVXG",
-        "logo_E3bcbh",
-        "logo_thP3P6",
-        "logo_Xmyx3f",
-        "logo_xeLDar",
-        "logo_yDWnTp",
-        "logo_tjmVFH",
-        "logo_W67Gt8"
-      ],
-      "disabled": true,
-      "name": "Trusted partners",
-      "settings": {
-        "eyebrow": "Trusted Retail Partners",
-        "heading": "Available On Pharmacies Near You",
-        "show_names": true,
-        "full_width": false,
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "logo_height_desktop": 48,
-        "logo_height_mobile": 32,
-        "logo_gap_desktop": 56,
-        "logo_gap_mobile": 28,
-        "grayscale_logos": false,
-        "enable_animation": true,
-        "animation_direction": "left",
-        "animation_speed": 30,
-        "pause_on_hover": true
-      }
-    },
-    "ingredients": {
-      "type": "features-with-image",
-      "blocks": {
-        "f1": {
-          "type": "feature",
-          "settings": {
-            "title": "Glutathione",
-            "text": "Brightens skin tone and enhances natural glow."
-          }
-        },
-        "f2": {
-          "type": "feature",
-          "settings": {
-            "title": "Vitamin C 20%",
-            "text": "Brightens skin tone and enhances natural glow."
-          }
-        },
-        "f3": {
-          "type": "feature",
-          "settings": {
-            "title": "Hyaluronic Acid",
-            "text": "Brightens skin & fades dark spots."
-          }
-        },
-        "f4": {
-          "type": "feature",
-          "settings": {
-            "title": "Niacinamide 10%",
-            "text": "Clears pores & controls oil."
-          }
-        }
-      },
-      "block_order": [
-        "f1",
-        "f2",
-        "f3",
-        "f4"
-      ],
-      "disabled": true,
-      "settings": {
-        "heading": "Pure Ingredients. Proven Science.",
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "comparison_table_QYKVLT": {
-      "type": "comparison-table",
-      "blocks": {
-        "feature_wkCLNE": {
-          "type": "feature",
-          "settings": {
-            "text": "Dermatologically Tested",
-            "icon_svg": ""
-          }
-        },
-        "feature_NVpk3y": {
-          "type": "feature",
-          "settings": {
-            "text": "No Harsh Chemicals",
-            "icon_svg": ""
-          }
-        },
-        "feature_Qag7iJ": {
-          "type": "feature",
-          "settings": {
-            "text": "Suitable for All Skin Types",
-            "icon_svg": ""
-          }
-        },
-        "feature_9wUkih": {
-          "type": "feature",
-          "settings": {
-            "text": "Visible Glow Results",
-            "icon_svg": ""
-          }
-        },
-        "feature_iYMwzB": {
-          "type": "feature",
-          "settings": {
-            "text": "Skin-Friendly Ingredients",
-            "icon_svg": ""
-          }
-        }
-      },
-      "block_order": [
-        "feature_wkCLNE",
-        "feature_NVpk3y",
-        "feature_Qag7iJ",
-        "feature_9wUkih",
-        "feature_iYMwzB"
-      ],
-      "disabled": true,
-      "settings": {
-        "heading": "Why Choose Mama Organic?",
-        "subheading": "<p>Our advanced skincare solutions are carefully formulated to deliver visible results while keeping your skin healthy, hydrated, and naturally radiant.</p>",
-        "content_max_width": 1000,
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "header_1": "Features",
-        "header_2": "Mama Organic Products",
-        "header_3": "Regular Products"
-      }
-    },
-    "image_gallery_RGGFDx": {
-      "type": "image-gallery",
-      "blocks": {
-        "image_tPVLBb": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        },
-        "image_3wnnt4": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_tPVLBb",
-        "image_3wnnt4"
-      ],
-      "disabled": true,
-      "name": "Image Gallery",
-      "settings": {
-        "heading": "Certified for Your Peace of Mind",
-        "subheading": "",
-        "text": "<p>Manufactured under strict ISO 9001 controls and proudly Halal-certified. We guarantee ethical, premium quality in every drop of our skincare and cosmetics.</p>",
-        "image_space": 16,
-        "aspect_ratio": "adapt",
-        "border_radius": 8,
-        "enable_border": true,
-        "border_color": "#e2e6e8",
-        "content_max_width": 800,
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "custom_section_dHGKA6": {
-      "type": "custom-section",
-      "disabled": true,
-      "name": "Custom Section",
-      "settings": {
-        "heading": "Follow Us on Instagram",
-        "text": "",
-        "link_text": "@mamaorganicpk",
-        "link_url": "https://www.instagram.com/mamaorganicpk/",
-        "link_new_tab": true,
-        "link_svg": "",
-        "full_width": false,
-        "embed_code": "",
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "before-after": {
-      "type": "image-comparison",
-      "disabled": true,
-      "settings": {
-        "before_label": "Before",
-        "after_label": "After",
-        "eyebrow": "See The Difference",
-        "heading": "Real Results. Proven By Science.",
-        "text": "<p>We don't guess—we prove. All Mama Organic products are independently tested to ensure they actually work. Every claim we make is backed by real research.</p>",
-        "text_position": "center",
-        "width": "medium",
-        "initial_position": 50,
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "real-results": {
-      "type": "split-banner",
-      "disabled": true,
-      "settings": {
-        "width": "container",
-        "layout": "image_left",
-        "style": "accent",
-        "image": "shopify://shop_images/Asset_3-8.png",
-        "heading": "Our Mission – Goodness Of Nature",
-        "subheading": "",
-        "text": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>",
-        "button_label": "Learn More",
-        "button_link": "shopify://pages/about-us",
-        "padding_top": 0,
-        "padding_bottom": 30
-      }
-    },
-    "hero": {
-      "type": "hero-banner",
-      "disabled": true,
-      "settings": {
-        "height": "large",
-        "custom_height": 640,
-        "mobile_height": "custom",
-        "custom_height_mobile": 600,
-        "transparent_header": false,
-        "show_overlay": false,
-        "overlay_color": "rgba(0, 0, 0, 0.2)",
-        "content_position_x": "left",
-        "content_position_y": "center",
-        "content_position_x_mobile": "left",
-        "content_position_y_mobile": "bottom",
-        "heading": "Where Beauty Begins with care",
-        "heading_color": "#004236",
-        "heading_size": "h0",
-        "text": "<p>We combine natural extracts with clinical research to give you skin results you can actually see. No fillers, just pure potency.</p>",
-        "button_label": "Shop Now",
-        "button_link": "/collections/all"
-      }
-    },
-    "curated-for-you": {
-      "type": "featured-collection",
-      "disabled": true,
-      "settings": {
-        "heading": "Curated for Every Skin",
-        "collection": "face-wash",
-        "products_to_show": 4,
-        "show_view_all": true,
-        "enable_slider": false,
-        "padding_top": 30,
-        "padding_bottom": 60
-      }
     }
   },
   "order": [
@@ -801,17 +441,8 @@
     "featured_collection_7wxMW6",
     "shop-by-concern",
     "custom_section_LCMcUH",
-    "image_with_text_HCBzik",
+    "about_hero_7qjLN6",
     "custom_section_GRHE7m",
-    "blogs",
-    "animated_pharmacies_qEMVb4",
-    "ingredients",
-    "comparison_table_QYKVLT",
-    "image_gallery_RGGFDx",
-    "custom_section_dHGKA6",
-    "before-after",
-    "real-results",
-    "hero",
-    "curated-for-you"
+    "blogs"
   ]
 }

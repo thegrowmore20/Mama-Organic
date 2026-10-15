@@ -278,7 +278,6 @@
 
 .product-gallery__stage {
   position: relative;
-  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: var(--radius-m, 12px);
   background: var(--color-surface);
@@ -317,7 +316,7 @@
 .product-gallery__placeholder {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -424,7 +423,6 @@
 .product-gallery__thumb {
   flex: 0 0 auto;
   width: 64px;
-  height: 64px;
   border-radius: var(--radius-s, 8px);
   overflow: hidden;
   border: 2px solid transparent;
@@ -442,7 +440,7 @@
 .product-gallery__thumb-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -528,7 +526,7 @@
 
 /* Title / price / rich text */
 h1.product-title {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-4);
   font-weight: 500;
   font-family: var(--font-accent);
 }
@@ -548,13 +546,14 @@ h1.product-title {
    bare .price rule would win on product cards too, once this stylesheet is
    on the page - it isn't reliably absent there in practice). */
 .product-info-section .price {
-  margin: var(--space-2) 0 0;
+  margin: var(--space-3) 0 0;
   flex-wrap: wrap;
   font-size: 18px;
 }
 
 .product-info-section .price .price-item--compare {
-  font-size: 15px;
+  /* font-size: 15px; */
+  font-size: inherit
 }
 
 /* Alignment of the sale price / compare-at price / savings badge row.
@@ -586,11 +585,20 @@ h1.product-title {
   border-radius: var(--radius-s, 4px);
 }
 
+.product-info-section .price .price__badge {
+  font-size: 12px;
+}
+
 /* An explicit display value (needed for layout) beats the UA [hidden]
    stylesheet rule at equal specificity, since this rule comes later in the
    cascade - so [hidden] needs to be restated here to actually hide it. */
 .price__badge[hidden] {
   display: none;
+}
+
+
+.product-info-section .jdgm-qa-badge__text {
+  vertical-align: unset;
 }
 
 .product-rich-text {
@@ -742,7 +750,7 @@ h1.product-title {
      otherwise become the tallest item stretch measures against. */
   display: flex;
   align-items: stretch;
-  height: 48px;
+  height: 44px;
   border: 1px solid var(--color-surface);
   border-radius: var(--radius-m);
   overflow: hidden;
@@ -829,7 +837,7 @@ h1.product-title {
    zeroed, and no negative margins are used, so it sits exactly one buy-box gap
    (16px) under Add to Cart both before and after it loads. */
 .product-buy-box__payment {
-  --payment-button-height: 48px;
+  --payment-button-height: 44px;
   --shopify-accelerated-checkout-button-block-size: var(--payment-button-height);
   --shopify-accelerated-checkout-button-border-radius: var(--radius-m);
   min-height: var(--payment-button-height);

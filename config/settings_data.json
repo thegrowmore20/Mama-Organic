@@ -82,9 +82,9 @@
           "email": {
             "type": "link",
             "settings": {
-              "label": "Email us",
-              "icon": "mail",
-              "url": "mailto:sales@mamaorganic.pk",
+              "label": "Whatsapp",
+              "icon": "whatsapp",
+              "url": "",
               "custom_link": "",
               "icon_url": ""
             }

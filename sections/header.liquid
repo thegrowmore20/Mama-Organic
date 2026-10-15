@@ -1,3 +1,9 @@
+{%- comment -%}
+  sections/header.liquid
+  - Mega menu blocks: edits tagged "MEGA MENU BLOCKS [n/6]". Menu items with no matching block render as before.
+  - Search: 990px+ uses the inline bar in the top row; below 990px the search icon opens the popup.
+    Both share #PredictiveSearchResults. Edits tagged "HEADER SEARCH [n/7]".
+{%- endcomment -%}
 <header class="header">
   <div class="container header__inner u-items-center u-justify-between">
     <button class="u-inline-flex u-items-center u-justify-center header__menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="HeaderNav" type="button">
@@ -19,9 +25,36 @@
         </span>
       {%- endif -%}
     </a>
-    {% comment %} Seach Bar {% endcomment %}
+
+    {%- comment -%}
+      HEADER SEARCH [1/7] - desktop search bar (990px+). Same form, fields and classes as the
+      popup form below, so it submits to the same results page. Typing drops the shared
+      predictive results panel (#HeaderSearchPopup) below the header. Hidden under 990px.
+    {%- endcomment -%}
+    <div class="header-search-desktop">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="header__search-form" id="HeaderSearchDesktop">
+        <input type="hidden" name="type" value="product">
+        <div class="u-flex u-items-center header__search-field">
+          <button type="submit" class="u-inline-flex u-items-center u-justify-center header__search-submit" aria-label="{{ 'general.search.submit' | t }}">
+            {% render 'icon', name: 'search' %}
+          </button>
+          <input
+            type="search"
+            name="q"
+            id="HeaderSearchInputDesktop"
+            class="header__search-input"
+            placeholder="Name, ingredients or concerns"
+            autocomplete="off"
+            aria-label="{{ 'general.search.placeholder' | t }}"
+            aria-controls="PredictiveSearchResults"
+          >
+        </div>
+      </form>
+    </div>
+
     <div class="u-flex u-items-center header__icons">
-      <button type="button" id="SearchToggle" aria-label="{{ 'general.search.placeholder' | t }}" aria-expanded="false" aria-controls="HeaderSearchPopup">
+      {%- comment -%} HEADER SEARCH [2/7] - class added so the icon can hide at 990px+ (the bar replaces it). {%- endcomment -%}
+      <button type="button" id="SearchToggle" class="header__icon-btn--search" aria-label="{{ 'general.search.placeholder' | t }}" aria-expanded="false" aria-controls="HeaderSearchPopup">
         {% render 'icon', name: 'search' %}
       </button>
       <!-- Vensa Wishlist icon. The app binds the click and the counter. -->
@@ -65,6 +98,83 @@
                 endif
               endfor
             -%}
+
+            {%- comment -%}
+              MEGA MENU BLOCKS [1/6] - find the block that targets this menu item.
+              Match is on the top-level item title, handleized on both sides, so
+              "By Ingredients", "by ingredients" and "By-Ingredients" all match.
+              First matching block wins. No match = original automatic behaviour.
+            {%- endcomment -%}
+            {%- liquid
+              assign mega_block = nil
+              assign link_handle = link.title | handleize
+              for block in section.blocks
+                if block.type == 'mega_menu_links' or block.type == 'mega_menu_cards'
+                  assign block_target = block.settings.title | handleize
+                  if block_target != blank and block_target == link_handle
+                    assign mega_block = block
+                    break
+                  endif
+                endif
+              endfor
+
+              # Layout: automatic by link depth (original rule), overridden by block type.
+              assign mega_layout = 'cards'
+              if has_third_level
+                assign mega_layout = 'columns'
+              endif
+              if mega_block.type == 'mega_menu_links'
+                assign mega_layout = 'columns'
+              elsif mega_block.type == 'mega_menu_cards'
+                assign mega_layout = 'cards'
+              endif
+
+              # Promo images (links block only).
+              assign has_promos = false
+              if mega_block.type == 'mega_menu_links'
+                if mega_block.settings.image_1 != blank or mega_block.settings.image_2 != blank
+                  assign has_promos = true
+                endif
+              endif
+
+              # Link columns in the desktop panel. The images get the room these leave over.
+              assign mega_cols = 1
+              if has_third_level
+                assign mega_cols = link.links.size
+              endif
+
+              # Cards + "View all" - defaults reproduce the old hard-coded behaviour.
+              assign cards_limit = 5
+              assign view_all_mode = 'auto'
+              assign view_all_url = link.url
+              assign view_all_label = 'general.navigation.view_all' | t
+              if mega_block.type == 'mega_menu_cards'
+                assign cards_limit = mega_block.settings.cards_limit
+                assign view_all_mode = mega_block.settings.view_all
+                if mega_block.settings.view_all_link != blank
+                  assign view_all_url = mega_block.settings.view_all_link
+                endif
+                if mega_block.settings.view_all_label != blank
+                  assign view_all_label = mega_block.settings.view_all_label
+                endif
+              endif
+
+              assign show_view_all = false
+              assign show_view_all_mobile = false
+              case view_all_mode
+                when 'always'
+                  assign show_view_all = true
+                  assign show_view_all_mobile = true
+                when 'auto'
+                  if link.links.size > cards_limit
+                    assign show_view_all = true
+                  endif
+                  if link.links.size > 10
+                    assign show_view_all_mobile = true
+                  endif
+              endcase
+            -%}
+
             <div class="u-flex u-items-center header__nav-item has-menu">
               <a href="{{ link.url }}" class="u-inline-flex u-items-center header__nav-link header__menu-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="Menu-{{ forloop.index }}">
                 <span class="u-flex header__menu-trigger-label">
@@ -79,40 +189,72 @@
                 dropdown on desktop, a collapsible accordion row-list on mobile.
                 See CLAUDE.md — only one .header__menu-panel may be open at a time.
               {%- endcomment -%}
-              <div class="header__menu-panel" id="Menu-{{ forloop.index }}">
+              {%- comment -%} MEGA MENU BLOCKS [2/6] - shopify_attributes so the block is selectable in the theme editor. {%- endcomment -%}
+              <div class="header__menu-panel" id="Menu-{{ forloop.index }}"{% if mega_block %} {{ mega_block.shopify_attributes }}{% endif %}>
                 <div class="header__menu-panel-inner">
                   <div class="mega-menu__inner container">
-                    {%- if has_third_level -%}
-                      {%- comment -%}
-                        Three-level menu: each second-level link is a column heading and its
-                        children are the links listed under it.
-                      {%- endcomment -%}
+                    {%- comment -%}
+                      MEGA MENU BLOCKS [3/6] - was: if has_third_level.
+                      With promo images the columns and the images sit in a two-area row
+                      (.mega-menu__layout): columns wrap inside their own area, images stay
+                      pinned top-right and never drop underneath. --mega-cols feeds the CSS.
+                    {%- endcomment -%}
+                    {%- if mega_layout == 'columns' -%}
+                      {%- if has_promos -%}
+                        <div class="mega-menu__layout" style="--mega-cols: {{ mega_cols }};">
+                      {%- endif -%}
                       <div class="mega-menu__columns u-flex">
-                        {%- for sub in link.links -%}
+                        {%- if has_third_level -%}
+                          {%- comment -%}
+                            Three-level menu: each second-level link is a column heading and its
+                            children are the links listed under it. (unchanged)
+                          {%- endcomment -%}
+                          {%- for sub in link.links -%}
+                            <div class="mega-menu__column">
+                              <a class="mega-menu__column-title" href="{{ sub.url }}">{{ sub.title }}</a>
+                              {%- if sub.links.size > 0 -%}
+                                <ul class="mega-menu__column-links u-flex u-flex-col" role="list">
+                                  {%- for child in sub.links -%}
+                                    <li><a class="mega-menu__column-link" href="{{ child.url }}">{{ child.title }}</a></li>
+                                  {%- endfor -%}
+                                </ul>
+                              {%- endif -%}
+                            </div>
+                          {%- endfor -%}
+                        {%- else -%}
+                          {%- comment -%}
+                            Links block on a two-level menu: one plain column of links,
+                            reusing the existing column-link styles.
+                          {%- endcomment -%}
                           <div class="mega-menu__column">
-                            <a class="mega-menu__column-title" href="{{ sub.url }}">{{ sub.title }}</a>
-                            {%- if sub.links.size > 0 -%}
-                              <ul class="mega-menu__column-links u-flex u-flex-col" role="list">
-                                {%- for child in sub.links -%}
-                                  <li><a class="mega-menu__column-link" href="{{ child.url }}">{{ child.title }}</a></li>
-                                {%- endfor -%}
-                              </ul>
-                            {%- endif -%}
+                            <ul class="mega-menu__column-links u-flex u-flex-col" role="list">
+                              {%- for sub in link.links -%}
+                                <li><a class="mega-menu__column-link" href="{{ sub.url }}">{{ sub.title }}</a></li>
+                              {%- endfor -%}
+                            </ul>
                           </div>
-                        {%- endfor -%}
+                        {%- endif -%}
                       </div>
+                      {%- comment -%} MEGA MENU BLOCKS [4/6] - promo images: sibling of the columns, closes the layout wrapper. {%- endcomment -%}
+                      {%- if has_promos -%}
+                          {% render 'mega-menu-promos', block: mega_block, context: 'desktop' %}
+                        </div>
+                      {%- endif -%}
                     {%- else -%}
                     <div class="u-flex u-justify-center mega-menu__cards">
-                      {%- for sub in link.links limit: 6 -%}
+                      {%- comment -%} MEGA MENU BLOCKS [5/6] - limit and "View all" now come from the block (defaults: 5 / auto). {%- endcomment -%}
+                      {%- for sub in link.links limit: cards_limit -%}
                         {%- if sub.type == 'product_link' and sub.object -%}
                           {% render 'mega-menu-product-card', product: sub.object %}
+                        {%- elsif sub.type == 'collection_link' and sub.object -%}
+                          {% render 'mega-menu-collection-card', collection: sub.object %}
                         {%- else -%}
                           <a class="mega-menu__text-link" href="{{ sub.url }}">{{ sub.title }}</a>
                         {%- endif -%}
                       {%- endfor -%}
-                      {%- if link.links.size > 6 -%}
-                        <a class="u-flex u-items-center u-justify-center mega-menu__view-all" href="{{ link.url }}">
-                          <span>{{ 'general.navigation.view_all' | t }}</span>
+                      {%- if show_view_all -%}
+                        <a class="u-flex u-items-center u-justify-center mega-menu__view-all" href="{{ view_all_url }}">
+                          <span>{{ view_all_label }}</span>
                           {% render 'icon', name: 'arrow-right' %}
                         </a>
                       {%- endif -%}
@@ -121,9 +263,18 @@
                   </div>
                   <div class="header__accordion-rows">
                     {%- for sub in link.links -%}
+                      {%- liquid
+                        assign sub_image = blank
+                        if sub.type == 'product_link' and sub.object
+                          assign sub_image = sub.object.featured_image
+                        endif
+                        if sub.type == 'collection_link' and sub.object
+                          assign sub_image = sub.object.featured_image
+                        endif
+                      -%}
                       <a class="header__accordion-row{% if sub.links.size > 0 %} header__accordion-row--parent{% endif %}" href="{{ sub.url }}">
-                        {%- if sub.type == 'product_link' and sub.object and sub.object.featured_image -%}
-                          {{ sub.object.featured_image | image_url: width: 64 | image_tag: loading: 'lazy', width: 32, height: 32, alt: '' }}
+                        {%- if sub_image and sub_image != blank -%}
+                          {{ sub_image | image_url: width: 64 | image_tag: loading: 'lazy', width: 32, height: 32, alt: '' }}
                         {%- endif -%}
                         <span>{{ sub.title }}</span>
                       </a>
@@ -133,11 +284,15 @@
                         </a>
                       {%- endfor -%}
                     {%- endfor -%}
-                    {%- if link.links.size > 10 -%}
-                      <a class="header__accordion-row header__accordion-row--view-all" href="{{ link.url }}">
-                        <span>{{ 'general.navigation.view_all' | t }}</span>
+                    {%- comment -%} MEGA MENU BLOCKS [6/6] - mobile "View all" follows the block; promo images repeat here for the drawer. {%- endcomment -%}
+                    {%- if show_view_all_mobile -%}
+                      <a class="header__accordion-row header__accordion-row--view-all" href="{{ view_all_url }}">
+                        <span>{{ view_all_label }}</span>
                         {% render 'icon', name: 'arrow-right' %}
                       </a>
+                    {%- endif -%}
+                    {%- if has_promos and mega_block.settings.show_on_mobile -%}
+                      {% render 'mega-menu-promos', block: mega_block, context: 'mobile' %}
                     {%- endif -%}
                   </div>
                 </div>
@@ -158,6 +313,9 @@
           {% render 'icon', name: 'account' %}
           <span>Account</span>
         </a>
+        <div class="mobile-hidden">
+        {% render 'social-icons', class: 'footer__social-icons' %}
+        </div>
       </nav>
     </div>
   </div>
@@ -271,7 +429,7 @@ body:not(:has(.banner--transparent-header)) {
    solid background instead of actually going away. */
 .header:where(body:has(.banner--transparent-header) *).header--scrolled::before,
 .header:where(body:has(.banner--transparent-header) *).header--drawer-open::before,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered)::before {
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open)::before {
   opacity: 0;
 }
 
@@ -300,12 +458,14 @@ body:not(:has(.banner--transparent-header)) {
 /* header--hovered is set by HeaderHover while a mouse pointer is anywhere over
    the header (logo, icons, links), so a transparent header turns solid the
    same way it does for header--menu-open, without opening a mega-menu panel.
+   header--search-open (HEADER SEARCH [3/7]) is set by PredictiveSearch while the
+   desktop results panel is open, for the same reason.
    header--menu-open is set by HeaderMenu while a desktop mega-menu panel is
    open. The panel drops down solid white, so a header still transparent
    (dark scrim, white text) over the hero looked disconnected from it - it
    takes on the same solid look as the scrolled state instead. */
 .header:where(body:has(.banner--transparent-header) *).header--scrolled,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered) {
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open) {
   background: var(--color-background);
 }
 
@@ -318,11 +478,11 @@ body:not(:has(.banner--transparent-header)) {
 .header:where(body:has(.banner--transparent-header) *).header--scrolled .header__logo-text span,
 .header:where(body:has(.banner--transparent-header) *).header--scrolled .header__icons,
 .header:where(body:has(.banner--transparent-header) *).header--scrolled .header__menu-toggle,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered) .header__nav-link,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered) .header__logo-text strong,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered) .header__logo-text span,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered) .header__icons,
-.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered) .header__menu-toggle {
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open) .header__nav-link,
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open) .header__logo-text strong,
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open) .header__logo-text span,
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open) .header__icons,
+.header:where(body:has(.banner--transparent-header) *):is(.header--menu-open, .header--hovered, .header--search-open) .header__menu-toggle {
   color: var(--color-primary);
 }
 
@@ -344,6 +504,10 @@ body:not(:has(.banner--transparent-header)) {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 0.5rem;
+    padding: 0;
+  }
+  header.header>.container {
+    padding-block: 10px;
   }
 
   .header__menu-toggle {
@@ -387,11 +551,11 @@ body:not(:has(.banner--transparent-header)) {
   display: none;
 }
 
-.header:where(body:has(.banner--transparent-header) *):not(.header--scrolled):not(.header--menu-open):not(.header--hovered) .header__logo--has-inverse .header__logo-img--default {
+.header:where(body:has(.banner--transparent-header) *):not(.header--scrolled):not(.header--menu-open):not(.header--hovered):not(.header--search-open) .header__logo--has-inverse .header__logo-img--default {
   display: none;
 }
 
-.header:where(body:has(.banner--transparent-header) *):not(.header--scrolled):not(.header--menu-open):not(.header--hovered) .header__logo--has-inverse .header__logo-img--inverse {
+.header:where(body:has(.banner--transparent-header) *):not(.header--scrolled):not(.header--menu-open):not(.header--hovered):not(.header--search-open) .header__logo--has-inverse .header__logo-img--inverse {
   display: block;
 }
 
@@ -794,7 +958,6 @@ body:not(:has(.banner--transparent-header)) {
 .mega-menu-card__media {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
   background: var(--color-surface);
   border-radius: 10px;
   overflow: hidden;
@@ -804,7 +967,7 @@ body:not(:has(.banner--transparent-header)) {
 .mega-menu-card__media img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .mega-menu-card__title {
@@ -874,7 +1037,7 @@ html:has(body.search-popup-open) {
     max-width: 400px;
     gap: 0;
     background: var(--color-background);
-    padding: 76px var(--space-5) var(--space-6);
+    padding: 60px var(--space-5) var(--space-6);
     overflow-y: auto;
     overscroll-behavior: contain;
     transform: translateX(-100%);
@@ -1079,6 +1242,7 @@ html:has(body.search-popup-open) {
   gap: var(--space-2);
   flex: 1;
   border: 1px solid var(--color-surface);
+  border: 1px solid #cccccc82;
   border-radius: var(--radius-m);
   padding-inline: var(--space-2);
 }
@@ -1190,6 +1354,272 @@ html:has(body.search-popup-open) {
   font-size: 14px;
   padding-block: var(--space-3);
 }
+
+
+
+/* ==========================================================================
+   HEADER SEARCH [4/7] - desktop search bar + results panel (990px+)
+
+   Under 990px nothing here applies: the bar is hidden and the search icon
+   opens the full-width popup exactly as before.
+
+   990px+:
+   - Top row becomes logo | search | icons, with the bar centred and capped
+     at --header-search-width.
+   - The bar reuses .header__search-field / -input / -submit from the popup.
+   - The popup turns into a results-only panel hanging below the header (like
+     the mega menu), its results column lined up under the bar. The backdrop
+     starts below the header so the bar stays clickable.
+   - The popup's own search row is hidden in this mode (the bar is in the header).
+   ========================================================================== */
+
+.header-search-desktop {
+  display: none;
+}
+
+@media screen and (min-width: 990px) {
+  .header {
+    --header-search-width: 560px;
+  }
+
+  /* Side columns never go narrower than the logo / icons themselves (so a
+     text logo can't wrap); the bar takes what's left, up to its max width. */
+  .header > .header__inner {
+    display: grid;
+    grid-template-columns:
+      minmax(max-content, 1fr)
+      minmax(0, var(--header-search-width))
+      minmax(max-content, 1fr);
+    column-gap: var(--space-6);
+  }
+
+  .header > .header__inner > .header__logo {
+    justify-self: start;
+  }
+
+  .header > .header__inner > .header__icons {
+    justify-self: end;
+  }
+
+  .header-search-desktop {
+    display: block;
+    min-width: 0;
+    /* HEADER SEARCH [8/8] - containing block for the dropdown below, so it's
+       positioned off the bar itself instead of the full-width header. */
+    position: relative;
+  }
+
+  /* Solid fill so the bar stays readable over a transparent-header hero. */
+  .header-search-desktop .header__search-field {
+    background: var(--color-background);
+    transition: border-color 0.2s ease;
+  }
+
+  /* The bar is always on screen, so it needs a visible focus state (the
+     popup didn't: opening it was the visible change). */
+  .header-search-desktop .header__search-field:focus-within {
+    border-color: var(--color-primary);
+  }
+
+  /* 42px input + the field's 1px borders = 44px, the height the logo and
+     icons already give this row, so the header doesn't grow and nothing
+     below it shifts (whatever the theme's line-height). */
+  .header-search-desktop .header__search-input {
+    height: 42px;
+    padding-block: 0;
+  }
+
+  .header__icons .header__icon-btn--search {
+    display: none;
+  }
+
+  .header__search-popup--dropdown {
+    /* HEADER SEARCH [8/8] - anchored to .header-search-desktop (reparented
+       there in #openDropdown(), restored on close), not to the header. That
+       makes "top: 100%" the bar's own bottom edge rather than the bottom of
+       the whole header (which includes the nav row below it), and makes the
+       inherited left:0/right:0 exactly the bar's width - no separate width
+       rule needed. It also means the panel visually covers the nav row
+       underneath it, so a cursor moving from the bar straight down into the
+       results never actually crosses a nav item and can't trigger its menu. */
+    position: absolute;
+    top: 100%;
+    margin-top: var(--space-2);
+    max-height: calc(100vh - var(--header-height, 90px));
+    overscroll-behavior: contain;
+  }
+
+  .header__search-popup--dropdown .header__search-bar {
+    display: none;
+  }
+
+  .header__search-popup--dropdown .header__search-popup-inner {
+    /* Neutralize the site .container utility's own max-width/padding - the
+       panel's parent is already exactly the bar's width, so this padding
+       would otherwise inset the results narrower than the bar on both sides. */
+    max-width: none;
+    /* padding-inline: 0; */
+  }
+
+  .header__search-popup--dropdown .header__search-results {
+    padding-top: 0;
+  }
+
+  .header__search-popup-backdrop--dropdown {
+    top: var(--header-height, 90px);
+  }
+}
+
+/* ==========================================================================
+   Mega menu promo images  -  block: "Mega menu – links"
+
+   REPLACES the previous "Mega menu promo images" block at the end of the
+   header stylesheet (everything from that banner comment down to the
+   closing endstylesheet tag, which stays).
+
+   Desktop layout: .mega-menu__layout is a two-area row.
+     [ link columns ................. ][ images ]
+   - The columns keep at least 160px each (the theme's own column minimum),
+     and wrap only inside their own area.
+   - The images take what is left, up to their configured width. When the
+     columns need the room the tiles shrink, then the second tile hides, then
+     both hide. Links always win; images never drop under the columns.
+   ========================================================================== */
+
+.mega-menu__layout {
+  --mega-promo-gap: 24px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+/* Area 1: the link columns. Ideal width = every column at its normal 220px;
+   floor = every column at 160px (+1px so sub-pixel rounding can't wrap the
+   last column). Never wider than the row, so nothing overflows the panel. */
+.mega-menu__layout > .mega-menu__columns {
+  flex: 1 1 calc(var(--mega-cols, 1) * 220px + (var(--mega-cols, 1) - 1) * var(--space-8));
+  min-width: min(
+    100% - var(--space-8),
+    calc(var(--mega-cols, 1) * 160px + (var(--mega-cols, 1) - 1) * var(--space-8) + 1px)
+  );
+}
+
+/* Inside the layout the columns may flex between 160px and their normal
+   220px instead of wrapping as soon as 220px no longer fits. */
+.mega-menu__layout .mega-menu__column {
+  flex: 1 1 160px;
+  max-width: 220px;
+}
+
+.mega-menu__promos {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mega-promo-gap, 24px);
+}
+
+/* Area 2: the images. A size container, so the tiles can react to the room
+   this area actually ended up with (not to the viewport). */
+.mega-menu__promos--desktop {
+  container: mega-promos / inline-size;
+  flex: 0 1 calc(
+    var(--mega-promo-count, 2) * var(--mega-promo-width, 240px) +
+    (var(--mega-promo-count, 2) - 1) * var(--mega-promo-gap, 24px)
+  );
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+.mega-menu__promo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: var(--mega-promo-width, 240px);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Two tiles need 2 x 140px + the 24px gap. Below that, show one. */
+@container mega-promos (max-width: 303px) {
+  .mega-menu__promo:nth-child(n + 2) {
+    display: none;
+  }
+}
+
+/* Under 140px a tile is too small to be worth showing. */
+@container mega-promos (max-width: 139px) {
+  .mega-menu__promo {
+    display: none;
+  }
+}
+
+.mega-menu__promo-media {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+}
+
+.mega-menu__promo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Fixed ratios crop the image; "adapt" keeps its natural shape. */
+.mega-menu__promos--ratio-square .mega-menu__promo-media { aspect-ratio: 1 / 1; }
+.mega-menu__promos--ratio-portrait .mega-menu__promo-media { aspect-ratio: 4 / 5; }
+.mega-menu__promos--ratio-landscape .mega-menu__promo-media { aspect-ratio: 3 / 2; }
+
+.mega-menu__promos:not(.mega-menu__promos--ratio-adapt) .mega-menu__promo-img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.mega-menu__promo-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-accent);
+  line-height: 1.35;
+}
+
+a.mega-menu__promo:hover .mega-menu__promo-subtitle {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a.mega-menu__promo:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .mega-menu__promo-img {
+    transition: transform 0.4s ease;
+  }
+
+  a.mega-menu__promo:hover .mega-menu__promo-img {
+    transform: scale(1.04);
+  }
+}
+
+/* Mobile drawer: two tiles side by side under the accordion rows, indented
+   to line up with the rows (.header__accordion-row has padding-inline: 1rem). */
+.mega-menu__promos--mobile {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 12px 1rem 16px;
+}
+
+.mega-menu__promos--mobile .mega-menu__promo {
+  max-width: none;
+  gap: 8px;
+}
+
 {% endstylesheet %}
 
 {% javascript %}
@@ -1334,7 +1764,9 @@ class HeaderScroll {
     // their containing block, dragging the open drawer/popup along with it
     // and breaking their fixed positioning. Never hide the header while
     // either is open.
-    if (document.body.classList.contains('menu-drawer-open') || document.body.classList.contains('search-popup-open')) {
+    // HEADER SEARCH [5/7] - the desktop results panel hangs off the header too.
+    const bodyClasses = document.body.classList
+    if (bodyClasses.contains('menu-drawer-open') || bodyClasses.contains('search-popup-open') || bodyClasses.contains('search-dropdown-open')) {
       this.#lastY = y
       return
     }
@@ -1380,83 +1812,220 @@ class CartIconBubble {
   }
 }
 
+// HEADER SEARCH [6/7] - one results panel, two ways in:
+// - under 990px: the search icon opens the full-width popup (unchanged behaviour)
+// - 990px+: typing in the header bar opens the same panel as a dropdown below the header
+// Submitting either form (Enter or the search icon button) goes to the search page as before.
 class PredictiveSearch {
   #toggle
   #popup
   #closeButton
   #backdrop
-  #input
+  #popupInput
+  #desktopForm
+  #desktopInput
   #results
+  #header
+  #desktopQuery
   #abortController
   #debounceTimer
   #lastFocused
+  #mode = null // null | 'popup' | 'dropdown'
+  #resultsFor = null // the input whose term the current results belong to
+  #refocusing = false // true while we move focus back to the bar ourselves
+  #popupHome // HEADER SEARCH [8/8] - the popup's real parent (mobile position)
+  #popupHomeNext // ...and the sibling it sat before, to restore its exact spot
 
   constructor() {
     this.#toggle = document.getElementById('SearchToggle')
     this.#popup = document.getElementById('HeaderSearchPopup')
     this.#closeButton = document.getElementById('HeaderSearchClose')
     this.#backdrop = document.getElementById('SearchPopupBackdrop')
-    this.#input = document.getElementById('HeaderSearchInput')
+    this.#popupInput = document.getElementById('HeaderSearchInput')
+    this.#desktopForm = document.getElementById('HeaderSearchDesktop')
+    this.#desktopInput = document.getElementById('HeaderSearchInputDesktop')
     this.#results = document.getElementById('PredictiveSearchResults')
-    if (!this.#toggle || !this.#popup || !this.#input || !this.#results) return
+    this.#header = document.querySelector('.header')
+    this.#desktopQuery = window.matchMedia('(min-width: 990px)')
+    if (!this.#popup || !this.#results) return
+    this.#popupHome = this.#popup.parentElement
+    this.#popupHomeNext = this.#popup.nextElementSibling
 
-    this.#toggle.addEventListener('click', () => this.#open())
-    this.#closeButton.addEventListener('click', () => this.#close())
+    if (this.#toggle && this.#popupInput) {
+      this.#toggle.addEventListener('click', () => this.#openPopup())
+      this.#closeButton?.addEventListener('click', () => this.#close())
+      this.#popupInput.addEventListener('input', () => this.#onInput(this.#popupInput))
+    }
     this.#backdrop?.addEventListener('click', () => this.#close())
-    this.#input.addEventListener('input', () => this.#onInput())
+
+    if (this.#desktopInput) {
+      this.#desktopInput.addEventListener('input', () => this.#onInput(this.#desktopInput))
+      // The results sit at the end of the header in the DOM, so Tab would skip
+      // past them to the icons. Tab / Arrow Down from the bar goes into them instead.
+      this.#desktopInput.addEventListener('keydown', (event) => {
+        if (this.#mode !== 'dropdown') return
+        const forward = event.key === 'ArrowDown' || (event.key === 'Tab' && !event.shiftKey)
+        const first = this.#resultLinks()[0]
+        if (forward && first) {
+          event.preventDefault()
+          first.focus()
+        }
+      })
+      this.#popup.addEventListener('keydown', (event) => this.#onResultsKeydown(event))
+      // Clicking back into the bar brings back the results it already has.
+      this.#desktopInput.addEventListener('focus', () => {
+        if (this.#refocusing) return
+        if (this.#resultsFor === this.#desktopInput && this.#desktopInput.value.trim().length >= 2 && this.#results.innerHTML.trim()) {
+          this.#openDropdown()
+        }
+      })
+      // Click or tab anywhere outside the bar and the panel closes it.
+      document.addEventListener('click', (event) => this.#onOutside(event.target))
+      document.addEventListener('focusin', (event) => this.#onOutside(event.target))
+      // Moving on to a mega-menu item means the shopper has left search.
+      for (const item of document.querySelectorAll('.header__nav-item.has-menu')) {
+        item.addEventListener('mouseenter', () => {
+          if (this.#mode === 'dropdown') this.#close({ restoreFocus: false })
+        })
+      }
+    }
+
+    // Crossing 990px with the panel open would leave the wrong presentation on screen.
+    this.#desktopQuery.addEventListener('change', () => {
+      if (this.#mode) this.#close({ restoreFocus: false })
+    })
     document.addEventListener('keydown', (event) => this.#onKeydown(event))
   }
 
-  #open() {
+  #openPopup() {
+    if (this.#resultsFor !== this.#popupInput) this.#clearResults(this.#popupInput)
     this.#lastFocused = document.activeElement
+    this.#mode = 'popup'
+    this.#show()
+    this.#toggle.setAttribute('aria-expanded', 'true')
+    this.#popupInput.focus()
+    document.body.classList.add('search-popup-open')
+  }
+
+  #openDropdown() {
+    if (this.#mode === 'dropdown') return
+    this.#mode = 'dropdown'
+    this.#popup.classList.add('header__search-popup--dropdown')
+    this.#backdrop?.classList.add('header__search-popup-backdrop--dropdown')
+    // HEADER SEARCH [8/8] - move the panel into the bar's own wrapper so
+    // "position: absolute; top: 100%" (set on .header__search-popup--dropdown)
+    // resolves against the bar, not the full-width header. Moved back in
+    // #close() below so the mobile popup is unaffected.
+    this.#desktopForm?.parentElement?.appendChild(this.#popup)
+    this.#show()
+    this.#header?.classList.add('header--search-open')
+    document.body.classList.add('search-dropdown-open')
+  }
+
+  #show() {
     this.#popup.hidden = false
     if (this.#backdrop) this.#backdrop.hidden = false
-    // The popup is nested inside .header and position: fixed - if the header
-    // was already scrolled hidden (its own transform) before opening, that
-    // transform is still the popup's containing block at this point, so it
-    // needs clearing here too, not just guarded against going forward.
-    document.querySelector('.header')?.classList.remove('header--hidden')
+    // The popup is nested inside .header - if the header was already scrolled
+    // hidden (its own transform) before opening, that transform is still the
+    // popup's containing block, so it needs clearing here too.
+    this.#header?.classList.remove('header--hidden')
     requestAnimationFrame(() => {
       this.#popup.classList.add('is-open')
       this.#backdrop?.classList.add('is-open')
     })
-    this.#toggle.setAttribute('aria-expanded', 'true')
-    this.#input.focus()
-    document.body.classList.add('search-popup-open')
   }
 
-  #close() {
+  #close({ restoreFocus = true } = {}) {
+    const mode = this.#mode
+    if (!mode) return
+    this.#mode = null
+    window.clearTimeout(this.#debounceTimer)
+    this.#abortController?.abort()
     this.#popup.classList.remove('is-open')
     this.#backdrop?.classList.remove('is-open')
-    this.#toggle.setAttribute('aria-expanded', 'false')
-    this.#abortController?.abort()
-    document.body.classList.remove('search-popup-open')
+
+    if (mode === 'popup') {
+      this.#toggle?.setAttribute('aria-expanded', 'false')
+      document.body.classList.remove('search-popup-open')
+    } else {
+      this.#header?.classList.remove('header--search-open')
+      document.body.classList.remove('search-dropdown-open')
+    }
+
     window.setTimeout(() => {
-      if (!this.#popup.classList.contains('is-open')) {
-        this.#popup.hidden = true
-        if (this.#backdrop) this.#backdrop.hidden = true
-      }
+      if (this.#popup.classList.contains('is-open')) return
+      this.#popup.hidden = true
+      if (this.#backdrop) this.#backdrop.hidden = true
+      this.#popup.classList.remove('header__search-popup--dropdown')
+      this.#backdrop?.classList.remove('header__search-popup-backdrop--dropdown')
+      // HEADER SEARCH [8/8] - put the panel back where it lives for the mobile popup.
+      if (mode === 'dropdown' && this.#popupHome) this.#popupHome.insertBefore(this.#popup, this.#popupHomeNext)
     }, 200)
-    this.#lastFocused?.focus()
+
+    if (mode === 'popup' && restoreFocus) this.#lastFocused?.focus()
+  }
+
+  #onOutside(target) {
+    if (this.#mode !== 'dropdown') return
+    if (this.#desktopForm?.contains(target) || this.#popup.contains(target)) return
+    this.#close({ restoreFocus: false })
+  }
+
+  #focusBar() {
+    this.#refocusing = true
+    this.#desktopInput.focus()
+    this.#refocusing = false
+  }
+
+  #resultLinks() {
+    return Array.from(this.#results.querySelectorAll('a[href]'))
+  }
+
+  // Arrow keys move through the results; Arrow Up from the first one, or
+  // Shift+Tab from it, goes back to the bar.
+  #onResultsKeydown(event) {
+    if (this.#mode !== 'dropdown') return
+    const links = this.#resultLinks()
+    const index = links.indexOf(document.activeElement)
+    if (index === -1) return
+    if (event.key === 'ArrowDown' && index < links.length - 1) {
+      event.preventDefault()
+      links[index + 1].focus()
+    } else if (event.key === 'ArrowUp' || (event.key === 'Tab' && event.shiftKey && index === 0)) {
+      event.preventDefault()
+      if (index === 0) this.#focusBar()
+      else links[index - 1].focus()
+    }
   }
 
   #onKeydown(event) {
-    if (event.key === 'Escape' && this.#popup.classList.contains('is-open')) {
-      this.#close()
-    }
+    if (event.key !== 'Escape' || !this.#mode) return
+    const mode = this.#mode
+    this.#close()
+    // Escape from a result link puts the shopper back in the bar (without
+    // the bar's focus listener reopening the panel straight away).
+    if (mode === 'dropdown' && this.#desktopInput) this.#focusBar()
   }
 
-  #onInput() {
+  #clearResults(owner) {
+    this.#abortController?.abort()
+    this.#results.innerHTML = ''
+    this.#resultsFor = owner
+  }
+
+  #onInput(input) {
     window.clearTimeout(this.#debounceTimer)
-    const term = this.#input.value.trim()
+    if (this.#resultsFor !== input) this.#clearResults(input)
+    const term = input.value.trim()
     if (term.length < 2) {
-      this.#results.innerHTML = ''
+      this.#clearResults(input)
+      if (this.#mode === 'dropdown') this.#close({ restoreFocus: false })
       return
     }
-    this.#debounceTimer = window.setTimeout(() => this.#search(term), 300)
+    this.#debounceTimer = window.setTimeout(() => this.#search(term, input), 300)
   }
 
-  async #search(term) {
+  async #search(term, input) {
     this.#abortController?.abort()
     this.#abortController = new AbortController()
 
@@ -1469,6 +2038,17 @@ class PredictiveSearch {
       const doc = new DOMParser().parseFromString(text, 'text/html')
       const section = doc.getElementById('shopify-section-predictive-search')
       this.#results.innerHTML = section ? section.innerHTML : ''
+      this.#resultsFor = input
+
+      // Desktop bar: open the panel once there is something to show, but only
+      // if the shopper is still in the bar (not if they clicked away mid-request).
+      if (input === this.#desktopInput && this.#desktopQuery.matches) {
+        if (this.#results.innerHTML.trim() && document.activeElement === input) {
+          this.#openDropdown()
+        } else if (!this.#results.innerHTML.trim()) {
+          this.#close({ restoreFocus: false })
+        }
+      }
     } catch (error) {
       if (error.name !== 'AbortError') this.#results.innerHTML = ''
     }
@@ -1523,6 +2103,11 @@ class HeaderMenu {
       })
       item.addEventListener('mouseenter', () => {
         if (!this.#desktopQuery.matches) return
+        // HEADER SEARCH [7/7] (cont.) - this item's own trigger had no guard
+        // against the desktop search dropdown being open, unlike the
+        // logo/icons handler below; a cursor straying off the covered area
+        // under the search bar onto a nav item would still pop a mega menu.
+        if (document.body.classList.contains('search-dropdown-open')) return
         // Cancel any pending close from the item the pointer just left, so
         // switching between two adjacent triggers crossfades straight into
         // the new panel instead of both being briefly closed.
@@ -1550,6 +2135,9 @@ class HeaderMenu {
       for (const area of document.querySelectorAll('.header__logo, .header__icons')) {
         area.addEventListener('mouseenter', () => {
           if (!this.#desktopQuery.matches) return
+          // HEADER SEARCH [7/7] - the search bar sits between the logo and the icons;
+          // don't drop a mega menu over its results while the shopper is searching.
+          if (document.body.classList.contains('search-dropdown-open')) return
           window.clearTimeout(this.#closeTimer)
           if (!this.#openPanel) this.#open(firstMenu.trigger, firstMenu.panel)
         })
@@ -1698,6 +2286,164 @@ new HeaderHover()
       "label": "Main menu",
       "default": "main-menu"
     }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu_links",
+      "name": "Mega menu – links",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Target menu item",
+          "info": "Type the top-level menu item title exactly as it appears in the header menu, e.g. Hair. Use on items that have links and sub-links."
+        },
+        {
+          "type": "paragraph",
+          "content": "Images sit to the right of the link columns and use the space the columns leave. Best with up to 4 columns. With more columns, or on smaller laptop screens, the images shrink, then the second image hides, then both. Links always stay visible."
+        },
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_1_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "image_1_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_2_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "image_2_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Image layout"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Image ratio",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "Adapt to image"
+            },
+            {
+              "value": "square",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "portrait",
+              "label": "Portrait (4:5)"
+            },
+            {
+              "value": "landscape",
+              "label": "Landscape (3:2)"
+            }
+          ],
+          "default": "portrait"
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "label": "Image width (desktop)",
+          "min": 160,
+          "max": 360,
+          "step": 20,
+          "unit": "px",
+          "default": 240
+        },
+        {
+          "type": "checkbox",
+          "id": "show_on_mobile",
+          "label": "Show images in mobile menu",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "mega_menu_cards",
+      "name": "Mega menu – cards",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Target menu item",
+          "info": "Type the top-level menu item title exactly as it appears in the header menu, e.g. By Ingredients. Use on items whose sub-links are collections or products."
+        },
+        {
+          "type": "range",
+          "id": "cards_limit",
+          "label": "Cards to show",
+          "min": 1,
+          "max": 8,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "header",
+          "content": "View all link"
+        },
+        {
+          "type": "select",
+          "id": "view_all",
+          "label": "Show \"View all\"",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Only when there are more links than cards"
+            },
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "never",
+              "label": "Never"
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "text",
+          "id": "view_all_label",
+          "label": "Label",
+          "info": "Leave empty to use the theme's default \"View all\" text."
+        },
+        {
+          "type": "url",
+          "id": "view_all_link",
+          "label": "Link",
+          "info": "Leave empty to use the menu item's own link."
+        }
+      ]
+    }
   ]
+
 }
 {% endschema %}

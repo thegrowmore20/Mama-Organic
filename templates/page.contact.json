@@ -12,10 +12,12 @@
     "hero_banner_QGALPh": {
       "type": "hero-banner",
       "settings": {
+        "image": "shopify://shop_images/About_us.jpg",
+        "mobile_image": "shopify://shop_images/About_us-mbl.jpg",
         "height": "custom",
-        "custom_height": 360,
+        "custom_height": 300,
         "mobile_height": "custom",
-        "custom_height_mobile": 380,
+        "custom_height_mobile": 300,
         "transparent_header": false,
         "show_overlay": false,
         "overlay_color": "rgba(0, 0, 0, 0.4)",
@@ -64,7 +66,12 @@
             "card_2_color": "#ffffff",
             "card_2_heading": "Email",
             "card_2_body": "<p>sales@mamaorganic.pk</p>",
-            "card_2_link": "mailto:sales@mamaorganic.pk"
+            "card_2_link": "mailto:sales@mamaorganic.pk",
+            "card_3_bg": "#004236",
+            "card_3_color": "#ffffff",
+            "card_3_heading": "Location",
+            "card_3_body": "<p>Your address here</p>",
+            "card_3_link": ""
           }
         },
         "social": {

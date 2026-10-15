@@ -13,6 +13,113 @@
   "sections": {
     "header": {
       "type": "header",
+      "blocks": {
+        "mega_menu_cards_pMKFV8": {
+          "type": "mega_menu_cards",
+          "settings": {
+            "title": "Bundles",
+            "cards_limit": 4,
+            "view_all": "always",
+            "view_all_label": "",
+            "view_all_link": ""
+          }
+        },
+        "mega_menu_links_7dMw33": {
+          "type": "mega_menu_links",
+          "settings": {
+            "title": "Face",
+            "image_1": "shopify://shop_images/Onion_Hair_Oil_100ml.webp",
+            "image_1_subtitle": "",
+            "image_1_link": "",
+            "image_2": "shopify://shop_images/Listing2_6d497ba3-08b1-41ff-a437-e7f7ed808659.jpg",
+            "image_2_subtitle": "",
+            "image_2_link": "",
+            "image_ratio": "portrait",
+            "image_width": 240,
+            "show_on_mobile": true
+          }
+        },
+        "mega_menu_links_7RXqHE": {
+          "type": "mega_menu_links",
+          "settings": {
+            "title": "Hair",
+            "image_1": "shopify://shop_images/3in1Sunscreen_5c3e7bc3-1fb3-4d8e-b0ec-33e57edccebc.webp",
+            "image_1_subtitle": "",
+            "image_1_link": "",
+            "image_2": "shopify://shop_images/VitaminCNightCream_5af70df8-f726-43b2-b68e-95f63c3f73b3.webp",
+            "image_2_subtitle": "",
+            "image_2_link": "",
+            "image_ratio": "portrait",
+            "image_width": 240,
+            "show_on_mobile": true
+          }
+        },
+        "mega_menu_cards_bfmD4U": {
+          "type": "mega_menu_cards",
+          "settings": {
+            "title": "Body",
+            "cards_limit": 4,
+            "view_all": "always",
+            "view_all_label": "",
+            "view_all_link": ""
+          }
+        },
+        "mega_menu_cards_JAb3jc": {
+          "type": "mega_menu_cards",
+          "settings": {
+            "title": "Baby Care",
+            "cards_limit": 4,
+            "view_all": "always",
+            "view_all_label": "",
+            "view_all_link": ""
+          }
+        },
+        "mega_menu_cards_4mkptf": {
+          "type": "mega_menu_cards",
+          "settings": {
+            "title": "Shop All",
+            "cards_limit": 4,
+            "view_all": "always",
+            "view_all_label": "",
+            "view_all_link": ""
+          }
+        },
+        "mega_menu_cards_RcMwRM": {
+          "type": "mega_menu_cards",
+          "settings": {
+            "title": "By Ingredients",
+            "cards_limit": 4,
+            "view_all": "always",
+            "view_all_label": "",
+            "view_all_link": ""
+          }
+        },
+        "mega_menu_links_8trGxH": {
+          "type": "mega_menu_links",
+          "settings": {
+            "title": "By Concerns",
+            "image_1": "shopify://shop_images/Selecting_the_Right_Retinol_Cream.png",
+            "image_1_subtitle": "Shop Now",
+            "image_1_link": "shopify://collections/all",
+            "image_2": "shopify://shop_images/VitaminCFaceWash_medium_da46d7e0-d399-4855-a319-774f8a757c5e.avif",
+            "image_2_subtitle": "",
+            "image_2_link": "shopify://collections/all",
+            "image_ratio": "portrait",
+            "image_width": 240,
+            "show_on_mobile": true
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_cards_pMKFV8",
+        "mega_menu_links_7dMw33",
+        "mega_menu_links_7RXqHE",
+        "mega_menu_cards_bfmD4U",
+        "mega_menu_cards_JAb3jc",
+        "mega_menu_cards_4mkptf",
+        "mega_menu_cards_RcMwRM",
+        "mega_menu_links_8trGxH"
+      ],
       "settings": {
         "logo": "shopify://shop_images/Mobile_Logo.svg",
         "brand_name": "",

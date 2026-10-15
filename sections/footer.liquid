@@ -80,26 +80,26 @@
               {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
                 <a href="{{ block.settings.link_url }}" class="footer__contact-item u-flex">
                   <span class="footer__contact-icon u-flex" aria-hidden="true">{% render 'icon', name: 'open-link' %}</span>
-                  <span>{{ block.settings.link_label | escape }}</span>
+                  <span class="footer__underline">{{ block.settings.link_label | escape }}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.phone != blank -%}
                 <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}" class="footer__contact-item u-flex">
                   <span class="footer__contact-icon u-flex footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'phone-filled' %}</span>
-                  <span>{{ block.settings.phone | escape }}</span>
+                  <span class="footer__underline">{{ block.settings.phone | escape }}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.email != blank -%}
                 <a href="mailto:{{ block.settings.email | escape }}" class="footer__contact-item u-flex">
                   <span class="footer__contact-icon u-flex footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'mail-filled' %}</span>
-                  <span>{{ block.settings.email | escape }}</span>
+                  <span class="footer__underline">{{ block.settings.email | escape }}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.address != blank -%}
                 {%- if block.settings.address_link != blank -%}
                   <a href="{{ block.settings.address_link }}" class="footer__contact-item u-flex footer__contact-item--address" target="_blank" rel="noopener noreferrer">
                     <span class="footer__contact-icon u-flex footer__contact-icon--filled" aria-hidden="true">{% render 'icon', name: 'marker-filled' %}</span>
-                    <span>{{ block.settings.address | escape | newline_to_br }}<span class="visually-hidden"> {{ 'general.accessibility.opens_in_new_tab' | t }}</span></span>
+                    <span class="footer__underline">{{ block.settings.address | escape | newline_to_br }}<span class="visually-hidden"> {{ 'general.accessibility.opens_in_new_tab' | t }}</span></span>
                   </a>
                 {%- else -%}
                   <p class="footer__contact-item u-flex footer__contact-item--address">
@@ -245,6 +245,14 @@
     margin: 0 0 var(--space-3);
     font-size: 14px;
     line-height: 1.5;
+    transition: all 0.3s ease;
+  }
+
+  .footer__contact-item:hover span:last-child{
+    font-weight: 500;
+  }
+  .footer__contact-item:not(:hover) span:last-child{
+    font-weight: 400;
   }
 
   .footer__contact-icon {
@@ -320,6 +328,7 @@
     font-family: var(--font-body);
     border-top-left-radius: var(--radius-m);
     border-bottom-left-radius: var(--radius-m);
+    height: 44px;
   }
 
   .footer__newsletter-form button {
@@ -329,6 +338,7 @@
     padding: var(--space-3) var(--space-5);
     font-size: 14px;
     cursor: pointer;
+    height: 44px;
   }
 
   .footer__newsletter-message {
@@ -358,6 +368,20 @@
 
   .footer__links a {
     text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .footer__links a:hover {
+    font-weight: 500;
+    transition: all 0.3s ease;
+    transform: translateX(5px);
+    position: relative;
+    
+  }
+  .footer__links a:not(:hover) {
+    transform: translateX(0px);
+    transition: all 0.3s ease;
   }
 
   .footer__bottom {
@@ -420,7 +444,7 @@
    animated underline below instead (.footer__underline), so no native
    underline here - it would draw over the animation.
 */
-    color: inherit;
+    color: var(--color-surface); 
   }
 
   .footer__credit {
@@ -465,7 +489,8 @@
 
   @media (hover: hover) and (pointer: fine) {
     .footer__brand-link:hover,
-    .footer__bottom-list a:hover {
+    .footer__bottom-list a:hover,
+    .footer__contact-item:hover span {
       background-size: 100% 1px;
       background-position: 0 100%;
     }

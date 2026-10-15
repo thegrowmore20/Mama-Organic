@@ -15,7 +15,7 @@
           {%- case block.type -%}
             {%- when 'link' -%}
               <a
-                class="mobile-bottom-nav__link"
+                class="mobile-bottom-nav__link {% if block.settings.icon == 'whatsapp' %}mobile-bottom-nav__whatsapp{% endif %}"
                 href="{{ item_url | default: routes.root_url }}"
                 {% if is_current %}aria-current="page"{% endif %}
               >
@@ -262,6 +262,7 @@ class MobileBottomNavReveal extends HTMLElement {
   #footerObserver
   #footerVisible = false
   #ticking = false
+  #whatsappButton
 
   connectedCallback() {
     this.#nav = this.querySelector('.mobile-bottom-nav')
@@ -270,14 +271,20 @@ class MobileBottomNavReveal extends HTMLElement {
     window.addEventListener('scroll', this.#requestUpdate, { passive: true })
     window.addEventListener('resize', this.#requestUpdate, { passive: true })
 
-    // Same idea as the product page's sticky add-to-cart bar: get out of the
-    // way once the footer scrolls into view, so the bar never sits on top of
-    // it (or of its links).
+    // WhatsApp button
+    this.#whatsappButton = this.querySelector('.mobile-bottom-nav__whatsapp')
+
+    if (this.#whatsappButton) {
+      this.#whatsappButton.addEventListener('click', this.#handleWhatsappClick)
+    }
+
+    // Hide bottom nav when footer is visible
     this.#footer = document.querySelector('.shopify-section-group-footer-group')
+
     if (this.#footer && 'IntersectionObserver' in window) {
-      // Seeded synchronously so a load that's already at/near the footer
-      // doesn't flash the bar in for a frame before the observer reports.
-      this.#footerVisible = this.#footer.getBoundingClientRect().top < window.innerHeight
+      this.#footerVisible =
+        this.#footer.getBoundingClientRect().top < window.innerHeight
+
       this.#footerObserver = new IntersectionObserver(
         ([entry]) => {
           this.#footerVisible = entry.isIntersecting
@@ -285,24 +292,40 @@ class MobileBottomNavReveal extends HTMLElement {
         },
         { threshold: 0 }
       )
+
       this.#footerObserver.observe(this.#footer)
     }
 
-    // Sync once now: after a reload the browser can restore a scrolled position
-    // before any scroll event fires, and a page too short to scroll at all
-    // would otherwise never reveal the bar.
     this.#update()
   }
 
   disconnectedCallback() {
     window.removeEventListener('scroll', this.#requestUpdate)
     window.removeEventListener('resize', this.#requestUpdate)
+
+    this.#whatsappButton?.removeEventListener(
+      'click',
+      this.#handleWhatsappClick
+    )
+
     this.#footerObserver?.disconnect()
+  }
+
+  #handleWhatsappClick = (event) => {
+    event.preventDefault()
+
+    const pushDaddyWidget = document.querySelector('#pushdaddy-button')
+
+    if (pushDaddyWidget) {
+      pushDaddyWidget.click()
+    }
   }
 
   #requestUpdate = () => {
     if (this.#ticking) return
+
     this.#ticking = true
+
     requestAnimationFrame(() => {
       this.#update()
       this.#ticking = false
@@ -310,16 +333,23 @@ class MobileBottomNavReveal extends HTMLElement {
   }
 
   #update() {
-    // Shown once the visitor has scrolled (or the page is too short to ever
-    // trigger that), but never while the footer is on screen.
-    const canScroll = document.documentElement.scrollHeight - window.innerHeight > 40
+    const canScroll =
+      document.documentElement.scrollHeight - window.innerHeight > 40
+
     const revealed = !canScroll || window.scrollY > 10
-    this.#nav.classList.toggle('is-visible', revealed && !this.#footerVisible)
+
+    this.#nav.classList.toggle(
+      'is-visible',
+      revealed && !this.#footerVisible
+    )
   }
 }
 
 if (!customElements.get('mobile-bottom-nav-reveal')) {
-  customElements.define('mobile-bottom-nav-reveal', MobileBottomNavReveal)
+  customElements.define(
+    'mobile-bottom-nav-reveal',
+    MobileBottomNavReveal
+  )
 }
 {% endjavascript %}
 
@@ -393,9 +423,15 @@ if (!customElements.get('mobile-bottom-nav-reveal')) {
             { "value": "message-chat-circle", "label": "Chat" },
             { "value": "marker-pin", "label": "Location pin" },
             { "value": "truck", "label": "Truck" },
-            { "value": "user", "label": "User" }
+            { "value": "user", "label": "User" },
+            { "value": "whatsapp", "label": "Whatsapp" },
           ],
           "default": "store"
+        },
+        {
+          "type": "paragraph",
+          "content": "Integrated with whatsapp, no link required",
+          "visible_if": "{{ block.settings.icon == 'whatsapp' }}"
         },
         {
           "type": "url",

@@ -1,0 +1,77 @@
+{%- comment -%}
+  snippets/mega-menu-promos.liquid
+
+  Up to two promo image tiles (image + subtitle + link) for a
+  "Mega menu – links" header block.
+
+  Accepts:
+  - block:   {Object} the mega_menu_links block
+  - context: {String} 'desktop' (inside .mega-menu__layout) or 'mobile' (inside .header__accordion-rows)
+
+  Usage:
+  {% render 'mega-menu-promos', block: mega_block, context: 'desktop' %}
+
+  --mega-promo-count / --mega-promo-width tell the CSS how wide the image area
+  would like to be; the CSS then shrinks or hides tiles when the link columns
+  need the room.
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign promo_sizes = s.image_width | append: 'px'
+  if context == 'mobile'
+    assign promo_sizes = '45vw'
+  endif
+
+  assign promo_count = 0
+  if s.image_1 != blank
+    assign promo_count = promo_count | plus: 1
+  endif
+  if s.image_2 != blank
+    assign promo_count = promo_count | plus: 1
+  endif
+-%}
+{%- if promo_count > 0 -%}
+  <div
+    class="mega-menu__promos mega-menu__promos--{{ context }} mega-menu__promos--ratio-{{ s.image_ratio }}"
+    style="--mega-promo-width: {{ s.image_width }}px; --mega-promo-count: {{ promo_count }};"
+  >
+    {%- for i in (1..2) -%}
+      {%- liquid
+        assign image_key = 'image_' | append: i
+        assign subtitle_key = image_key | append: '_subtitle'
+        assign link_key = image_key | append: '_link'
+        assign promo_image = s[image_key]
+        assign promo_subtitle = s[subtitle_key]
+        assign promo_link = s[link_key]
+        assign promo_alt = promo_image.alt | default: promo_subtitle
+      -%}
+      {%- if promo_image != blank -%}
+        {%- if promo_link != blank -%}
+          <a class="mega-menu__promo" href="{{ promo_link }}">
+        {%- else -%}
+          <div class="mega-menu__promo">
+        {%- endif -%}
+            <span class="mega-menu__promo-media">
+              {{
+                promo_image
+                | image_url: width: 720
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '240, 360, 480, 720',
+                  sizes: promo_sizes,
+                  alt: promo_alt,
+                  class: 'mega-menu__promo-img'
+              }}
+            </span>
+            {%- if promo_subtitle != blank -%}
+              <span class="mega-menu__promo-subtitle">{{ promo_subtitle | escape }}</span>
+            {%- endif -%}
+        {%- if promo_link != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

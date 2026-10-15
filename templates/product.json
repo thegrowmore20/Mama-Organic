@@ -62,18 +62,21 @@
         },
         "icons-with-text": {
           "type": "icons_with_text",
-          "disabled": true,
           "settings": {
             "layout": "horizontal",
             "columns": "2",
             "icon_size": 24,
             "background_color": "#f4f6f7",
-            "heading_1": "Secure Checkout",
+            "icon_1": "shopify://shop_images/Multiple_Payment_Options.svg",
+            "heading_1": "Cash on Delivery",
             "text_1": "",
+            "icon_2": "shopify://shop_images/Fast_Shipping.svg",
             "heading_2": "Fast Shipping",
             "text_2": "",
-            "heading_3": "Multiple Payment Options",
+            "icon_3": "shopify://shop_images/Secure_Checkout.svg",
+            "heading_3": "WhatsApp  Confirmation",
             "text_3": "",
+            "icon_4": "shopify://shop_images/Easy_Returns.svg",
             "heading_4": "Easy Return",
             "text_4": ""
           }
