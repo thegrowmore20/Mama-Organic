@@ -8,6 +8,9 @@
       assign text_color = '#ffffff'
     endif
   endif
+  if section.settings.text_color != blank
+    assign text_color = section.settings.text_color
+  endif
   assign has_content = false
   if section.settings.heading != blank or section.settings.subheading != blank or section.settings.text != blank or section.settings.text_image != blank
     assign has_content = true
@@ -21,7 +24,11 @@
 
 <section
   class="image-with-text section-padding{% if section.settings.image_position == 'right' %} image-with-text--reverse{% endif %}"
-  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+  style="
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+    {%- if section.settings.show_section_bg and section.settings.section_bg_color != blank %}background: {{ section.settings.section_bg_color }};{% endif -%}
+  "
 >
   <div class="container">
     <div class="image-with-text__grid u-grid">
@@ -282,6 +289,12 @@
       "info": "Leave empty to use the theme surface color. Text color adjusts to stay readable."
     },
     {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "info": "Leave empty for automatic contrast (dark on light, light on dark)."
+    },
+    {
       "type": "text",
       "id": "button_label",
       "label": "Button label"
@@ -303,6 +316,23 @@
       "id": "button_text_color",
       "label": "Button text color",
       "info": "Leave empty to use the theme button text color."
+    },
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_bg",
+      "label": "Enable section background",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "section_bg_color",
+      "label": "Background color",
+      "default": "#faf6f1",
+      "visible_if": "{{ section.settings.show_section_bg }}"
     },
     {
       "type": "header",
