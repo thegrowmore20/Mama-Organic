@@ -20,18 +20,29 @@
     assign has_button = true
     assign has_content = true
   endif
+  assign is_full_width = section.settings.full_width
+  assign section_has_bg = false
+  if section.settings.show_section_bg and section.settings.section_bg_color != blank
+    assign section_has_bg = true
+  endif
 -%}
 
 <section
-  class="image-with-text section-padding{% if section.settings.image_position == 'right' %} image-with-text--reverse{% endif %}"
+  class="image-with-text section-padding{% if is_full_width %} image-with-text--full{% endif %}{% if section.settings.image_position == 'right' %} image-with-text--reverse{% endif %}"
   style="
     --padding-top: {{ section.settings.padding_top }}px;
     --padding-bottom: {{ section.settings.padding_bottom }}px;
-    {%- if section.settings.show_section_bg and section.settings.section_bg_color != blank %}background: {{ section.settings.section_bg_color }};{% endif -%}
+    {%- if section_has_bg %}
+      padding-left: var(--space-5); padding-right: var(--space-5);
+      {%- if is_full_width %}background: {{ section.settings.section_bg_color }};{% endif -%}
+    {%- endif -%}
   "
 >
-  <div class="container">
-    <div class="image-with-text__grid u-grid">
+  <div class="{% unless is_full_width %}container{% endunless %}">
+    <div
+      class="image-with-text__grid u-grid"
+      {%- if section_has_bg and is_full_width == false %} style="background: {{ section.settings.section_bg_color }};"{% endif -%}
+    >
       <div class="image-with-text__media">
         {%- if section.settings.image -%}
           {%- assign media_alt = section.settings.image.alt | default: section.settings.heading -%}
@@ -212,6 +223,11 @@
     padding: 48px 7em;
   }
 }
+
+/* Full-width mode: grid spans the full section, no rounded corners. */
+.image-with-text--full .image-with-text__grid {
+  border-radius: 0;
+}
 {% endstylesheet %}
 
 {% schema %}
@@ -233,6 +249,13 @@
         { "value": "right", "label": "Right" }
       ],
       "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "info": "Stretch the section edge-to-edge. When off, the section is contained to the page width.",
+      "default": false
     },
     {
       "type": "header",
