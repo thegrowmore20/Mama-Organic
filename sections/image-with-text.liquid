@@ -32,10 +32,7 @@
   style="
     --padding-top: {{ section.settings.padding_top }}px;
     --padding-bottom: {{ section.settings.padding_bottom }}px;
-    {%- if section_has_bg %}
-      padding-left: var(--space-5); padding-right: var(--space-5);
-      {%- if is_full_width %}background: {{ section.settings.section_bg_color }};{% endif -%}
-    {%- endif -%}
+    {%- if section_has_bg and is_full_width %}background: {{ section.settings.section_bg_color }};{% endif -%}
   "
 >
   <div class="{% unless is_full_width %}container{% endunless %}">
