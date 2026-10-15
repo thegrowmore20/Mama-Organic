@@ -361,16 +361,36 @@
       "type": "about-hero",
       "name": "About hero",
       "settings": {
-        "background_color": "#faf6f1",
+        "eyebrow": "Our Story",
+        "heading": "Science is Our Foundation",
+        "description": "<p>Mama Organic was born from a simple belief: skincare should work. Not just feel good, work. We combine cutting-edge dermatological research with the most potent bioactive ingredients on earth.</p>",
         "image": "shopify://shop_images/Our_Mission.png",
-        "subheading": "",
-        "heading": "Our Mission – Goodness Of Nature",
-        "description": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>",
-        "certifications_image": "",
-        "button_label": "Learn More",
-        "button_link": "shopify://pages/about-us",
+        "button_1_label": "Explore Our Products",
+        "button_1_link": "",
+        "button_2_label": "Our Science",
+        "button_2_link": "",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "image_with_text_KCmRqL": {
+      "type": "image-with-text",
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/image.png",
+        "image_position": "left",
+        "text_alignment": "left",
+        "heading": "Our Mission – Goodness Of Nature",
+        "subheading": "At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.",
+        "text": "",
+        "text_image_width": 300,
+        "text_background": "",
+        "button_label": "Learn More",
+        "button_link": "shopify://pages/about-us",
+        "button_color": "",
+        "button_text_color": "",
+        "padding_top": 30,
+        "padding_bottom": 30
       }
     },
     "custom_section_GRHE7m": {
@@ -442,6 +462,7 @@
     "shop-by-concern",
     "custom_section_LCMcUH",
     "about_hero_7qjLN6",
+    "image_with_text_KCmRqL",
     "custom_section_GRHE7m",
     "blogs"
   ]
