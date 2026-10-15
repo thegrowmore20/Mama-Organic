@@ -1,6 +1,44 @@
 {%- liquid
   assign banner_image = section.settings.image | default: collection.image
-  assign mobile_banner = section.settings.mobile_image | default: collection.products.first.featured_image
+  assign mobile_banner = section.settings.mobile_image | default: collection.metafields.custom.mobile_image
+
+  if banner_image == blank or mobile_banner == blank
+    assign _found = false
+    for top_link in linklists['main-menu'].links
+      if _found
+        break
+      endif
+      for child_link in top_link.links
+        if _found
+          break
+        endif
+        if child_link.object.handle == collection.handle
+          assign _found = true
+          if banner_image == blank
+            assign banner_image = top_link.object.featured_image
+          endif
+          if mobile_banner == blank
+            assign mobile_banner = top_link.object.metafields.custom.mobile_image
+          endif
+          break
+        endif
+        for grand_link in child_link.links
+          if grand_link.object.handle == collection.handle
+            assign _found = true
+            if banner_image == blank
+              assign banner_image = top_link.object.featured_image
+            endif
+            if mobile_banner == blank
+              assign mobile_banner = top_link.object.metafields.custom.mobile_image
+            endif
+            break
+          endif
+        endfor
+      endfor
+    endfor
+  endif
+
+  assign mobile_banner = mobile_banner | default: collection.products.first.featured_image
   assign banner_source = banner_image | default: mobile_banner
   assign mobile_height = section.settings.mobile_height | default: section.settings.height
   assign heading = section.settings.heading | default: collection.title
