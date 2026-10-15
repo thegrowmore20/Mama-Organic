@@ -103,6 +103,10 @@
   overflow: hidden;
 }
 
+.image-with-text__content {
+  overflow: hidden;
+}
+
 .image-with-text__image {
   display: block;
   width: 100%;
@@ -206,14 +210,25 @@
     padding: 48px 5em;
   }
 
+  /* Asymmetric radius: image left → round left corners; content right → round right corners. */
+  .image-with-text__media {
+    border-radius: var(--radius-m) 0 0 var(--radius-m);
+  }
+
+  .image-with-text__content {
+    border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  }
+
   /* Only the visual order flips - the DOM keeps image first so the reading
      order stays heading-after-image on every screen. */
   .image-with-text--reverse .image-with-text__media {
     order: 2;
+    border-radius: 0 var(--radius-m) var(--radius-m) 0;
   }
 
   .image-with-text--reverse .image-with-text__content {
     order: 1;
+    border-radius: var(--radius-m) 0 0 var(--radius-m);
   }
 }
 
