@@ -1,61 +1,119 @@
 {%- comment -%}
-  About page hero: eyebrow + heading + description + two buttons, with an
-  optional image (falls back to an icon panel when none is set).
+  Homepage about section: image left, content right — eyebrow, heading,
+  description, certification badge blocks, single CTA button.
 {%- endcomment -%}
 
 <section
   class="about-hero section-padding"
-  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;"
+  style="
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  "
 >
   <div class="container">
-    <div class="u-grid u-items-center about-hero__layout">
+    <div class="about-hero__layout">
+
+      <div class="about-hero__media">
+        {%- if section.settings.image != blank -%}
+          {%- assign hero_alt = section.settings.image.alt | default: section.settings.heading -%}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '500, 750, 900, 1200',
+              sizes: '(min-width: 750px) 50vw, 100vw',
+              alt: hero_alt,
+              class: 'about-hero__image'
+          }}
+        {%- else -%}
+          <div class="about-hero__placeholder">{% render 'icon', name: 'sparkle' %}</div>
+        {%- endif -%}
+      </div>
+
       <div class="about-hero__content">
         {%- if section.settings.eyebrow != blank -%}
           <p class="about-hero__eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="about-hero__heading h2">{{ section.settings.heading }}</h2>
+          <h2 class="about-hero__heading">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- if section.settings.description != blank -%}
           <div class="about-hero__description">{{ section.settings.description }}</div>
         {%- endif -%}
-        {%- if section.settings.button_1_label != blank or section.settings.button_2_label != blank -%}
-          <div class="u-flex u-items-center about-hero__actions">
-            {%- if section.settings.button_1_label != blank -%}
-              <a href="{{ section.settings.button_1_link | default: '#' }}" class="button button--accent">{{ section.settings.button_1_label }}</a>
-            {%- endif -%}
-            {%- if section.settings.button_2_label != blank -%}
-              <a href="{{ section.settings.button_2_link | default: '#' }}" class="u-inline-flex u-items-center about-hero__link">
-                {{ section.settings.button_2_label }}
-                {% render 'icon', name: 'arrow-right' %}
-              </a>
-            {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="about-hero__badges">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'badge' and block.settings.image != blank -%}
+                <div class="about-hero__badge" {{ block.shopify_attributes }}>
+                  {{
+                    block.settings.image
+                    | image_url: width: 160
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '80, 120, 160',
+                      sizes: '80px',
+                      class: 'about-hero__badge-img',
+                      alt: block.settings.image.alt | default: ''
+                  }}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="about-hero__actions">
+            <a href="{{ section.settings.button_link | default: routes.root_url }}" class="button about-hero__button">
+              {{ section.settings.button_label }}
+              {% render 'icon', name: 'arrow-right' %}
+            </a>
           </div>
         {%- endif -%}
       </div>
-      <div class="about-hero__media">
-        {%- if section.settings.image != blank -%}
-          {%- assign hero_alt = section.settings.image.alt | default: section.settings.heading -%}
-          {{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '500, 750, 1000', sizes: '(min-width: 750px) 50vw, 100vw', alt: hero_alt }}
-        {%- else -%}
-          <div class="u-flex u-items-center u-justify-center about-hero__placeholder">{% render 'icon', name: 'sparkle' %}</div>
-        {%- endif -%}
-      </div>
+
     </div>
   </div>
 </section>
 
 {% stylesheet %}
 .about-hero__layout {
+  display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
+  align-items: center;
 }
 
 @media screen and (min-width: 750px) {
   .about-hero__layout {
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 64px;
   }
+}
+
+.about-hero__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+}
+
+.about-hero__placeholder {
+  aspect-ratio: 4 / 3;
+  background: var(--color-surface);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.about-hero__placeholder svg {
+  width: 64px;
+  height: 64px;
 }
 
 .about-hero__eyebrow {
@@ -69,13 +127,15 @@
 }
 
 .about-hero__heading {
+  font-size: clamp(26px, 3.5vw, 40px);
+  line-height: 1.2;
   color: var(--color-primary);
-  margin: 0 0 18px;
+  margin: 0 0 20px;
 }
 
 .about-hero__description {
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--color-text);
   max-width: 46ch;
 }
@@ -88,44 +148,42 @@
   margin-top: var(--space-3);
 }
 
-.about-hero__actions {
-  gap: var(--space-6);
+.about-hero__badges {
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: var(--space-6);
+}
+
+.about-hero__badge-img {
+  height: 64px;
+  width: auto;
+  display: block;
+}
+
+.about-hero__actions {
   margin-top: var(--space-7);
 }
 
-.about-hero__link {
-  gap: var(--space-2);
-  font-weight: 600;
-  font-family: var(--font-accent);
-  color: var(--color-primary);
+.about-hero__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-primary);
+  color: #fff;
 }
 
-.about-hero__link:hover {
-  color: var(--color-secondary);
+.about-hero__button svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
-.about-hero__media {
-  border-radius: var(--radius-m);
-  overflow: hidden;
-  background: var(--color-surface);
-}
-
-.about-hero__media img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.about-hero__placeholder {
-  aspect-ratio: 4 / 3;
-  color: var(--color-secondary);
-}
-
-.about-hero__placeholder svg {
-  width: 64px;
-  height: 64px;
+@media (hover: hover) and (pointer: fine) {
+  .about-hero__button:hover {
+    background: var(--color-secondary);
+  }
 }
 {% endstylesheet %}
 
@@ -134,23 +192,38 @@
   "name": "About hero",
   "class": "section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Story" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Science is Our Foundation" },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf6f1"
+    },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Mission – Goodness Of Nature" },
     {
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Mama Organic was born from a simple belief: skincare should work. Not just feel good, work. We combine cutting-edge dermatological research with the most potent bioactive ingredients on earth.</p>"
+      "default": "<p>At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.</p>"
     },
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "header", "content": "Buttons" },
-    { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "Explore Our Products" },
-    { "type": "url", "id": "button_1_link", "label": "Button 1 link" },
-    { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "Our Science" },
-    { "type": "url", "id": "button_2_link", "label": "Button 2 link" },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Learn More" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
     { "type": "header", "content": "Padding" },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Certification badge",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Badge image" }
+      ]
+    }
   ],
   "presets": [
     { "name": "About hero" }
