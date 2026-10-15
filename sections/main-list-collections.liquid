@@ -41,13 +41,14 @@
       <h2 class="visually-hidden">{{ 'collections.general.heading' | t }}</h2>
       <ul class="u-grid collection-directory-grid">
         {%- for collection in sorted_collections -%}
+          {%- assign card_image = collection.metafields.custom.mobile_image | default: collection.products.first.featured_image -%}
           <li class="collection-directory-grid__item">
             <a href="{{ collection.url }}" class="collection-directory-card">
               <div class="collection-directory-card__media">
-                {%- if collection.featured_image -%}
-                  {%- assign collection_alt = collection.featured_image.alt | default: collection.title -%}
+                {%- if card_image -%}
+                  {%- assign collection_alt = card_image.alt | default: collection.title -%}
                   {{
-                    collection.featured_image
+                    card_image
                     | image_url: width: 600
                     | image_tag:
                       loading: 'lazy',
