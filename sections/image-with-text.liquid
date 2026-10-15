@@ -39,7 +39,7 @@
   <div class="{% unless is_full_width %}container{% endunless %}">
     <div
       class="image-with-text__grid u-grid"
-      {%- if section_has_bg and is_full_width != true %} style="background: {{ section.settings.section_bg_color }};"{% endif -%}
+      {%- if section_has_bg and is_full_width != true %} style="background: {{ section.settings.section_bg_color }}; padding: var(--space-5);"{% endif -%}
     >
       <div class="image-with-text__media">
         {%- if section.settings.image -%}
