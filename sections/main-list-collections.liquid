@@ -31,7 +31,9 @@
   style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --grid-columns-desktop: {{ section.settings.columns_desktop }}; --grid-columns-mobile: {{ section.settings.columns_mobile }};"
 >
   <div class="container">
-    <h1 class="collection-list-section__title h2">{{ section.settings.title }}</h1>
+    {%- if section.settings.show_title -%}
+      <h1 class="collection-list-section__title h2">{{ section.settings.title }}</h1>
+    {%- endif -%}
 
     {%- if sorted_collections.size == 0 -%}
       <p class="collection-list-section__empty">{{ 'collections.general.empty' | t }}</p>
@@ -148,6 +150,12 @@
     "templates": ["list-collections"]
   },
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show heading",
+      "default": true
+    },
     {
       "type": "text",
       "id": "title",

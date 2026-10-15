@@ -12,8 +12,8 @@
     "hero_banner_g9UPfe": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/CONCERN.webp",
-        "mobile_image": "shopify://shop_images/CONCERN-Mbl.webp",
+        "image": "shopify://shop_images/CONCERN.jpg",
+        "mobile_image": "shopify://shop_images/CONCERN-Mbl.jpg",
         "height": "custom",
         "custom_height": 300,
         "mobile_height": "custom",
@@ -36,6 +36,7 @@
     "main": {
       "type": "main-list-collections",
       "settings": {
+        "show_title": false,
         "title": "Collections",
         "sort": "alphabetical",
         "columns_desktop": 4,
