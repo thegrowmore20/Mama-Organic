@@ -60,7 +60,7 @@
               {%- if block.settings.mobile_image -%}
                 <source
                   media="(max-width: 749px)"
-                  srcset="{{ block.settings.mobile_image | image_url: width: 375, quality: 100 }} 375w, {{ block.settings.mobile_image | image_url: width: 550, quality: 100 }} 550w, {{ block.settings.mobile_image | image_url: width: 750, quality: 100 }} 750w, {{ block.settings.mobile_image | image_url: width: 1100, quality: 100 }} 1100w, {{ block.settings.mobile_image | image_url: width: 1500, quality: 100 }} 1500w"
+                  srcset="{{ block.settings.mobile_image | image_url: width: 375, quality: 90 }} 375w, {{ block.settings.mobile_image | image_url: width: 550, quality: 90 }} 550w, {{ block.settings.mobile_image | image_url: width: 750, quality: 90 }} 750w, {{ block.settings.mobile_image | image_url: width: 1100, quality: 90 }} 1100w, {{ block.settings.mobile_image | image_url: width: 1500, quality: 90 }} 1500w"
                   sizes="100vw"
                   width="{{ block.settings.mobile_image.width }}"
                   height="{{ block.settings.mobile_image.height }}"
@@ -68,7 +68,7 @@
               {%- endif -%}
               {{
                 slide_image
-                | image_url: width: 3200, quality: 100
+                | image_url: width: 3200, quality: 90
                 | image_tag:
                   loading: slide_loading,
                   fetchpriority: slide_priority,
