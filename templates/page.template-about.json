@@ -15,9 +15,9 @@
         "image": "shopify://shop_images/About_us.jpg",
         "mobile_image": "shopify://shop_images/About_us-mbl.jpg",
         "height": "custom",
-        "custom_height": 360,
+        "custom_height": 300,
         "mobile_height": "custom",
-        "custom_height_mobile": 380,
+        "custom_height_mobile": 300,
         "transparent_header": false,
         "show_overlay": false,
         "overlay_color": "rgba(0, 0, 0, 0.4)",
@@ -37,10 +37,11 @@
       "type": "about-hero",
       "settings": {
         "eyebrow": "About Mama Organic",
-        "heading": "100% Natural, Toxin-Free Care for Skin, Hair & Body",
-        "description": "<p>Mama Organic is a brand owned, maintained and run by Interlink Global. We provide 100% natural and toxin-free products for your skin, hair, body and baby care in Pakistan.</p><p>We believe in the power of nature, which is why every product is made with natural, toxin-free ingredients, free from harsh chemicals.</p>",
-        "button_1_label": "Shop All Products",
-        "button_1_link": "shopify://collections/all",
+        "heading": "Nature-Inspired Care for Skin, Hair & Body",
+        "description": "<p>Mama Organic creates thoughtfully formulated beauty and personal care products inspired by the goodness of nature and designed for everyday routines.</p><p>From skincare and hair care to body and baby care, our products bring together carefully selected ingredients and purposeful formulas to help you care for yourself and your family with confidence.</p><p>We believe everyday care should feel <strong>simple, gentle and dependable</strong>, without making your bathroom shelf resemble a chemistry laboratory.</p>",
+        "image": "shopify://shop_images/about_us_Main_Featured_Image.webp",
+        "button_1_label": "Explore Mama Organic",
+        "button_1_link": "shopify://collections/shop",
         "button_2_label": "",
         "button_2_link": "",
         "padding_top": 60,
@@ -53,6 +54,7 @@
         "vision": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Our_Vision.svg",
             "icon": "globe",
             "label": "Our Vision",
             "heading": "Eco-friendly beauty, around the world",
@@ -62,6 +64,7 @@
         "mission": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Our_Mission.svg",
             "icon": "marker-pin",
             "label": "Our Mission",
             "heading": "Toxin-free care, for everyone",
@@ -88,6 +91,7 @@
         "item_1": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/Natural.svg",
             "icon": "leaf",
             "title": "Natural",
             "text": "Natural source ingredients, free from harsh chemicals, in everything we make."
@@ -96,6 +100,7 @@
         "item_2": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/champion.svg",
             "icon": "heart",
             "title": "Be the Customer's Champion",
             "text": "Your needs come first. We stand beside you in every order and every question."
@@ -104,6 +109,7 @@
         "item_3": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/Better.svg",
             "icon": "sparkle",
             "title": "Be Better Everyday",
             "text": "We keep improving our products and our service, a little more each day."
@@ -112,6 +118,7 @@
         "item_4": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/Honesty.svg",
             "icon": "shield",
             "title": "Honesty",
             "text": "Open and truthful about what is in our products and what they can do."
@@ -120,6 +127,7 @@
         "item_5": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/Orignal.svg",
             "icon": "star",
             "title": "Be Original",
             "text": "We build our own range with our own standards, never a copy of someone else's."
@@ -128,6 +136,7 @@
         "item_6": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/Action.svg",
             "icon": "drop",
             "title": "Sustainability in Every Action",
             "text": "Eco-friendly products and choices that respect the planet we all share."
@@ -201,7 +210,7 @@
         "quote": "Natural care should be the standard for every family in Pakistan — not a luxury only a few can afford.",
         "body": "<p>That belief is why every Mama Organic formula is built from natural source ingredients, kept free from harsh chemicals, and priced so a full routine stays within reach — across face, hair, body and baby care.</p>",
         "primary_label": "Shop All Products",
-        "primary_link": "",
+        "primary_link": "shopify://collections/shop",
         "padding_top": 60,
         "padding_bottom": 60
       }

@@ -51,6 +51,7 @@
         | image_tag:
           loading: 'eager',
           fetchpriority: 'high',
+          sizes: '100vw',
           widths: '750, 990, 1200, 1500, 1920, 2400, 3200',
           width: 3200,
           height: banner_h,
@@ -74,7 +75,7 @@
           {%- if section.settings.text != blank -%}
             {{ section.settings.text }}
           {%- else -%}
-            {{ collection.description }}
+            {{ collection.description | strip_html | truncatewords: 40 }}
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -110,6 +111,7 @@
 }
 
 .collection-banner__picture {
+  display: block;
   position: absolute;
   inset: 0;
   z-index: 0;
