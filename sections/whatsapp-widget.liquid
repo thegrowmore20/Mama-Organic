@@ -81,11 +81,10 @@
   outline-offset: 3px;
 }
 
-/* Phones: a little closer to the corner, and above the bottom navigation bar. */
+/* Hide the floating widget on mobile — the bottom nav bar has its own WhatsApp button there. */
 @media screen and (max-width: 749px) {
   .whatsapp-widget {
-    left: 12px;
-    bottom: calc(var(--mobile-bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px) + 12px);
+    display: none;
   }
 }
 
