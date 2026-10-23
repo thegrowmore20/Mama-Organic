@@ -1,4 +1,8 @@
 {%- comment -%}
+This file has been modified by the Yoast SEO for Shopify app.
+You can learn more about this (and learn how to cleanly revert these changes) at https://yoa.st/removing-theme-changes.
+{%- endcomment -%}
+{%- comment -%}
   sections/header.liquid
   - Mega menu blocks: edits tagged "MEGA MENU BLOCKS [n/6]". Menu items with no matching block render as before.
   - Search: 990px+ uses the inline bar in the top row; below 990px the search icon opens the popup.
@@ -962,6 +966,7 @@ body:not(:has(.banner--transparent-header)) {
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 10px;
+  min-height: 177px;
 }
 
 .mega-menu-card__media img {
@@ -2237,6 +2242,9 @@ new HeaderMenu()
 new HeaderHover()
 {% endjavascript %}
 
+{%- comment -%}Yoast SEO schema control block: start.{%- endcomment -%}
+{%- assign yoast_seo_settings = shop.metafields.yoast_seo.settings.value | default: shop.metafields.yoast_seo.settings -%}
+{%- if disabled_by_yoast_seo or yoast_seo_settings.schema.useTheme.schema or yoast_seo_settings.schema.useTheme.organization -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -2252,7 +2260,9 @@ new HeaderHover()
     "description": {{ shop.brand.short_description | json }}
   {%- endif -%}
 }
+{%- comment -%}Yoast SEO schema control block: end.{%- endcomment -%}
 </script>
+{%- endif -%}
 
 {% schema %}
 {

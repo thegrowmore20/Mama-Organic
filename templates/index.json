@@ -12,21 +12,6 @@
     "hero_slideshow_mamaorganic": {
       "type": "hero-slideshow",
       "blocks": {
-        "slide_1": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Main_Banner-2.jpg",
-            "mobile_image": "shopify://shop_images/Main_Banner-2-mbl.jpg",
-            "eyebrow": "",
-            "heading": "Skin-first formulas for real concerns",
-            "heading_color": "#004236",
-            "heading_size": "h1",
-            "content": "<p>Targeted care thoughtfully tailored to your skin’s unique needs.</p>",
-            "button_label": "Shop Now",
-            "link": "shopify://collections/tea-tree",
-            "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
-          }
-        },
         "slide_RdnJCb": {
           "type": "slide",
           "settings": {
@@ -41,11 +26,26 @@
             "link": "shopify://collections/vitamin-c",
             "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
           }
+        },
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Main_Banner-2.jpg",
+            "mobile_image": "shopify://shop_images/Main_Banner-2-mbl.jpg",
+            "eyebrow": "",
+            "heading": "Skin-first formulas for real concerns",
+            "heading_color": "#004236",
+            "heading_size": "h1",
+            "content": "<p>Targeted care thoughtfully tailored to your skin’s unique needs.</p>",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/tea-tree",
+            "ratings": "<div class=\"store-reviews\">\n              <!-- Start of Judge.me code -->\n              <a href='javascript:void(0)'>\n                <span data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' class='jdgm-all-reviews-rating'></span>\n                <span class='jdgm-all-reviews-text__text' data-score='{{ shop.metafields.judgeme.all_reviews_rating }}' data-number-of-reviews='{{ shop.metafields.judgeme.all_reviews_count }}' data-locale='en'>\n                  {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} ({{ shop.metafields.judgeme.all_reviews_count }})\n                </span>\n              </a>  \n              <!-- End of Judge.me code -->\n            </div>"
+          }
         }
       },
       "block_order": [
-        "slide_1",
-        "slide_RdnJCb"
+        "slide_RdnJCb",
+        "slide_1"
       ],
       "settings": {
         "height": "large",
@@ -287,7 +287,7 @@
           "type": "collection",
           "settings": {
             "collection": "pigmentation",
-            "image": "shopify://shop_images/Pigmentation.png",
+            "image": "shopify://shop_images/Pigmentation.webp",
             "title": "Pigmentation"
           }
         },
@@ -359,6 +359,7 @@
     },
     "about_hero_7qjLN6": {
       "type": "about-hero",
+      "disabled": true,
       "name": "About hero",
       "settings": {
         "eyebrow": "Our Story",
@@ -379,18 +380,23 @@
       "settings": {
         "image": "shopify://shop_images/image.png",
         "image_position": "left",
+        "full_width": false,
         "text_alignment": "left",
         "heading": "Our Mission – Goodness Of Nature",
         "subheading": "At MamaOrganic, we believe in the power of nature. Our commitment is to make our community happier and healthier by sharing the goodness of natural beauty and self-care.",
         "text": "",
-        "text_image_width": 300,
-        "text_background": "",
+        "text_image": "shopify://shop_images/Certified_Trust_Icon_Halla.webp",
+        "text_image_width": 400,
+        "text_background": "#f9efe5",
+        "text_color": "#004236",
         "button_label": "Learn More",
         "button_link": "shopify://pages/about-us",
         "button_color": "",
         "button_text_color": "",
+        "show_section_bg": true,
+        "section_bg_color": "#fcf6ef",
         "padding_top": 30,
-        "padding_bottom": 30
+        "padding_bottom": 60
       }
     },
     "custom_section_GRHE7m": {

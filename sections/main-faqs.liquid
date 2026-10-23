@@ -1,4 +1,8 @@
 {%- comment -%}
+This file has been modified by the Yoast SEO for Shopify app.
+You can learn more about this (and learn how to cleanly revert these changes) at https://yoa.st/removing-theme-changes.
+{%- endcomment -%}
+{%- comment -%}
   FAQs page accordion, driven by the `general_faqs` metaobject definition
   (fields: faq_category, question, answer, order). Entries are grouped by faq_category
   and the categories are sorted by `order`; every category gets its own heading and its
@@ -105,9 +109,14 @@
   </section>
 
   {%- if section.settings.show_structured_data and schema_count > 0 -%}
-    <script type="application/ld+json">
+    {%- comment -%}Yoast SEO schema control block: start.{%- endcomment -%}
+{%- assign yoast_seo_settings = shop.metafields.yoast_seo.settings.value | default: shop.metafields.yoast_seo.settings -%}
+{%- if disabled_by_yoast_seo or yoast_seo_settings.schema.useTheme.schema or yoast_seo_settings.schema.useTheme.webpage -%}
+<script type="application/ld+json">
       {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ schema_questions }}]}
-    </script>
+    {%- comment -%}Yoast SEO schema control block: end.{%- endcomment -%}
+</script>
+{%- endif -%}
   {%- endif -%}
 {%- elsif request.design_mode -%}
   <section class="faqs section-padding" style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px;">
