@@ -44,7 +44,9 @@
       <div class="image-with-text__media">
         {%- if section.settings.image -%}
           {%- assign media_alt = section.settings.image.alt | default: section.settings.heading -%}
-          {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700, 1000, 1400', sizes: '(min-width: 992px) 50vw, 100vw', alt: media_alt, class: 'image-with-text__image' }}
+          {%- assign media_ar = section.settings.image.aspect_ratio | default: 1.0 -%}
+          {%- assign media_h = 1400 | divided_by: media_ar | round -%}
+          {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700, 1000, 1400', sizes: '(min-width: 992px) 50vw, 100vw', width: 1400, height: media_h, alt: media_alt, class: 'image-with-text__image' }}
         {%- else -%}
           {{ 'lifestyle-1' | placeholder_svg_tag: 'image-with-text__image image-with-text__placeholder' }}
         {%- endif -%}
@@ -65,8 +67,10 @@
           {%- endif -%}
           {%- if section.settings.text_image != blank -%}
             {%- assign text_image_alt = section.settings.text_image.alt | default: section.settings.heading -%}
+            {%- assign text_image_ar = section.settings.text_image.aspect_ratio | default: 1.0 -%}
+            {%- assign text_image_h = 1200 | divided_by: text_image_ar | round -%}
             <div class="image-with-text__text-image" style="--image-with-text-image-width: {{ section.settings.text_image_width }}px;">
-              {{ section.settings.text_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 992px) 40vw, 90vw', alt: text_image_alt }}
+              {{ section.settings.text_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 992px) 40vw, 90vw', width: 1200, height: text_image_h, alt: text_image_alt }}
             </div>
           {%- endif -%}
           {%- if has_button -%}

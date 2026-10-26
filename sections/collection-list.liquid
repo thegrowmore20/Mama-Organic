@@ -7,10 +7,12 @@
         {%- assign collection = block.settings.collection -%}
         {%- assign card_title = block.settings.title | default: collection.title -%}
         {%- assign card_image = block.settings.image | default: collection.featured_image -%}
+        {%- assign card_image_ar = card_image.aspect_ratio | default: 1.0 -%}
+        {%- assign card_image_h = 600 | divided_by: card_image_ar | round -%}
         <a class="collection-card" href="{{ collection.url | default: routes.collections_url }}" {{ block.shopify_attributes }}>
           <div class="collection-card__media">
             {%- if card_image -%}
-              {{ card_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 1200px) 200px, (min-width: 600px) 30vw, 45vw', alt: card_title }}
+              {{ card_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 1200px) 200px, (min-width: 600px) 30vw, 45vw', width: 600, height: card_image_h, alt: card_title }}
             {%- else -%}
               {{ 'collection-1' | placeholder_svg_tag }}
             {%- endif -%}

@@ -24,6 +24,12 @@
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
+        "rich_text_qHC9yE": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>{{ product.metafields.custom.hookline | metafield_tag }}</p>"
+          }
+        },
         "price": {
           "type": "price",
           "settings": {
@@ -92,16 +98,16 @@
         "accordion_QwpEjW": {
           "type": "accordion",
           "settings": {
-            "heading": "Ingredients",
-            "content": "{{ product.metafields.product.ingredients | metafield_tag }}",
+            "heading": "Beauty Gains",
+            "content": "{{ product.metafields.custom.beauty_gains | metafield_tag }}",
             "open_by_default": false
           }
         },
-        "accordion_N7zm6k": {
+        "accordion_ddtyqc": {
           "type": "accordion",
           "settings": {
-            "heading": "How It Works",
-            "content": "{{ product.metafields.product.how_it_works | metafield_tag }}",
+            "heading": "Ingredients",
+            "content": "{{ product.metafields.product.ingredients | metafield_tag }}",
             "open_by_default": false
           }
         },
@@ -118,6 +124,14 @@
           "settings": {
             "heading": "Who Can Use",
             "content": "{{ product.metafields.product.who_can_use | metafield_tag }}",
+            "open_by_default": false
+          }
+        },
+        "accordion_N7zm6k": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How It Works",
+            "content": "{{ product.metafields.product.how_it_works | metafield_tag }}",
             "open_by_default": false
           }
         },
@@ -148,6 +162,7 @@
       "block_order": [
         "title",
         "judge_me_reviews_preview_badge_UhKfiV",
+        "rich_text_qHC9yE",
         "price",
         "variant-picker",
         "addons_block",
@@ -156,9 +171,10 @@
         "icons-with-text",
         "accordion-description",
         "accordion_QwpEjW",
-        "accordion_N7zm6k",
+        "accordion_ddtyqc",
         "accordion_9WFKDV",
         "accordion_P6Bgpw",
+        "accordion_N7zm6k",
         "accordion_LWxRLg",
         "image_Ft9EMh",
         "share"

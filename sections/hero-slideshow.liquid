@@ -30,7 +30,7 @@
             assign has_text_content = true
           endif
           assign slide_loading = 'lazy'
-          assign slide_priority = 'auto'
+          assign slide_priority = 'low'
           if forloop.first and section.index == 1
             assign slide_loading = 'eager'
             assign slide_priority = 'high'
@@ -60,7 +60,7 @@
               {%- if block.settings.mobile_image -%}
                 <source
                   media="(max-width: 749px)"
-                  srcset="{{ block.settings.mobile_image | image_url: width: 375, quality: 90 }} 375w, {{ block.settings.mobile_image | image_url: width: 550, quality: 90 }} 550w, {{ block.settings.mobile_image | image_url: width: 750, quality: 90 }} 750w, {{ block.settings.mobile_image | image_url: width: 1100, quality: 90 }} 1100w, {{ block.settings.mobile_image | image_url: width: 1500, quality: 90 }} 1500w"
+                  srcset="{{ block.settings.mobile_image | image_url: width: 375, quality: 75 }} 375w, {{ block.settings.mobile_image | image_url: width: 550, quality: 75 }} 550w, {{ block.settings.mobile_image | image_url: width: 750, quality: 75 }} 750w, {{ block.settings.mobile_image | image_url: width: 1100, quality: 75 }} 1100w, {{ block.settings.mobile_image | image_url: width: 1500, quality: 75 }} 1500w"
                   sizes="100vw"
                   width="{{ block.settings.mobile_image.width }}"
                   height="{{ block.settings.mobile_image.height }}"
@@ -68,7 +68,7 @@
               {%- endif -%}
               {{
                 slide_image
-                | image_url: width: 3200, quality: 90
+                | image_url: width: 3200, quality: 75
                 | image_tag:
                   loading: slide_loading,
                   fetchpriority: slide_priority,

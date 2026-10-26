@@ -65,23 +65,22 @@
       }
     </style>
 
-    <script type="speculationrules">
-      {
-        "prerender": [
-          {
-            "where": {
-              "and": [
-                { "href_matches": "/*" },
-                { "not": { "href_matches": "/cart*" } },
-                { "not": { "href_matches": "/account*" } },
-                { "not": { "href_matches": "/checkout*" } }
-              ]
-            },
-            "eagerness": "moderate"
-          }
-        ]
-      }
-    </script>
+    {%- comment -%}
+      Speculation-rules prerendering used to run here with eagerness "moderate"
+      (prerender any same-site link once it's visible/hovered). On mobile,
+      "moderate" triggers on viewport visibility rather than hover, so it
+      ended up prerendering linked pages during the very first scroll - and
+      each prerendered storefront page pulls in Shopify's full checkout-web
+      bundle in the background (160+ requests, ~900 KB+), even though the
+      rule itself excluded "/checkout*" - the checkout bundle gets prefetched
+      as part of rendering any prerendered storefront page, not just the
+      checkout route. That background download was competing for
+      bandwidth/CPU with the actual page load and was a major contributor to
+      the poor mobile PageSpeed score (page weight, TBT, LCP). Removed rather
+      than tuned down, since it's a pure "feel instant on click" nicety with
+      no visible feature - normal navigation still works exactly the same,
+      just without the speculative prefetch.
+    {%- endcomment -%}
 
     {%- comment -%}
       The AirReviews app injects its own stylesheet (air-reviews.min.css)
